@@ -1,3 +1,3 @@
 # mainstream
 
-* Link to planning doc: https://docs.google.com/document/d/16hFHjjicYY4mx8KU-dVk44RAPih505K-ErnHd7PGYKQ/edit?usp=sharing
+* Link to planning doc: https://docs.google.com/document/d/1hOEGgVviXsRaosUH0yCJjV4tPubaXNNmpAfvH3JU9mY/edit?usp=sharing
