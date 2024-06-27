@@ -3,9 +3,11 @@ const prisma = new PrismaClient();
 const express = require('express');
 const app = express();
 const port = 3000;
+const cors = require('cors');
 require('dotenv').config();
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/users', async (req, res) => {
     const users = await prisma.user.findMany()
