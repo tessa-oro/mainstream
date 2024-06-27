@@ -4,12 +4,12 @@ import _ from 'lodash';
 import "./Login.css"
 
 function Login() {
-    const [username, setUsername] = useState("");
+    const [user, setUser] = useState("");
     const [password, setPassword ] = useState("");
     const [result, setResult] = useState("");
 
     const handleChangeUser = (e) => {
-        setUsername(e.target.value);
+        setUser(e.target.value);
     }
 
     const handleChangePassword = (e) => {
@@ -24,7 +24,7 @@ function Login() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                username,
+                user,
                 password,
             }),
         })
@@ -41,6 +41,31 @@ function Login() {
         });
     }
 
+    const handleLogin = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/login`,
+        {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                user,
+                password,
+            }),
+        })
+        .then(response => {
+            console.log(response)
+            if (response.ok) {
+                setResult("login success!");
+            } else {
+                setResult("failed to login");
+            }
+        })
+        .catch(error => {
+            setResult("failed to login");
+        });
+    }
+
     return (
         <>
         <div id="createLogin">
@@ -48,7 +73,7 @@ function Login() {
                 <h3>Login</h3>
                 <div id="username">
                     <label>Username:</label>
-                    <input type="text" id="usernameInput" name="username" value={username} 
+                    <input type="text" id="usernameInput" name="username" value={user} 
                     onChange={handleChangeUser} required></input>
                 </div>
                 <div id="password">
@@ -57,7 +82,7 @@ function Login() {
                     onChange={handleChangePassword} required></input>
                 </div>
                 <button onClick={handleCreate}>Create Account</button>
-                {/* <button onClick={handleLogin}>Login</button> */}
+                <button onClick={handleLogin}>Login</button>
                 <div>
                     { result && <p>{result}</p>}
                 </div>

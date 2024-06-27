@@ -15,14 +15,26 @@ app.get('/users', async (req, res) => {
 })
 
 app.post('/create', async (req, res) => {
-    const { username, password } = req.body;
+    const { user, password } = req.body;
     const newUser = await prisma.user.create({
       data: {
-        username,
+        user,
         password
       }
     })
     res.status(200).json({});
+})
+
+app.post("/login", async (req, res) => {
+    const { user, password } = req.body;
+    const userRecord = await prisma.user.findUnique({
+        where : { user }
+    })
+    if (userRecord.password === password) {
+        res.status(200).json({});
+    } else {
+        res.status(500).json({error: "error with login"});
+    }
 })
 
 app.listen(port, () => {
