@@ -1,9 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
-import _ from 'lodash';
 import "./Login.css"
 
-function Login() {
+function Login( {closeLogin} ) {
     const [user, setUser] = useState("");
     const [password, setPassword ] = useState("");
     const [result, setResult] = useState("");
@@ -57,6 +56,7 @@ function Login() {
             console.log(response)
             if (response.ok) {
                 setResult("login success!");
+                closeLogin();
             } else {
                 setResult("failed to login");
             }
@@ -86,7 +86,6 @@ function Login() {
                 <div>
                     { result && <p>{result}</p>}
                 </div>
-                <p id="close" >enter</p>
             </div>
         </div>
         <div id="overlay"></div>
