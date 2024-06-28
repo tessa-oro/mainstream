@@ -5,7 +5,7 @@ import Dashboard from "./Dashboard"
 import Header from "./Header"
 
 function App() {
-  const [showLogin, setShowLogin] = useState(true);
+  const [showLogin, setShowLogin] = useState(false);
 
   const closeLogin = () => {
     setShowLogin(false);

@@ -1,11 +1,15 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "./Login.css"
 
 function Login( {closeLogin} ) {
     const [user, setUser] = useState("");
     const [password, setPassword ] = useState("");
     const [result, setResult] = useState("");
+
+    useEffect(() => {
+
+    }, [user])
 
     const handleChangeUser = (e) => {
         setUser(e.target.value);
@@ -40,7 +44,7 @@ function Login( {closeLogin} ) {
         });
     }
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/login`,
         {
             method: 'POST',

@@ -16,4 +16,16 @@ datasource db {
 model User {
   user String @id
   password String
+  playlist Song[]
+}
+
+model Song {
+  id Int @id @default(autoincrement())
+  cover String
+  name String
+  artist String
+  audio String
+  ratings Int[]
+  playlistUser User @relation(fields: [userID], references:[user], onDelete: Cascade)
+  userID String
 }
