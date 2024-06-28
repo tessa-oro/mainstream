@@ -15,7 +15,7 @@ function Profile() {
 
     const fetchSearch = () => {
         console.log("fetching")
-        let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchQuery}&key=AIzaSyD9ZWWiNhlyqM-qoWv3YEcLxGQ8IEB5B-o`;
+        let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchQuery}&key=${import.meta.env.VITE_API_KEY}`;
         fetch(url)
             .then(response => response.json())
             .then(response => {setSearch(response.data);
