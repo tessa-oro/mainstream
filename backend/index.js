@@ -37,6 +37,20 @@ app.post("/login", async (req, res) => {
     }
 })
 
+app.post('/songs/:user/create/', async (req, res) => {
+    const { user } = req.params
+    const { title, player } = req.body
+    const newSong = await prisma.song.create({
+      data: {
+        title,
+        player,
+        artist : "placeholder",
+        userID : user
+      }
+    })
+    res.json(newSong)
+})
+
 app.listen(port, () => {
     console.log(`starting on port: ${port}`);
 })
