@@ -4,7 +4,7 @@ import "./Profile.css";
 
 function Profile() {
     const [searchQuery, setSearchQuery] = useState("");
-    const [search, setSearch] = useState([]);
+    const [searchResult, setSearchResult] = useState([]);
 
     useEffect(() => {
         fetchSearch();
@@ -15,10 +15,10 @@ function Profile() {
 
     const fetchSearch = () => {
         console.log("fetching")
-        let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchQuery}&key=${import.meta.env.VITE_API_KEY}`;
+        let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchQuery}&type=video&videoCategoryId=10&key=${import.meta.env.VITE_API_KEY}`;
         fetch(url)
             .then(response => response.json())
-            .then(response => {setSearch(response.data);
+            .then(response => {setSearchResult(response.items);
                 console.log(response);
             })
             .catch(err => console.error(err));
@@ -26,18 +26,28 @@ function Profile() {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        setSearchQuery(e.target.elements.searchQ.value);
+        setSearchQuery(e.target.elements.searchQ.value + " " + e.target.elements.searchA.value);
     }
 
-    console.log(search);
+    console.log(searchResult);
 
 
     return (
       <div id="profileContainer">
         <h2>my profile</h2>
+        <p>Search songs to recommend to your friends!</p>
         <form onSubmit={(e) => handleSearch(e)}>
-            <input name="searchQ"></input>
+            <label>Song title</label>
+            <input name="searchQ" required></input>
+            <label>Artist</label>
+            <input name="searchA" required></input>
+            <button type="submit" value="Submit">Go</button>
         </form>
+        <div>
+            {searchResult.map((searchResult, index) => (
+                <p>{searchResult.snippet.title}</p>)                          
+            )}
+        </div>
       </div>
     )
 }
