@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import "./Login.css"
 
-function Login( {closeLogin} ) {
+function Login( {closeLogin, setAppUser} ) {
     const [user, setUser] = useState("");
     const [password, setPassword ] = useState("");
     const [result, setResult] = useState("");
@@ -13,6 +13,7 @@ function Login( {closeLogin} ) {
 
     const handleChangeUser = (e) => {
         setUser(e.target.value);
+        setAppUser(e.target.value);
     }
 
     const handleChangePassword = (e) => {

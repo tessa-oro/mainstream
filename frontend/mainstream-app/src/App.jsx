@@ -5,7 +5,13 @@ import Dashboard from "./Dashboard"
 import Header from "./Header"
 
 function App() {
-  const [showLogin, setShowLogin] = useState(false);
+  const [curUser, setCurUser] = useState("");
+  const [showLogin, setShowLogin] = useState(true);
+
+  const setAppUser = (e) => {
+    setCurUser(e);
+    console.log("app username is:", curUser);
+  }
 
   const closeLogin = () => {
     setShowLogin(false);
@@ -14,8 +20,8 @@ function App() {
   return (
     <>
       <Header></Header>
-      { showLogin ? (<Login closeLogin={() => closeLogin()}></Login> ) : (<></>)}
-      <Dashboard></Dashboard>
+      { showLogin ? (<Login setAppUser={setAppUser} closeLogin={() => closeLogin()}></Login> ) : (<></>)}
+      <Dashboard curUser={curUser}></Dashboard>
     </>
   )
 }
