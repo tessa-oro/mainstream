@@ -3,19 +3,19 @@ import { useState, useEffect } from 'react';
 import "./Profile.css";
 import Playlist from "./Playlist";
 
-function Profile() {
+function Profile( {curUser} ) {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResult, setSearchResult] = useState([]);
+    const [playerToAdd, setPlayerToAdd] = useState("");
+    const [toAddTitle, setToAddTitle] = useState("addLater");
+    const [result, setResult] = useState("");
 
     useEffect(() => {
         fetchSearch();
         console.log(searchQuery)
     }, [searchQuery]);
 
-    const key = import.meta.env.VITE_API_KEY;
-
     const fetchSearch = () => {
-        console.log("fetching")
         let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchQuery}&maxResults=3&type=video&videoCategoryId=10&key=${import.meta.env.VITE_API_KEY}`;
         fetch(url)
             .then(response => response.json())
@@ -28,6 +28,43 @@ function Profile() {
     const handleSearch = (e) => {
         e.preventDefault();
         setSearchQuery(e.target.elements.searchQ.value + " " + e.target.elements.searchA.value);
+    }
+
+    const fetchSong = (vidID) => {
+        let url = `https://www.googleapis.com/youtube/v3/videos?part=player&id=${vidID}&key=${import.meta.env.VITE_API_KEY}`;
+        fetch(url)
+            .then(response => response.json())
+            .then(response => {
+                console.log(response);
+                setPlayerToAdd(response.items[0].player.embedHtml);
+            })
+            .catch(err => console.error(err));
+        addSongToUser();
+    }
+
+    const addSongToUser = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/songs/${curUser}/create/`,
+        {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                toAddTitle,
+                playerToAdd
+            }),
+        })
+        .then(response => {
+            console.log(response)
+            if (response.ok) {
+                setResult("added song!");
+            } else {
+                setResult("failed to add song");
+            }
+        })
+        .catch(error => {
+            setResult("failed to add song");
+        });
     }
 
     console.log(searchResult);
@@ -44,12 +81,12 @@ function Profile() {
             <input name="searchA" required></input>
             <button type="submit" value="Submit">Go</button>
         </form>
-        {searchQuery && <div>
+        {searchResult && <div>
             {searchResult.map((searchResult, index) => (
-                <p>{searchResult.snippet.title}</p>)                          
+                <p onClick={fetchSong(searchResult.id.videoId)}>{searchResult.snippet.title}</p>)                          
             )}
         </div>}
-        <Playlist></Playlist>
+        <Playlist curUser={curUser}></Playlist>
       </div>
     )
 }

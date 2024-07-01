@@ -51,6 +51,19 @@ app.post('/songs/:user/create/', async (req, res) => {
     res.json(newSong)
 })
 
+app.get('/songs/:user/', async (req, res) => {
+    const { user } = req.params
+    try {
+      const songs = await prisma.song.findMany({
+        where: { userID : user
+        }
+      });
+      res.status(200).json(songs);
+    } catch (error) {
+      res.status(500).json({ error: "An error occurred while fetching the songs." });
+    }
+})
+
 app.listen(port, () => {
     console.log(`starting on port: ${port}`);
 })
