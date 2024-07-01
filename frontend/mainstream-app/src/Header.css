@@ -1,0 +1,15 @@
+h1 {
+    font-size: 3em;
+    display: inline;
+}
+
+#main {
+    text-decoration: line-through;
+    font-size: 2.8em;
+}
+
+#headerText {
+    text-align: center;
+    padding-top: 30px;
+    padding: 30px;
+}
