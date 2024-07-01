@@ -21,10 +21,9 @@ model User {
 
 model Song {
   id Int @id @default(autoincrement())
-  cover String
-  name String
+  title String
   artist String
-  audio String
+  player String
   ratings Int[]
   playlistUser User @relation(fields: [userID], references:[user], onDelete: Cascade)
   userID String
