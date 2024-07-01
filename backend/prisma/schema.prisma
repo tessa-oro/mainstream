@@ -28,3 +28,9 @@ model Song {
   playlistUser User @relation(fields: [userID], references:[user], onDelete: Cascade)
   userID String
 }
+
+model Relationships {
+  id Int @id @default(autoincrement())
+  follower String
+  following String
+}

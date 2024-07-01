@@ -7,6 +7,7 @@ function ViewFriends() {
     return (
       <div id="viewFriendsContainer">
         <h2>friends</h2>
+        <p>add new friend</p>
       </div>
     )
   }
