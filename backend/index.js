@@ -84,9 +84,29 @@ app.get('/following/:user', async (req, res) => {
       });
       res.status(200).json(relationships);
     } catch (error) {
-      res.status(500).json({ error: "An error occurred while fetching the posts." });
+      res.status(500).json({ error: "An error occurred while fetching following." });
     }
 })
+
+app.get('/users/:searchUser', async (req, res) => {
+    const { searchUser } = req.params
+    try {
+      const userList = await prisma.user.findMany({
+        where: { user: {
+                contains: searchUser,
+                mode: 'insensitive'
+                } 
+        }
+      });
+      const listNames = [];
+      userList.forEach((name) => {
+        listNames.push(name.user);
+      })
+      res.status(200).json(listNames);
+    } catch (error) {
+      res.status(500).json({ error: "An error occurred while fetching following." });
+    }
+  })
 
 app.listen(port, () => {
     console.log(`starting on port: ${port}`);
