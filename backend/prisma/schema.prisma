@@ -16,6 +16,8 @@ datasource db {
 model User {
   user String @id
   password String
+  followers Follower[]
+  following Following[]
   playlist Song[]
 }
 
@@ -29,8 +31,16 @@ model Song {
   userID String
 }
 
-model Relationship {
+model Follower {
   id Int @id @default(autoincrement())
-  follower String
-  following String
+  follows User @relation(fields: [followsName], references: [user], onDelete: Cascade)
+  followsName String
+  name String
+}
+
+model Following {
+  id Int @id @default(autoincrement())
+  followedBy User @relation(fields: [followedByName], references: [user], onDelete: Cascade)
+  followedByName String
+  name String
 }

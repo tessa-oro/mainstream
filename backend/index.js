@@ -64,25 +64,63 @@ app.get('/songs/:user/', async (req, res) => {
     }
 })
 
-app.post('/follow', async (req, res) => {
-    const { follower, following } = req.body;
-    const newRelation = await prisma.relationship.create({
-      data: {
-        follower,
-        following
-      }
-    })
-    res.status(200).json({});
+//adding to someone else's follower list
+app.post('/follower/:user', async (req, res) => {
+    try {
+        const { user } = req.params;
+        const { name } = req.body;
+        const newFollower = await prisma.follower.create({
+            data: {
+                followsName : user,
+                name
+            }
+        })
+        res.status(200).json(newFollower);
+    } catch (error) {
+        res.status(500).json({ error: "An error occured while following user." });
+    }
 })
 
+//adding to own following list
+app.post('/following/:user', async (req, res) => {
+    try {
+        const { user } = req.params;
+        const { name } = req.body;
+        const newFollowing = await prisma.following.create({
+            data: {
+                followedByName : user,
+                name,
+            }
+        })
+        res.status(200).json(newFollowing);
+    } catch (error) {
+        res.status(500).json({ error: "An error occured while following user." });
+    }
+})
+
+//get user's followers
+app.get('/followers/:user', async (req, res) => {
+    const { user } = req.params
+    try {
+        const followers = await prisma.follower.findMany({
+          where: { followsName : user 
+          }
+        });
+        res.status(200).json(followers);
+      } catch (error) {
+        res.status(500).json({ error: "An error occurred while fetching followers." });
+      }
+})
+
+//get user's following
 app.get('/following/:user', async (req, res) => {
     const { user } = req.params
     try {
-      const relationships = await prisma.relationship.findMany({
-        where: { follower : user 
+      const following = await prisma.following.findMany({
+        where: { followedByName : user 
         }
       });
-      res.status(200).json(relationships);
+      res.status(200).json(following);
     } catch (error) {
       res.status(500).json({ error: "An error occurred while fetching following." });
     }

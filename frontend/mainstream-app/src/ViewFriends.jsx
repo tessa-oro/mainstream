@@ -12,7 +12,7 @@ function ViewFriends( {curUser, login} ) {
     useEffect(() => {
         console.log("fetching following");
         fetchFollowing();
-    }, [login]);
+    }, [login, showModal]);
 
     const fetchFollowing = () => {
         console.log("fetch function");
