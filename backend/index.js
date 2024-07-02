@@ -95,7 +95,7 @@ app.get('/users/:searchUser', async (req, res) => {
         where: { user: {
                 contains: searchUser,
                 mode: 'insensitive'
-                } 
+            } 
         }
       });
       const listNames = [];
