@@ -13,3 +13,11 @@
     padding: 10px;
     padding-top: 20px;
 }
+
+#user {
+    cursor: pointer;
+}
+
+#user:hover {
+    font-weight: bold;
+}

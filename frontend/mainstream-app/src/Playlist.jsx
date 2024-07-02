@@ -23,7 +23,7 @@ function Playlist( { curUser } ) {
               } 
         })
         .then(data => {
-            setSongs(...songs, ...data);
+            setSongs(data);
         })
         .catch(error => {
             console.error('Error fetching boards', error);
