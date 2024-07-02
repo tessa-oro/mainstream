@@ -20,16 +20,14 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
             }),
         })
         .then(response => {
-            console.log(response)
             if (response.ok) {
                 setResult(`following ${following}!`);
-                console.log("following");
             } else {
-                setResult("failed to follow");
+                setResult("already following");
             }
         })
         .catch(error => {
-            setResult("failed to follow");
+            setResult("could not follow");
         });
     }
 
@@ -45,21 +43,18 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
             }),
         })
         .then(response => {
-            console.log(response)
             if (response.ok) {
-                console.log("one of their followers");
+                setResult("following!");
             } else {
-                setResult("not a follower");
+                setResult("already following");
             }
         })
         .catch(error => {
-            setResult("not a follower");
+            setResult("already following");
         });
     }
 
     const createRelationship = () => {
-        console.log(follower);
-        console.log(following);
         addToFollowing();
         addToFollowers();
     }

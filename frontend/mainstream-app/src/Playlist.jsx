@@ -26,7 +26,6 @@ function Playlist( { curUser } ) {
             setSongs(data);
         })
         .catch(error => {
-            console.error('Error fetching boards', error);
         });
     }
 

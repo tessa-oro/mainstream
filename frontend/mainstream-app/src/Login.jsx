@@ -33,7 +33,6 @@ function Login( {closeLogin, setAppUser} ) {
             }),
         })
         .then(response => {
-            console.log(response)
             if (response.ok) {
                 setResult("create success!");
             } else {
@@ -58,7 +57,6 @@ function Login( {closeLogin, setAppUser} ) {
             }),
         })
         .then(response => {
-            console.log(response)
             if (response.ok) {
                 setResult("login success!");
                 closeLogin();

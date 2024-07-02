@@ -10,7 +10,6 @@ function App() {
 
   const setAppUser = (e) => {
     setCurUser(e);
-    console.log("app username is:", curUser);
   }
 
   const closeLogin = () => {

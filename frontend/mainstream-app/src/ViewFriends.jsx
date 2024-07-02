@@ -10,12 +10,10 @@ function ViewFriends( {curUser, login} ) {
     const [userToFollow, setUserToFollow] = useState("");
  
     useEffect(() => {
-        console.log("fetching following");
         fetchFollowing();
     }, [login, showModal]);
 
     const fetchFollowing = () => {
-        console.log("fetch function");
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/following/${curUser}`)
         .then(response => {
              if (!response.ok) {
@@ -25,11 +23,10 @@ function ViewFriends( {curUser, login} ) {
               } 
         })
         .then(data => {
-            console.log(data);
             setFollowing(data);
         })
         .catch(error => {
-            console.error('Error fetching boards', error);
+            
         });
     }
 
@@ -47,10 +44,9 @@ function ViewFriends( {curUser, login} ) {
             })
             .then(data => {
                 setUserResults(data);
-                console.log(data);
             })
             .catch(error => {
-                console.error('Error fetching users', error);
+                
             });
         } else {
             setUserResults([]);
@@ -60,14 +56,13 @@ function ViewFriends( {curUser, login} ) {
     const followModal = (user) => {
         setUserToFollow(user);
         setShowModal(!showModal);
-        console.log(userToFollow);
     }
 
     return (
       <div id="viewFriendsContainer">
-        <h2>Following</h2>
+        <h2>Discover</h2>
         <form onSubmit={(e) => getUsers(e)}>
-            <label>search users: </label>
+            <label>search users to follow: </label>
             <input type="text" name="searchUser"></input>
         </form>
         { showModal && <FollowModal closeModal={() => followModal()} userToFollow={userToFollow} curUser={curUser}/>}
@@ -77,9 +72,10 @@ function ViewFriends( {curUser, login} ) {
             )}
         </div>
         <div id="followingContainer">
-        {following.map((follow, index) => (
-                <p id="following">{follow.name}</p>)                        
-        )}
+            <h3>Following: </h3>
+            {following.map((follow, index) => (
+                    <p id="following">{follow.name}</p>)                        
+            )}
         </div>
       </div>
     )

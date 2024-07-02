@@ -80,7 +80,7 @@ app.post('/follower/:user', async (req, res) => {
         })
         res.status(200).json(newFollower);
     } catch (error) {
-        res.status(500).json({ error: "An error occured while following user." });
+        res.status(500).json({ error: "An unexpected error occurred." });
     }
 })
 
@@ -97,8 +97,11 @@ app.post('/following/:user', async (req, res) => {
         })
         res.status(200).json(newFollowing);
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: "An error occured while following user." });
+        if (error.code === 'P2002') {
+            res.status(500).json({ error: "Already following user." });
+        } else {
+            res.status(500).json({ error: "An unexpected error occurred." });
+        }
     }
 })
 

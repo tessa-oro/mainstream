@@ -12,7 +12,6 @@ function Profile( {curUser} ) {
 
     useEffect(() => {
         fetchSearch();
-        console.log(searchQuery)
     }, [searchQuery]);
 
     const fetchSearch = () => {
@@ -20,9 +19,8 @@ function Profile( {curUser} ) {
         fetch(url)
             .then(response => response.json())
             .then(response => {setSearchResult(response.items);
-                console.log(response);
             })
-            .catch(err => console.error(err));
+            .catch(err => {});
     }
 
     const handleSearch = (e) => {
@@ -35,10 +33,9 @@ function Profile( {curUser} ) {
         fetch(url)
             .then(response => response.json())
             .then(response => {
-                console.log(response);
                 setPlayerToAdd(response.items[0].player.embedHtml);
             })
-            .catch(err => console.error(err));
+            .catch(err => {});
         addSongToUser();
     }
 
@@ -55,7 +52,6 @@ function Profile( {curUser} ) {
             }),
         })
         .then(response => {
-            console.log(response)
             if (response.ok) {
                 setResult("added song!");
             } else {
@@ -66,8 +62,6 @@ function Profile( {curUser} ) {
             setResult("failed to add song");
         });
     }
-
-    console.log(searchResult);
 
 
     return (
