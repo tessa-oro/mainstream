@@ -70,7 +70,7 @@ function ViewFriends( {curUser, login} ) {
             <label>search users: </label>
             <input type="text" name="searchUser"></input>
         </form>
-        { showModal && <FollowModal closeModal={() => followModal()} userToFollow={userToFollow}/>}
+        { showModal && <FollowModal closeModal={() => followModal()} userToFollow={userToFollow} curUser={curUser}/>}
         <div>
             {userResults && userResults.map((user) => (
                     <p onClick={() => followModal(user)} id="user">{user}</p>)                        
