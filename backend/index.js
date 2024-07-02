@@ -7,7 +7,10 @@ const cors = require('cors');
 require('dotenv').config();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
 
 app.get('/users', async (req, res) => {
     const users = await prisma.user.findMany()
@@ -94,6 +97,7 @@ app.post('/following/:user', async (req, res) => {
         })
         res.status(200).json(newFollowing);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: "An error occured while following user." });
     }
 })

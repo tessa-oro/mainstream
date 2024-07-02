@@ -78,7 +78,7 @@ function ViewFriends( {curUser, login} ) {
         </div>
         <div id="followingContainer">
         {following.map((follow, index) => (
-                <p id="following">{follow.following}</p>)                        
+                <p id="following">{follow.name}</p>)                        
         )}
         </div>
       </div>

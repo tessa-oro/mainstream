@@ -36,6 +36,7 @@ model Follower {
   follows User @relation(fields: [followsName], references: [user], onDelete: Cascade)
   followsName String
   name String
+  @@unique([followsName, name])
 }
 
 model Following {
@@ -43,4 +44,5 @@ model Following {
   followedBy User @relation(fields: [followedByName], references: [user], onDelete: Cascade)
   followedByName String
   name String
+  @@unique([followedByName, name])
 }

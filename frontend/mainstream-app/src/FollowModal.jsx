@@ -7,22 +7,22 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
     const [follower, setFollower] = useState(curUser);
     const [following, setFollowing] = useState(userToFollow);
 
-    const createRelationship = () => {
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/follow`,
+    const addToFollowing = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/following/${follower}`,
         {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                follower,
-                following,
+                name: following
             }),
         })
         .then(response => {
             console.log(response)
             if (response.ok) {
-                setResult(`following ${userToFollow}!`);
+                setResult(`following ${following}!`);
                 console.log("following");
             } else {
                 setResult("failed to follow");
@@ -31,6 +31,37 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
         .catch(error => {
             setResult("failed to follow");
         });
+    }
+
+    const addToFollowers = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/follower/${following}`,
+        {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: follower
+            }),
+        })
+        .then(response => {
+            console.log(response)
+            if (response.ok) {
+                console.log("one of their followers");
+            } else {
+                setResult("not a follower");
+            }
+        })
+        .catch(error => {
+            setResult("not a follower");
+        });
+    }
+
+    const createRelationship = () => {
+        console.log(follower);
+        console.log(following);
+        addToFollowing();
+        addToFollowers();
     }
 
     return (
