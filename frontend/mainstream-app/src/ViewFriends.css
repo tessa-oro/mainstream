@@ -3,3 +3,13 @@
     text-align: center;
     background-color: rgb(150, 189, 240);
 }
+
+#followingContainer{
+    margin-top: 20px;
+}
+
+#following {
+    display: inline;
+    padding: 10px;
+    padding-top: 20px;
+}

@@ -29,7 +29,7 @@ model Song {
   userID String
 }
 
-model Relationships {
+model Relationship {
   id Int @id @default(autoincrement())
   follower String
   following String
