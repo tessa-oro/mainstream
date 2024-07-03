@@ -1,6 +1,8 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const express = require('express');
+const bcrypt = require('bcrypt');
+const saltRounds = 14;
 const app = express();
 const port = 3000;
 const cors = require('cors');
@@ -19,13 +21,19 @@ app.get('/users', async (req, res) => {
 
 app.post('/create', async (req, res) => {
     const { user, password } = req.body;
-    const newUser = await prisma.user.create({
-      data: {
-        user,
-        password
-      }
+    bcrypt.hash(password, saltRounds, async function(err, hashed) {
+        try {
+            await prisma.user.create({
+                data: {
+                    user,
+                    hashedPassword: hashed
+                }
+            })
+            res.status(200).json({});
+        } catch (e) {
+            res.status(500).json({"error": e.message});
+        }
     })
-    res.status(200).json({});
 })
 
 app.post("/login", async (req, res) => {
@@ -33,11 +41,13 @@ app.post("/login", async (req, res) => {
     const userRecord = await prisma.user.findUnique({
         where : { user }
     })
-    if (userRecord.password === password) {
-        res.status(200).json({});
-    } else {
-        res.status(500).json({error: "error with login"});
-    }
+    bcrypt.compare(password, userRecord.hashedPassword, function(err, result) {
+        if (result) {
+            res.status(200).json({});
+        } else {
+            res.status(500).json({"error": err})
+        }
+    })
 })
 
 app.post('/songs/:user/create/', async (req, res) => {
