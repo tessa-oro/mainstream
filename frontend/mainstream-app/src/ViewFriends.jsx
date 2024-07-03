@@ -69,6 +69,9 @@ function ViewFriends( {curUser, login} ) {
         setShowModal(!showModal);
     }
 
+    /*
+    * Display playlist of the selected user
+    */
     const displayPlaylist = (name) => {
         setSelectedFollowing(name);
         setShowPlaylist(true);
@@ -84,8 +87,9 @@ function ViewFriends( {curUser, login} ) {
         { showModal && <FollowModal closeModal={() => followModal()} userToFollow={userToFollow} curUser={curUser}/>}
         <div>
             {userResults && userResults.map((user) => (
-                    <p onClick={() => followModal(user)} id="user">{user}</p>)                        
-            )}
+                 (user !== curUser) &&
+                    <p onClick={() => followModal(user)} id="user">{user}</p>          
+            ))}
         </div>
         <div id="followingContainer">
             <h3>Following</h3>
