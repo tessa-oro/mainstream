@@ -13,7 +13,6 @@ function Login( {closeLogin, setAppUser} ) {
 
     const handleChangeUser = (e) => {
         setUser(e.target.value);
-        setAppUser(e.target.value);
     }
 
     const handleChangePassword = (e) => {
@@ -33,15 +32,14 @@ function Login( {closeLogin, setAppUser} ) {
             }),
         })
         .then(response => {
-            console.log(response)
             if (response.ok) {
-                setResult("create success!");
+                handleLogin();
             } else {
-                setResult("failed to create account");
+                setResult("Username taken.");
             }
         })
         .catch(error => {
-            setResult("failed to create!");
+            setResult("Username taken.");
         });
     }
 
@@ -58,17 +56,17 @@ function Login( {closeLogin, setAppUser} ) {
             }),
         })
         .then(response => {
-            console.log(response)
             if (response.ok) {
                 setResult("login success!");
                 closeLogin();
             } else {
-                setResult("failed to login");
+                setResult("Failed to login. Please double check username and password.");
             }
         })
         .catch(error => {
-            setResult("failed to login");
+            setResult("Failed to login. Please double check username and password.");
         });
+        setAppUser(user);
     }
 
     return (
@@ -77,16 +75,16 @@ function Login( {closeLogin, setAppUser} ) {
             <div id="loginContent">
                 <h3>Login</h3>
                 <div id="username">
-                    <label>Username:</label>
+                    <label>Username: </label>
                     <input type="text" id="usernameInput" name="username" value={user} 
                     onChange={handleChangeUser} required></input>
                 </div>
                 <div id="password">
-                    <label>Password:</label>
+                    <label>Password: </label>
                     <input type="text" id="passwordInput" name="password" value={password} 
                     onChange={handleChangePassword} required></input>
                 </div>
-                <button onClick={handleCreate}>Create Account</button>
+                <button onClick={handleCreate}>Create account</button>
                 <button onClick={handleLogin}>Login</button>
                 <div>
                     { result && <p>{result}</p>}

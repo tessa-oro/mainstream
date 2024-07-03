@@ -12,7 +12,6 @@ function Profile( {curUser} ) {
 
     useEffect(() => {
         fetchSearch();
-        console.log(searchQuery)
     }, [searchQuery]);
 
     const fetchSearch = () => {
@@ -20,9 +19,8 @@ function Profile( {curUser} ) {
         fetch(url)
             .then(response => response.json())
             .then(response => {setSearchResult(response.items);
-                console.log(response);
             })
-            .catch(err => console.error(err));
+            .catch(err => {});
     }
 
     const handleSearch = (e) => {
@@ -30,60 +28,56 @@ function Profile( {curUser} ) {
         setSearchQuery(e.target.elements.searchQ.value + " " + e.target.elements.searchA.value);
     }
 
-    const fetchSong = (vidID) => {
-        let url = `https://www.googleapis.com/youtube/v3/videos?part=player&id=${vidID}&key=${import.meta.env.VITE_API_KEY}`;
-        fetch(url)
-            .then(response => response.json())
-            .then(response => {
-                console.log(response);
-                setPlayerToAdd(response.items[0].player.embedHtml);
-            })
-            .catch(err => console.error(err));
-        addSongToUser();
-    }
+    // const fetchSong = (vidID) => {
+    //     let url = `https://www.googleapis.com/youtube/v3/videos?part=player&id=${vidID}&key=${import.meta.env.VITE_API_KEY}`;
+    //     fetch(url)
+    //         .then(response => response.json())
+    //         .then(response => {
+    //             setPlayerToAdd(response.items[0].player.embedHtml);
+    //         })
+    //         .catch(err => {});
+    //     addSongToUser();
+    // }
 
-    const addSongToUser = () => {
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/songs/${curUser}/create/`,
-        {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                toAddTitle,
-                playerToAdd
-            }),
-        })
-        .then(response => {
-            console.log(response)
-            if (response.ok) {
-                setResult("added song!");
-            } else {
-                setResult("failed to add song");
-            }
-        })
-        .catch(error => {
-            setResult("failed to add song");
-        });
-    }
-
-    console.log(searchResult);
+    // const addSongToUser = () => {
+    //     fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/songs/${curUser}/create/`,
+    //     {
+    //         method: 'POST',
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             toAddTitle,
+    //             playerToAdd
+    //         }),
+    //     })
+    //     .then(response => {
+    //         if (response.ok) {
+    //             setResult("added song!");
+    //         } else {
+    //             setResult("failed to add song");
+    //         }
+    //     })
+    //     .catch(error => {
+    //         setResult("failed to add song");
+    //     });
+    // }
 
 
     return (
       <div id="profileContainer">
-        <h2>my profile</h2>
+        <h2>{curUser}</h2>
         <p>Search songs to recommend to your friends!</p>
         <form onSubmit={(e) => handleSearch(e)}>
-            <label>Song title</label>
+            <label>Song title: </label>
             <input name="searchQ" required></input>
-            <label>Artist</label>
+            <label id="artist">Artist: </label>
             <input name="searchA" required></input>
             <button type="submit" value="Submit">Go</button>
         </form>
         {searchResult && <div>
             {searchResult.map((searchResult, index) => (
-                <p onClick={fetchSong(searchResult.id.videoId)}>{searchResult.snippet.title}</p>)                          
+                <p /*onClick={fetchSong(searchResult.id.videoId)}*/>{searchResult.snippet.title}</p>)                          
             )}
         </div>}
         <Playlist curUser={curUser}></Playlist>
