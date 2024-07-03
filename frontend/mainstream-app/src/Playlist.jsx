@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import "./Playlist.css";
 
-function Playlist( { curUser, songAdded } ) {
+function Playlist( { curUser } ) {
     const [songs, setSongs] = useState([]);
 
     useEffect(() => {
@@ -30,7 +30,7 @@ function Playlist( { curUser, songAdded } ) {
 
     return (
       <div id="playlistContainer">
-        <h3>Playlist</h3>
+        <h3>{curUser}'s playlist</h3>
         {songs.map((song) => (
             <div id="songPlayer" dangerouslySetInnerHTML={{ __html: song.player }} />)                          
         )}

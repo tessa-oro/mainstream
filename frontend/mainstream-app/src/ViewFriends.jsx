@@ -2,12 +2,15 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import "./ViewFriends.css";
 import FollowModal from "./FollowModal";
+import Playlist from "./Playlist";
 
 function ViewFriends( {curUser, login} ) {
     const [following, setFollowing] = useState([]);
     const [userResults, setUserResults] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [userToFollow, setUserToFollow] = useState("");
+    const [showPlaylist, setShowPlaylist] = useState(false);
+    const [selectedFollowing, setSelectedFollowing] = useState("");
  
     useEffect(() => {
         fetchFollowing();
@@ -66,6 +69,11 @@ function ViewFriends( {curUser, login} ) {
         setShowModal(!showModal);
     }
 
+    const displayPlaylist = (name) => {
+        setSelectedFollowing(name);
+        setShowPlaylist(true);
+    }
+
     return (
       <div id="viewFriendsContainer">
         <h2>Discover</h2>
@@ -82,9 +90,10 @@ function ViewFriends( {curUser, login} ) {
         <div id="followingContainer">
             <h3>Following</h3>
             {following.map((follow, index) => (
-                    <p id="following">{follow.name}</p>)                        
+                    <p onClick={() => displayPlaylist(follow.name)} id="following">{follow.name}</p>)                        
             )}
         </div>
+        {showPlaylist && <Playlist curUser={selectedFollowing}></Playlist>}
       </div>
     )
   }
