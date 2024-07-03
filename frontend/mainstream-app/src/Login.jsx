@@ -11,14 +11,23 @@ function Login( {closeLogin, setAppUser} ) {
 
     }, [user])
 
+    /*
+    * Updates current username
+    */
     const handleChangeUser = (e) => {
         setUser(e.target.value);
     }
 
+    /*
+    * Updates current password
+    */
     const handleChangePassword = (e) => {
         setPassword(e.target.value);
     }
 
+    /*
+    * Creates an account with current user and password. Tells user if username is taken.
+    */
     const handleCreate = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/create`,
         {
@@ -35,7 +44,7 @@ function Login( {closeLogin, setAppUser} ) {
             if (response.ok) {
                 handleLogin();
             } else {
-                setResult("Username taken.");
+                setResult("faled to create.");
             }
         })
         .catch(error => {
@@ -43,6 +52,9 @@ function Login( {closeLogin, setAppUser} ) {
         });
     }
 
+    /*
+    * Logs user in with inputted username and password.
+    */
     const handleLogin = async () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/login`,
         {
