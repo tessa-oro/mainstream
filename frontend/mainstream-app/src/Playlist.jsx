@@ -13,6 +13,9 @@ function Playlist( { curUser } ) {
         fetchUserSongs();
     }, []);
 
+    /*
+    * Fetches songs on user playlist
+    */
     const fetchUserSongs = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/songs/${curUser}`)
         .then(response => {
@@ -31,10 +34,10 @@ function Playlist( { curUser } ) {
 
     return (
       <div id="playlistContainer">
-        <h2>your playlist</h2>
+        <h3>Playlist</h3>
         {songs.map((song) => (
-                <iframe src={song.player}/>)                          
-            )}
+            <iframe src={song.player}/>)                          
+        )}
       </div>
     )
   }

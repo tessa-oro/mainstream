@@ -16,7 +16,6 @@
 #followModal {
     z-index: 1000;
     justify-content: center;
-    display: flex;
     position: fixed;
     width: 70%;
     height: 70%;
@@ -34,11 +33,11 @@
 }
 
 #modalContent {
-    padding-left: 30px;
     align-items: center;
     color:aliceblue;
 }
 
 #result {
+    display: block;
     color: white;
 }

@@ -7,10 +7,12 @@ import Profile from './Profile';
 function Dashboard( {curUser, login} ) {
 
     return (
+       <>
       <div id="dashboard">
         <ViewFriends curUser={curUser} login={login}></ViewFriends>
         <Profile curUser={curUser}></Profile>
       </div>
+      </>
     )
   }
   

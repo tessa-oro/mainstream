@@ -13,6 +13,9 @@ function ViewFriends( {curUser, login} ) {
         fetchFollowing();
     }, [login, showModal]);
 
+    /*
+    * Fetches users that current user follows.
+    */
     const fetchFollowing = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/following/${curUser}`)
         .then(response => {
@@ -26,10 +29,12 @@ function ViewFriends( {curUser, login} ) {
             setFollowing(data);
         })
         .catch(error => {
-            
         });
     }
 
+    /*
+    * Fetches users that match current user's search
+    */
     const getUsers = (e) => {
         e.preventDefault();
         let searchName = e.target.elements.searchUser.value;
@@ -53,6 +58,9 @@ function ViewFriends( {curUser, login} ) {
         }
     }
 
+    /*
+    * Opens and closes modal to follow a user
+    */
     const followModal = (user) => {
         setUserToFollow(user);
         setShowModal(!showModal);
@@ -62,7 +70,7 @@ function ViewFriends( {curUser, login} ) {
       <div id="viewFriendsContainer">
         <h2>Discover</h2>
         <form onSubmit={(e) => getUsers(e)}>
-            <label>search users to follow: </label>
+            <label>Search users to follow: </label>
             <input type="text" name="searchUser"></input>
         </form>
         { showModal && <FollowModal closeModal={() => followModal()} userToFollow={userToFollow} curUser={curUser}/>}
@@ -72,7 +80,7 @@ function ViewFriends( {curUser, login} ) {
             )}
         </div>
         <div id="followingContainer">
-            <h3>Following: </h3>
+            <h3>Following</h3>
             {following.map((follow, index) => (
                     <p id="following">{follow.name}</p>)                        
             )}

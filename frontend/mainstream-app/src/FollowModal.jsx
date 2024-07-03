@@ -7,6 +7,9 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
     const [follower, setFollower] = useState(curUser);
     const [following, setFollowing] = useState(userToFollow);
 
+    /*
+    * Adds the selected user to the following list of the current user.
+    */
     const addToFollowing = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/following/${follower}`,
         {
@@ -31,6 +34,9 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
         });
     }
 
+    /*
+    * Adds the current user to the follower list of the selected user.
+    */
     const addToFollowers = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/follower/${following}`,
         {
@@ -45,6 +51,7 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
         .then(response => {
             if (response.ok) {
                 setResult("following!");
+                closeModal();
             } else {
                 setResult("already following");
             }
@@ -54,6 +61,9 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
         });
     }
 
+    /*
+    * Creates following and follwer relationships
+    */
     const createRelationship = () => {
         addToFollowing();
         addToFollowers();
@@ -62,13 +72,14 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
     return (
         <>
             <div id="followModal">
-                <p id="close" onClick={closeModal}>&times;</p>
                 <div id="modalContent">
                     <h2>follow {userToFollow}?</h2>
                     <button onClick={() => createRelationship()}>yes</button>
-                    <button>cancel</button>
+                    <button onClick={closeModal}>cancel</button>
                 </div>
+                <div>
                 {result && <p id="result">{result}</p>}
+                </div>
             </div>
             <div id="overlay"></div>
         </>
