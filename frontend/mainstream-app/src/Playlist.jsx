@@ -2,16 +2,12 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import "./Playlist.css";
 
-function Playlist( { curUser } ) {
+function Playlist( { curUser, songAdded } ) {
     const [songs, setSongs] = useState([]);
-
-    // use click from profile search to use video ID to fetch video and create new song in user 
-    // array of songs. fetch user songs and set to array of of songs. refetch on new songID.
-    // for each song, display in playlist.
 
     useEffect(() => {
         fetchUserSongs();
-    }, []);
+    });
 
     /*
     * Fetches songs on user playlist
@@ -36,7 +32,7 @@ function Playlist( { curUser } ) {
       <div id="playlistContainer">
         <h3>Playlist</h3>
         {songs.map((song) => (
-            <iframe src={song.player}/>)                          
+            <div id="songPlayer" dangerouslySetInnerHTML={{ __html: song.player }} />)                          
         )}
       </div>
     )

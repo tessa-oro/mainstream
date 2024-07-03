@@ -7,3 +7,11 @@
 #artist {
     padding-left: 20px;
 }
+
+#searchResult {
+    cursor: pointer;
+}
+
+#searchResult:hover {
+    font-weight: bold;
+}
