@@ -1,7 +1,7 @@
 #viewFriendsContainer {
     width: 50%;
     text-align: center;
-    background-color: rgb(150, 189, 240);
+    background-color: #5ab9ea;
 }
 
 #followingContainer{
@@ -19,5 +19,10 @@
 }
 
 #user:hover {
+    font-weight: bold;
+}
+
+#following:hover {
+    cursor: pointer;
     font-weight: bold;
 }
