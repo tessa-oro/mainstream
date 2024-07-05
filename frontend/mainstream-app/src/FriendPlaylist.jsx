@@ -1,9 +1,12 @@
 import React from 'react';
+import RateModal from "./RateModal";
 import { useState, useEffect } from 'react';
 import "./FriendPlaylist.css";
 
 function FriendPlaylist( { curUser } ) {
     const [songs, setSongs] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [songID, setSongID] = useState();
 
     useEffect(() => {
         fetchUserSongs();
@@ -27,6 +30,15 @@ function FriendPlaylist( { curUser } ) {
         .catch(error => {
         });
     }
+    
+    const goToRate = (id) => {
+        setSongID(id);
+        setShowModal(true);
+    }
+
+    const closeModal = () => {
+        setShowModal(false);
+    }
 
     return (
       <div id="playlistContainer">
@@ -34,10 +46,11 @@ function FriendPlaylist( { curUser } ) {
         {songs.map((song) => (
             <div id="songBorder">
                 <div id="songPlayer" dangerouslySetInnerHTML={{ __html: song.player }} />
-                <button id="rate">rate song</button>
+                <button id="rate" onClick={() => goToRate(song.id)}>rate song</button>
             </div>
         )                          
         )}
+        {showModal && <RateModal songID={songID} closeModal={closeModal}></RateModal>}
       </div>
     )
   }

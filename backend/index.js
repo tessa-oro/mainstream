@@ -161,7 +161,29 @@ app.get('/users/:searchUser', async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: "An error occurred while fetching following." });
     }
-  })
+})
+
+app.patch('/song/rate/:id/:num', async (req, res) => {
+    const { id, num } = req.params;
+    try {
+        const song = await prisma.song.findUnique({
+            where: {id: parseInt(id)}
+        });
+        if (!song) {
+            return res.status(404).json({error: "Song not found"});
+        }
+        const addRating = [...song.ratings, parseInt(num)];
+        const updatedSong = await prisma.song.update({
+            where: { id: parseInt(id) },
+            data: {
+            ratings: addRating,
+            }
+        })
+        res.status(200).json(updatedSong)
+  } catch (error) {
+        res.status(500).json({error : "could not rate song"});
+  }
+})
 
 app.listen(port, () => {
     console.log(`starting on port: ${port}`);
