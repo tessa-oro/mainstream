@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import "./ViewFriends.css";
 import FollowModal from "./FollowModal";
-import Playlist from "./Playlist";
+import FriendPlaylist from "./FriendPlaylist";
 
 function ViewFriends( {curUser, login} ) {
     const [following, setFollowing] = useState([]);
@@ -97,7 +97,7 @@ function ViewFriends( {curUser, login} ) {
                     <p onClick={() => displayPlaylist(follow.name)} id="following">{follow.name}</p>)                        
             )}
         </div>
-        {showPlaylist && <Playlist curUser={selectedFollowing}></Playlist>}
+        {showPlaylist && <FriendPlaylist curUser={selectedFollowing}></FriendPlaylist>}
       </div>
     )
   }
