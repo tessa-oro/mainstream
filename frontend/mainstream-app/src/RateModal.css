@@ -13,7 +13,7 @@
     z-index: 999;
 }
 
-#followModal {
+#rateModal {
     z-index: 1000;
     justify-content: center;
     position: fixed;
@@ -47,4 +47,13 @@
 
 #rateForm {
     margin-bottom: 60px;
+    align-content: center;
+}
+
+#selectedNum {
+    color: white;
+}
+
+#submit {
+    margin-left: 50px;
 }
