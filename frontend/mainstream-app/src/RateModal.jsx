@@ -75,7 +75,6 @@ const RateModal = ({ songID, closeModal}) => {
                         {num && <p id="selectedNum">{num}</p>}
                         <input type="checkbox" onChange={(e) => handleCheck(e)}></input>
                         <label>I already know this song</label>
-                        { check && <p id="check">checked</p>}
                         <button id="submit" type="submit">Submit</button>
                    </form>
                 </div>

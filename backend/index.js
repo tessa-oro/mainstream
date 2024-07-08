@@ -58,6 +58,7 @@ app.post('/songs/:user/create/', async (req, res) => {
         title,
         player,
         artist : "placeholder",
+        avgRating: 0,
         userID : user
       }
     })
@@ -76,6 +77,19 @@ app.get('/songs/:user/', async (req, res) => {
       res.status(500).json({ error: "An error occurred while fetching the songs." });
     }
 })
+
+// app.get('/songs/:user/score', async (req, res) => {
+//     const { user } = req.params
+//     try {
+//       const songs = await prisma.song.findMany({
+//         where: { userID : user
+//         }
+//       });
+//       res.status(200).json(songs);
+//     } catch (error) {
+//       res.status(500).json({ error: "An error occurred while fetching the songs." });
+//     }
+// })
 
 //adding to someone else's follower list
 app.post('/follower/:user', async (req, res) => {
@@ -173,10 +187,19 @@ app.patch('/song/rate/:id/:num', async (req, res) => {
             return res.status(404).json({error: "Song not found"});
         }
         const addRating = [...song.ratings, parseInt(num)];
+        const currAvgTotal = (song.ratings.length * song.avgRating);
+        console.log(song.ratings.length);
+        console.log(currAvgTotal);
+        console.log(num);
+        const newLength = song.ratings.length + 1;
+        console.log(newLength);
+        const newAvg = ((parseInt(currAvgTotal) + parseInt(num)) / newLength);
+        console.log(newAvg);
         const updatedSong = await prisma.song.update({
             where: { id: parseInt(id) },
             data: {
             ratings: addRating,
+            avgRating: newAvg,
             }
         })
         res.status(200).json(updatedSong)

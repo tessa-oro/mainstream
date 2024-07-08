@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Song" ALTER COLUMN "avgRating" SET DATA TYPE DECIMAL(65,30);
