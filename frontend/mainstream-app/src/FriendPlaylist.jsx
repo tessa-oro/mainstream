@@ -31,11 +31,17 @@ function FriendPlaylist( { curUser } ) {
         });
     }
     
+    /*
+    * Opens rate modal for selected song to rate
+    */
     const goToRate = (id) => {
         setSongID(id);
         setShowModal(true);
     }
 
+    /*
+    * Closes the modal
+    */
     const closeModal = () => {
         setShowModal(false);
     }

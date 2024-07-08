@@ -5,6 +5,9 @@ import { useState, useEffect } from 'react';
 const RateModal = ({ songID, closeModal}) => {
     const [num, setNum] = useState("");
 
+    /*
+    * Adds submitted rating to a song's collection of ratings using PATCH
+    */
     const handleRate = (e) => {
         e.preventDefault();
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/song/rate/${songID}/${num}`,
@@ -23,14 +26,15 @@ const RateModal = ({ songID, closeModal}) => {
                 } 
         })
         .then(data => {
-            console.log(data);
             closeModal();
         })
         .catch(error => {
-            console.error('Error fetching post', error);
         });
     }
 
+    /*
+    * Sets the currently selected rating
+    */
     const pickNum = (e) => {
         e.preventDefault();
         setNum(e.target.value);
