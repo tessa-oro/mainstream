@@ -166,6 +166,19 @@ app.get('/users/:searchUser', async (req, res) => {
     }
 })
 
+app.get('/user/:userId/score', async (req, res) => {
+    const { userId } = req.params
+    try {
+      const user = await prisma.user.findUnique({
+        where: { user: userId
+        }
+      });
+      res.status(200).json(user.score);
+    } catch (error) {
+      res.status(500).json({ error: "An error occurred while fetching following." });
+    }
+})
+
 app.patch('/song/rate/:userId/:id/:num', async (req, res) => {
     const { userId, id, num } = req.params;
     try {
@@ -207,7 +220,7 @@ app.patch('/song/rate/:userId/:id/:num', async (req, res) => {
 const updateAverage = ( currAvg, currNumEntries, newEntry ) => {
     const currTotal = (currAvg * currNumEntries);
     const newLength = currNumEntries + 1;
-    const newAvg = ((parseInt(currTotal) + parseInt(newEntry)) / newLength).toFixed(1);
+    const newAvg = ((parseInt(currTotal) + parseInt(newEntry)) / newLength).toFixed(2);
     return newAvg;
 }
 
@@ -220,7 +233,7 @@ const updateUserScore = ( user ) => {
             count += 1;
         }
     })
-    let score = total / count;
+    let score = (total / count).toFixed(1);
     return (score);
 }
 
