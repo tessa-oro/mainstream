@@ -16,6 +16,8 @@ datasource db {
 model User {
   user String @id
   hashedPassword String
+  score Decimal
+  numRatedSongs Int
   followers Follower[]
   following Following[]
   playlist Song[]
@@ -27,6 +29,7 @@ model Song {
   artist String
   player String
   ratings Int[]
+  avgRating Decimal
   playlistUser User @relation(fields: [userID], references:[user], onDelete: Cascade)
   userID String
 }

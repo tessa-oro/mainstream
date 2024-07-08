@@ -26,7 +26,9 @@ app.post('/create', async (req, res) => {
             await prisma.user.create({
                 data: {
                     user,
-                    hashedPassword: hashed
+                    hashedPassword: hashed,
+                    score: 0,
+                    numRatedSongs: 0
                 }
             })
             res.status(200).json({});
@@ -58,6 +60,7 @@ app.post('/songs/:user/create/', async (req, res) => {
         title,
         player,
         artist : "placeholder",
+        avgRating: 0,
         userID : user
       }
     })
@@ -163,8 +166,21 @@ app.get('/users/:searchUser', async (req, res) => {
     }
 })
 
-app.patch('/song/rate/:id/:num', async (req, res) => {
-    const { id, num } = req.params;
+app.get('/user/:userId/score', async (req, res) => {
+    const { userId } = req.params
+    try {
+      const user = await prisma.user.findUnique({
+        where: { user: userId
+        }
+      });
+      res.status(200).json(user.score);
+    } catch (error) {
+      res.status(500).json({ error: "An error occurred while fetching following." });
+    }
+})
+
+app.patch('/song/rate/:userId/:id/:num', async (req, res) => {
+    const { userId, id, num } = req.params;
     try {
         const song = await prisma.song.findUnique({
             where: {id: parseInt(id)}
@@ -173,17 +189,53 @@ app.patch('/song/rate/:id/:num', async (req, res) => {
             return res.status(404).json({error: "Song not found"});
         }
         const addRating = [...song.ratings, parseInt(num)];
+        const newAvg = updateAverage( song.avgRating, song.ratings.length, num );
         const updatedSong = await prisma.song.update({
             where: { id: parseInt(id) },
             data: {
             ratings: addRating,
+            avgRating: newAvg,
             }
         })
-        res.status(200).json(updatedSong)
-  } catch (error) {
-        res.status(500).json({error : "could not rate song"});
-  }
+        const user = await prisma.user.findUnique({
+            where: {user: userId},
+            include: { playlist: true }
+        });
+        if (!user) {
+            return res.status(404).json({error: "User not found"});
+        }
+        const newScore = updateUserScore(user);
+        const updatedUser = await prisma.user.update({
+            where: {user: userId},
+            data: {
+                score: newScore
+            }
+        });
+        res.status(200).json([updatedSong, updatedUser]);
+    } catch (error) {
+            res.status(500).json({error : "could not rate song"});
+    }
 })
+
+const updateAverage = ( currAvg, currNumEntries, newEntry ) => {
+    const currTotal = (currAvg * currNumEntries);
+    const newLength = currNumEntries + 1;
+    const newAvg = ((parseInt(currTotal) + parseInt(newEntry)) / newLength).toFixed(2);
+    return newAvg;
+}
+
+const updateUserScore = ( user ) => {
+    let total = 0;
+    let count = 0;
+    user.playlist.forEach((song) => {
+        if (song.avgRating != 0) {
+            total += parseInt(song.avgRating);
+            count += 1;
+        }
+    })
+    let score = (total / count).toFixed(1);
+    return (score);
+}
 
 app.listen(port, () => {
     console.log(`starting on port: ${port}`);

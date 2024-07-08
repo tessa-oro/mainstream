@@ -2,12 +2,17 @@ import "./RateModal.css";
 import React from "react";
 import { useState, useEffect } from 'react';
 
-const RateModal = ({ songID, closeModal}) => {
+const RateModal = ({ curUser, songID, closeModal}) => {
     const [num, setNum] = useState("");
+    const [check, setCheck] = useState(false);
+    const [subScore, setSubScore] = useState(0);
 
+    /*
+    * Adds submitted rating to a song's collection of ratings using PATCH
+    */
     const handleRate = (e) => {
         e.preventDefault();
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/song/rate/${songID}/${num}`,
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/song/rate/${curUser}/${songID}/${(num - subScore) > 0 ? (num - subScore) : (1)}`,
             {
                 method: "PATCH",
                 headers: {
@@ -23,17 +28,30 @@ const RateModal = ({ songID, closeModal}) => {
                 } 
         })
         .then(data => {
-            console.log(data);
             closeModal();
         })
         .catch(error => {
-            console.error('Error fetching post', error);
         });
     }
 
+    /*
+    * Sets the currently selected rating
+    */
     const pickNum = (e) => {
         e.preventDefault();
         setNum(e.target.value);
+    }
+
+    /*
+    * Marks that a user already knows a song
+    */
+    const handleCheck = (e) => {
+        setCheck(e.target.checked);
+        if (e.target.checked) {
+            setSubScore(2);
+        } else {
+            setSubScore(0);
+        }
     }
 
     return (
@@ -55,7 +73,7 @@ const RateModal = ({ songID, closeModal}) => {
                                 <button type="button" value="10" onClick={(e) => pickNum(e)}>10</button>
                         </div>
                         {num && <p id="selectedNum">{num}</p>}
-                        <input type="checkbox"></input>
+                        <input type="checkbox" onChange={(e) => handleCheck(e)}></input>
                         <label>I already know this song</label>
                         <button id="submit" type="submit">Submit</button>
                    </form>
