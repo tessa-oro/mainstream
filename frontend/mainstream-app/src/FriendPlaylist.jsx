@@ -56,7 +56,7 @@ function FriendPlaylist( { curUser } ) {
             </div>
         )                          
         )}
-        {showModal && <RateModal songID={songID} closeModal={closeModal}></RateModal>}
+        {showModal && <RateModal curUser={curUser} songID={songID} closeModal={closeModal}></RateModal>}
       </div>
     )
   }

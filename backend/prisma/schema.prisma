@@ -16,6 +16,8 @@ datasource db {
 model User {
   user String @id
   hashedPassword String
+  score Decimal
+  numRatedSongs Int
   followers Follower[]
   following Following[]
   playlist Song[]
