@@ -34,13 +34,6 @@ const RateModal = ({ curUser, songID, closeModal}) => {
         });
     }
 
-    /* 
-    user score should update when a new rating gets added. most efficient would be in the same function
-    where avg rating is updated. use the average rating to update user's score. need to send user to the
-    patch function as well. select user. get their current score. get the length of their songs array. update 
-    their user score the same was avg rating was updated.
-    */
-
     /*
     * Sets the currently selected rating
     */
