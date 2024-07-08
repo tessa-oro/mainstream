@@ -188,13 +188,8 @@ app.patch('/song/rate/:id/:num', async (req, res) => {
         }
         const addRating = [...song.ratings, parseInt(num)];
         const currAvgTotal = (song.ratings.length * song.avgRating);
-        console.log(song.ratings.length);
-        console.log(currAvgTotal);
-        console.log(num);
         const newLength = song.ratings.length + 1;
-        console.log(newLength);
         const newAvg = ((parseInt(currAvgTotal) + parseInt(num)) / newLength);
-        console.log(newAvg);
         const updatedSong = await prisma.song.update({
             where: { id: parseInt(id) },
             data: {
