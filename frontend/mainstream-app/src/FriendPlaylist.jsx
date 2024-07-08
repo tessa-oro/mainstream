@@ -51,7 +51,7 @@ function FriendPlaylist( { curUser } ) {
         <h3>{curUser}'s playlist</h3>
         {songs.map((song) => (
             <div id="songBorder">
-                <div id="songPlayer" dangerouslySetInnerHTML={{ __html: song.player }} />
+                <div id="songPlayerFollowing" dangerouslySetInnerHTML={{ __html: song.player }} />
                 <button id="rate" onClick={() => goToRate(song.id)}>rate song</button>
             </div>
         )                          

@@ -177,7 +177,6 @@ app.patch('/song/rate/:userId/:id/:num', async (req, res) => {
         }
         const addRating = [...song.ratings, parseInt(num)];
         const newAvg = updateAverage( song.avgRating, song.ratings.length, num );
-        const firstEntry = song.avgRating == 0;
         const updatedSong = await prisma.song.update({
             where: { id: parseInt(id) },
             data: {
@@ -192,23 +191,17 @@ app.patch('/song/rate/:userId/:id/:num', async (req, res) => {
         if (!user) {
             return res.status(404).json({error: "User not found"});
         }
-        const newScore = updateAverage( user.score, user.numRatedSongs, newAvg );
-        const updateUserData = {
-            score: newScore
-        }
-        if (firstEntry) {
-            updateUserData.numRatedSongs = {
-                increment: 1
-            }
-        }
+        const newScore = updateUserScore(user);
         const updatedUser = await prisma.user.update({
             where: {user: userId},
-            data: updateUserData
+            data: {
+                score: newScore
+            }
         });
         res.status(200).json([updatedSong, updatedUser]);
-        } catch (error) {
-                res.status(500).json({error : "could not rate song"});
-        }
+    } catch (error) {
+            res.status(500).json({error : "could not rate song"});
+    }
 })
 
 const updateAverage = ( currAvg, currNumEntries, newEntry ) => {
@@ -216,6 +209,19 @@ const updateAverage = ( currAvg, currNumEntries, newEntry ) => {
     const newLength = currNumEntries + 1;
     const newAvg = ((parseInt(currTotal) + parseInt(newEntry)) / newLength).toFixed(1);
     return newAvg;
+}
+
+const updateUserScore = ( user ) => {
+    let total = 0;
+    let count = 0;
+    user.playlist.forEach((song) => {
+        if (song.avgRating != 0) {
+            total += parseInt(song.avgRating);
+            count += 1;
+        }
+    })
+    let score = total / count;
+    return (score);
 }
 
 app.listen(port, () => {
