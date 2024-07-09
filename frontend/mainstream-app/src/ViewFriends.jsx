@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import "./ViewFriends.css";
 import FollowModal from "./FollowModal";
 import FriendPlaylist from "./FriendPlaylist";
+import { Link } from 'react-router-dom';
 
 function ViewFriends( {curUser, login} ) {
     const [following, setFollowing] = useState([]);
@@ -98,6 +99,9 @@ function ViewFriends( {curUser, login} ) {
             )}
         </div>
         {showPlaylist && <FriendPlaylist curUser={selectedFollowing}></FriendPlaylist>}
+        <Link to="/lb">
+            <button>&#128081; View leaderboard &#128081;</button>
+        </Link>
       </div>
     )
   }
