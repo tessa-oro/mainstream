@@ -2,12 +2,19 @@ h1 {
     font-size: 4em;
     display: inline;
     color: white;
+    background: linear-gradient(to right, #bc7aff, #369aff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-emphasis-color: transparent;
+    text-align: center;
+    text-shadow: rgba(239, 237, 255, 0.697) 1px 0 10px;
 }
 
 #main {
     text-decoration: line-through;
+    text-shadow: rgb(255, 255, 255) 1px 0 9px;
     font-size: 3.8em;
-    color: white;
 }
 
 #headerText {
