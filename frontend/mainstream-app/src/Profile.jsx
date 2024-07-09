@@ -95,12 +95,12 @@ function Profile( {curUser} ) {
         <h2 id="profileHeader">{curUser}</h2>
         <div id="searchSongSection">
         <p id="searchSongPrompt">Search songs to recommend to your friends!</p>
-        <form onSubmit={(e) => handleSearch(e)}>
-            <label>Song title: </label>
-            <input name="searchQ" required></input>
-            <label id="artist">Artist: </label>
-            <input name="searchA" required></input>
-            <button type="submit" value="Submit">Go</button>
+        <form onSubmit={(e) => handleSearch(e)} id="searchForm">
+            <div>
+                <input name="searchQ" required placeholder="Song title"></input>
+                <input name="searchA" required placeholder="Artist"></input>
+            </div>
+            <button id="goSearch" type="submit" value="Submit">Go</button>
         </form>
         { searched && <button onClick={() => clearSearch()}>Clear search</button> }
         {searchResult && <div>

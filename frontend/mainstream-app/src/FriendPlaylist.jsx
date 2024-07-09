@@ -69,8 +69,12 @@ function FriendPlaylist( { curUser } ) {
 
     return (
       <div id="playlistContainer">
-        <h3 class="playlistHeader">{curUser}'s playlist</h3>
-        <p>score: {score}</p>
+        <div class="playlistHeaderContainer">
+            <h3 class="playlistHeader">{curUser}'s playlist</h3>
+            <div class="score">
+                <p class="scoreVal">{score}</p>
+            </div>
+        </div>
         {songs.map((song) => (
             <div id="songBorder">
                 <div id="songPlayerFollowing" dangerouslySetInnerHTML={{ __html: song.player }} />

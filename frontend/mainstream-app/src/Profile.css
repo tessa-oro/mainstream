@@ -20,7 +20,15 @@
     background-color: #c3a3ff;
     padding: 20px;
     padding-bottom: 35px;
-    color: #4b2295;
+    text-align: center;
+}
+
+#searchForm {
+    text-align: center;
+    align-content: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
 }
 
 #profileHeader {
@@ -28,5 +36,25 @@
 }
 
 #searchSongPrompt {
+    color: #744eba;
     font-weight: bold;
+    font-size: 1.1em;
+}
+
+#goSearch {
+    display: block;
+    margin-top: 15px;
+    background-color: #8860d0;
+    border-radius: 8px;
+    border: #ffffff00;
+    color: white;
+    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+#goSearch:hover {
+    background-color: #ae82ff;
 }
