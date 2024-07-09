@@ -80,16 +80,18 @@ function ViewFriends( {curUser, login} ) {
     return (
       <div id="viewFriendsContainer">
         <h2 id="discoverHeader">Discover</h2>
-        <form onSubmit={(e) => getUsers(e)}>
-            <label>Search users to follow: </label>
-            <input type="text" name="searchUser"></input>
-        </form>
-        { showModal && <FollowModal closeModal={() => followModal()} userToFollow={userToFollow} curUser={curUser}/>}
-        <div>
-            {userResults && userResults.map((user) => (
-                 (user !== curUser) &&
-                    <p onClick={() => followModal(user)} id="user">{user}</p>          
-            ))}
+        <div id="searchUsersContainer">
+            <form onSubmit={(e) => getUsers(e)} id="searchUsersForm">
+                <label id="searchUsersPrompt">Search users to follow: </label>
+                <input type="text" name="searchUser"></input>
+            </form>
+            { showModal && <FollowModal closeModal={() => followModal()} userToFollow={userToFollow} curUser={curUser}/>}
+            <div>
+                {userResults && userResults.map((user) => (
+                    (user !== curUser) &&
+                        <p onClick={() => followModal(user)} id="user">{user}</p>          
+                ))}
+            </div>
         </div>
         <div id="followingContainer">
             <h3>Following</h3>
