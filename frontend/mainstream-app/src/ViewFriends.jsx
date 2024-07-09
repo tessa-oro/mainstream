@@ -32,7 +32,7 @@ function ViewFriends( {curUser, login} ) {
             setFollowing(data);
         })
         .catch(error => {
-        });
+        })
     }
 
     /*

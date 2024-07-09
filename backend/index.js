@@ -15,8 +15,8 @@ app.use(cors({
 }));
 
 app.get('/users', async (req, res) => {
-    const users = await prisma.user.findMany()
-    res.status(200).json(users)
+    const users = await prisma.user.findMany();
+    res.status(200).json(users);
 })
 
 app.post('/create', async (req, res) => {
@@ -53,8 +53,8 @@ app.post("/login", async (req, res) => {
 })
 
 app.post('/songs/:user/create/', async (req, res) => {
-    const { user } = req.params
-    const { title, player } = req.body
+    const { user } = req.params;
+    const { title, player } = req.body;
     const newSong = await prisma.song.create({
       data: {
         title,
@@ -68,10 +68,13 @@ app.post('/songs/:user/create/', async (req, res) => {
 })
 
 app.get('/songs/:user/', async (req, res) => {
-    const { user } = req.params
+    const { user } = req.params;
     try {
       const songs = await prisma.song.findMany({
         where: { userID : user
+        },
+        orderBy: {
+            id: 'desc'
         }
       });
       res.status(200).json(songs);
@@ -120,7 +123,7 @@ app.post('/following/:user', async (req, res) => {
 
 //get user's followers
 app.get('/followers/:user', async (req, res) => {
-    const { user } = req.params
+    const { user } = req.params;
     try {
         const followers = await prisma.follower.findMany({
           where: { followsName : user 
@@ -134,7 +137,7 @@ app.get('/followers/:user', async (req, res) => {
 
 //get user's following
 app.get('/following/:user', async (req, res) => {
-    const { user } = req.params
+    const { user } = req.params;
     try {
       const following = await prisma.following.findMany({
         where: { followedByName : user 
@@ -147,7 +150,7 @@ app.get('/following/:user', async (req, res) => {
 })
 
 app.get('/users/:searchUser', async (req, res) => {
-    const { searchUser } = req.params
+    const { searchUser } = req.params;
     try {
       const userList = await prisma.user.findMany({
         where: { user: {
