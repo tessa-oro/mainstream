@@ -69,7 +69,7 @@ function FriendPlaylist( { curUser } ) {
 
     return (
       <div id="playlistContainer">
-        <h3>{curUser}'s playlist</h3>
+        <h3 class="playlistHeader">{curUser}'s playlist</h3>
         <p>score: {score}</p>
         {songs.map((song) => (
             <div id="songBorder">

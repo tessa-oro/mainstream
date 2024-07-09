@@ -14,7 +14,7 @@ function ViewFriends( {curUser, login} ) {
  
     useEffect(() => {
         fetchFollowing();
-    }, [login, showModal]);
+    }, [login, showModal, following]);
 
     /*
     * Fetches users that current user follows.
@@ -79,7 +79,7 @@ function ViewFriends( {curUser, login} ) {
 
     return (
       <div id="viewFriendsContainer">
-        <h2>Discover</h2>
+        <h2 id="discoverHeader">Discover</h2>
         <form onSubmit={(e) => getUsers(e)}>
             <label>Search users to follow: </label>
             <input type="text" name="searchUser"></input>
