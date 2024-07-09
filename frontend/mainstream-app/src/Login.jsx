@@ -85,19 +85,22 @@ function Login( {closeLogin, setAppUser} ) {
         <>
         <div id="createLogin">
             <div id="loginContent">
-                <h3>Login</h3>
-                <div id="username">
-                    <label>Username: </label>
-                    <input type="text" id="usernameInput" name="username" value={user} 
+                <h2 id="loginTitle">Login</h2>
+                <div class="loginInput">
+                    <label>username: </label>
+                    <input type="text" class="formInput" name="username" value={user} 
                     onChange={handleChangeUser} required></input>
                 </div>
-                <div id="password">
-                    <label>Password: </label>
-                    <input type="text" id="passwordInput" name="password" value={password} 
+                <div class="loginInput">
+                    <label>password: </label>
+                    <input type="text" class="formInput" name="password" value={password} 
                     onChange={handleChangePassword} required></input>
                 </div>
-                <button onClick={handleCreate}>Create account</button>
-                <button onClick={handleLogin}>Login</button>
+                <div id="loginSubmit">
+                    <button onClick={handleLogin} class="formSubmit">Login</button>
+                    <p id="or">or</p>
+                    <button onClick={handleCreate} class="formSubmit">Create account</button>
+                </div>
                 <div>
                     { result && <p>{result}</p>}
                 </div>
