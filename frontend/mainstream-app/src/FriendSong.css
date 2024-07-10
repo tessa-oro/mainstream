@@ -1,0 +1,25 @@
+#rate {
+    display: inline-flex;
+    margin-left: 20px;
+    height: 40px;
+    border-radius: 7px;
+    border: 1px;
+    cursor: pointer;
+    align-items: center;
+}
+
+#rate:hover {
+    background-color: rgb(213, 213, 213);
+}
+
+#songPlayerFollowing {
+    display: inline;
+}
+
+#songBorder {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    text-align: left; 
+    width: 300px;
+}
