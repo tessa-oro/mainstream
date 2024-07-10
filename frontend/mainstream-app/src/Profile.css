@@ -10,10 +10,20 @@
 
 #searchResult {
     cursor: pointer;
+    color: black;
+    background-color: rgba(0, 255, 183, 0.681);
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 15px;
+    margin-left: 30px;
+    margin-left: 30px;
+    transition: 0.2s ease;
 }
 
 #searchResult:hover {
-    font-weight: bold;
+    background-color: rgba(0, 255, 183);
+    box-shadow: #744eba 2px 2px 5px;
 }
 
 #searchSongSection {
@@ -56,5 +66,21 @@
 }
 
 #goSearch:hover {
+    background-color: #ae82ff;
+}
+
+#clearSearchButton {
+    background-color: #8860d0;
+    border-radius: 8px;
+    border: #ffffff00;
+    color: white;
+    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+#clearSearchButton:hover {
     background-color: #ae82ff;
 }

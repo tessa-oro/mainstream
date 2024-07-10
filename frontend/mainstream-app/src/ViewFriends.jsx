@@ -83,7 +83,7 @@ function ViewFriends( {curUser, login} ) {
         <div id="searchUsersContainer">
             <form onSubmit={(e) => getUsers(e)} id="searchUsersForm">
                 <label id="searchUsersPrompt">Search users to follow: </label>
-                <input type="text" name="searchUser"></input>
+                <input type="text" placeholder="Search by username" name="searchUser"></input>
             </form>
             { showModal && <FollowModal closeModal={() => followModal()} userToFollow={userToFollow} curUser={curUser}/>}
             <div>

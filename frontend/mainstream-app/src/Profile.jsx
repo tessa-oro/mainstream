@@ -102,12 +102,12 @@ function Profile( {curUser} ) {
             </div>
             <button id="goSearch" type="submit" value="Submit">Go</button>
         </form>
-        { searched && <button onClick={() => clearSearch()}>Clear search</button> }
         {searchResult && <div>
             {searchResult.map((searchResult, index) => (
                 <p id="searchResult" onClick={() => fetchSong(searchResult.id.videoId)}>{searchResult.snippet.title}</p>)                          
             )}
         </div>}
+        { searched && <button id="clearSearchButton" onClick={() => clearSearch()}>Clear search</button> }
         </div>
         <Playlist curUser={curUser} songAdded={songAdded}></Playlist>
       </div>
