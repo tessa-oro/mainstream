@@ -10,8 +10,77 @@
 
 #searchResult {
     cursor: pointer;
+    color: black;
+    background-color: rgba(0, 255, 183, 0.681);
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 15px;
+    margin-left: 30px;
+    margin-left: 30px;
+    transition: 0.2s ease;
 }
 
 #searchResult:hover {
-    font-weight: bold;
+    background-color: rgba(0, 255, 183);
+    box-shadow: #744eba 2px 2px 5px;
+}
+
+#searchSongSection {
+    background-color: #c3a3ff;
+    padding: 20px;
+    padding-bottom: 35px;
+    text-align: center;
+}
+
+#searchForm {
+    text-align: center;
+    align-content: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
+#profileHeader {
+    font-size: 2em;
+}
+
+#searchSongPrompt {
+    color: #744eba;
+    font-weight: 300;
+    font-size: 1.1em;
+}
+
+#goSearch {
+    display: block;
+    margin-top: 15px;
+    background-color: #8860d0;
+    border-radius: 8px;
+    border: #ffffff00;
+    color: white;
+    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+#goSearch:hover {
+    background-color: #ae82ff;
+}
+
+#clearSearchButton {
+    background-color: #8860d0;
+    border-radius: 8px;
+    border: #ffffff00;
+    color: white;
+    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+#clearSearchButton:hover {
+    background-color: #ae82ff;
 }

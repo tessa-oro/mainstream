@@ -6,6 +6,7 @@ import Playlist from "./Playlist";
 function Profile( {curUser} ) {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResult, setSearchResult] = useState([]);
+    const [searched, setSearched] = useState(false);
     const [toAddTitle, setToAddTitle] = useState("addLater");
     const [result, setResult] = useState("");
     const [songAdded, setSongAdded] = useState("");
@@ -36,6 +37,7 @@ function Profile( {curUser} ) {
     const handleSearch = (e) => {
         e.preventDefault();
         setSearchQuery(e.target.elements.searchQ.value + e.target.elements.searchA.value);
+        setSearched(true);
     }
 
     /*
@@ -85,25 +87,28 @@ function Profile( {curUser} ) {
     const clearSearch = () => {
         setSearchQuery("");
         setResult("");
+        setSearched(false);
     }
 
     return (
       <div id="profileContainer">
-        <h2>{curUser}</h2>
-        <p>Search songs to recommend to your friends!</p>
-        <form onSubmit={(e) => handleSearch(e)}>
-            <label>Song title: </label>
-            <input name="searchQ" required></input>
-            <label id="artist">Artist: </label>
-            <input name="searchA" required></input>
-            <button type="submit" value="Submit">Go</button>
+        <h2 id="profileHeader">{curUser}</h2>
+        <div id="searchSongSection">
+        <p id="searchSongPrompt">Search songs to recommend to your friends!</p>
+        <form onSubmit={(e) => handleSearch(e)} id="searchForm">
+            <div>
+                <input name="searchQ" required placeholder="Song title"></input>
+                <input name="searchA" required placeholder="Artist"></input>
+            </div>
+            <button id="goSearch" type="submit" value="Submit">Go</button>
         </form>
-        <button onClick={() => clearSearch()}>Clear search</button>
         {searchResult && <div>
             {searchResult.map((searchResult, index) => (
                 <p id="searchResult" onClick={() => fetchSong(searchResult.id.videoId)}>{searchResult.snippet.title}</p>)                          
             )}
         </div>}
+        { searched && <button id="clearSearchButton" onClick={() => clearSearch()}>Clear search</button> }
+        </div>
         <Playlist curUser={curUser} songAdded={songAdded}></Playlist>
       </div>
     )
