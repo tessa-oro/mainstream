@@ -76,10 +76,12 @@ function FriendPlaylist( { curUser } ) {
                 <p class="scoreVal">{score}</p>
             </div>
         </div>
-        {songs.map((song) => (
-            <FriendSong player={song.player} goToRate={goToRate} songId={song.id}></FriendSong>
-        )                          
-        )}
+        <div id="songsWrapper">
+            {songs.map((song) => (
+                <FriendSong player={song.player} goToRate={goToRate} songId={song.id}></FriendSong>
+            )                          
+            )}
+        </div>
         {showModal && <RateModal curUser={curUser} songID={songID} closeModal={closeModal}></RateModal>}
       </div>
     )

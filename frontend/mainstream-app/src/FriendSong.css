@@ -1,10 +1,11 @@
 #rate {
-    display: inline;
+    display: inline-flex;
     margin-left: 20px;
     height: 40px;
     border-radius: 7px;
     border: 1px;
     cursor: pointer;
+    align-items: center;
 }
 
 #rate:hover {
@@ -17,6 +18,8 @@
 
 #songBorder {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: left;
+    text-align: left; 
+    width: 300px;
 }
