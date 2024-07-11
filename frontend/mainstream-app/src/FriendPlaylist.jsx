@@ -1,6 +1,7 @@
 import React from 'react';
 import RateModal from "./RateModal";
 import { useState, useEffect } from 'react';
+import { Vortex } from 'react-loader-spinner';
 import "./FriendPlaylist.css";
 import FriendSong from './FriendSong';
 
@@ -85,9 +86,12 @@ function FriendPlaylist( { curUser, friend, showPlaylist } ) {
 
     if (isLoading) {
         return (
-            <>
-                <p>loading...</p>
-            </>
+            <div id="loadingContainer">
+                <div class="progress-bar">
+                    <div class="circle border">
+                    </div>
+                </div>
+            </div>
         )
     }
 
