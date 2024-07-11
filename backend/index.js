@@ -45,12 +45,28 @@ app.post("/login", async (req, res) => {
     })
     bcrypt.compare(password, userRecord.hashedPassword, function(err, result) {
         if (result) {
-            res.status(200).json({});
+            const accessToken = jwt.sign(userRecord, process.env.ACCESS_TOKEN_SECRET)
+            res.status(200).json({ accessToken: accessToken })
+            //res.status(200).json({});
         } else {
             res.status(500).json({"error": err})
         }
     })
-})
+ })
+ 
+ 
+ function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if (token == null) return res.sendStatus(401)
+   
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, userRecord) => {
+        if (err) return res.sendStatus(403)
+        req.user = userRecord
+        next()
+    })
+ }
+ 
 
 app.post('/songs/:user/create/', async (req, res) => {
     const { user } = req.params;
