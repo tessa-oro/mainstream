@@ -170,7 +170,7 @@ app.get('/users/:searchUser', async (req, res) => {
 })
 
 app.get('/user/:userId/score', async (req, res) => {
-    const { userId } = req.params
+    const { userId } = req.params;
     try {
       const user = await prisma.user.findUnique({
         where: { user: userId
@@ -182,8 +182,20 @@ app.get('/user/:userId/score', async (req, res) => {
     }
 })
 
-app.patch('/song/rate/:userId/:id/:num', async (req, res) => {
-    const { userId, id, num } = req.params;
+app.get('/song/ratedBy/:songId', async (req, res) => {
+    const { songId } = req.params;
+    try {
+        const song = await prisma.song.findUnique({
+        where: { id: parseInt(songId) }
+        });
+        res.status(200).json(song.ratedBy);
+    } catch (error) {
+        res.status(500).json({ error: "An error occurred while fetching rated by." });
+    }
+})
+
+app.patch('/song/rate/:userId/:by/:id/:num', async (req, res) => {
+    const { userId, by, id, num } = req.params;
     try {
         const song = await prisma.song.findUnique({
             where: {id: parseInt(id)}
@@ -192,11 +204,13 @@ app.patch('/song/rate/:userId/:id/:num', async (req, res) => {
             return res.status(404).json({error: "Song not found"});
         }
         const addRating = [...song.ratings, parseInt(num)];
+        const addRatedBy = [...song.ratedBy, by];
         const newAvg = updateAverage( song.avgRating, song.ratings.length, num );
         const updatedSong = await prisma.song.update({
             where: { id: parseInt(id) },
             data: {
             ratings: addRating,
+            ratedBy: addRatedBy,
             avgRating: newAvg,
             }
         })

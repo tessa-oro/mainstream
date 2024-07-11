@@ -2,7 +2,7 @@ import "./RateModal.css";
 import React from "react";
 import { useState, useEffect } from 'react';
 
-const RateModal = ({ curUser, songID, closeModal}) => {
+const RateModal = ({ curUser, friend, songID, closeModal}) => {
     const [num, setNum] = useState("");
     const [check, setCheck] = useState(false);
     const [subScore, setSubScore] = useState(0);
@@ -12,7 +12,7 @@ const RateModal = ({ curUser, songID, closeModal}) => {
     */
     const handleRate = (e) => {
         e.preventDefault();
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/song/rate/${curUser}/${songID}/${(num - subScore) > 0 ? (num - subScore) : (1)}`,
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/song/rate/${friend}/${curUser}/${songID}/${(num - subScore) > 0 ? (num - subScore) : (1)}`,
             {
                 method: "PATCH",
                 headers: {

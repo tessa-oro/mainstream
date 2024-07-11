@@ -1,19 +1,38 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "./FriendSong.css";
 
 
-function FriendSong( { player, goToRate, songId } ) {
-    const [notRated, setNotRated] = useState(true);
+function FriendSong( { curUser, player, goToRate, songId } ) {
+    const [ratedBy, setRatedBy] = useState([]);
 
+    useEffect(() => {
+        fetchRatedBy();
+    });
+
+    /*
+    * Fetches array of users who have rated song
+    */
+    const fetchRatedBy = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/song/ratedBy/${songId}`)
+        .then(response => {
+             if (!response.ok) {
+                 throw new Error(`HTTP error! status: ${response.status}`);
+             } else {
+                return response.json();
+              } 
+        })
+        .then(data => {
+            setRatedBy(data);
+        })
+        .catch(error => {
+        });
+    }
 
     return (
         <div id="songBorder">
                 <div id="songPlayerFollowing" dangerouslySetInnerHTML={{ __html: player }} />
-                {notRated && <button id="rate" onClick={() => {
-                    goToRate(songId);
-                    setNotRated(false);
-                }}>rate song</button>}
+                { !(ratedBy.includes(curUser)) && <button id="rate" onClick={() => {goToRate(songId);}}>rate song</button>}
         </div>
     )
   }
