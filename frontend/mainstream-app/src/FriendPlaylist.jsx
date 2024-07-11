@@ -1,6 +1,7 @@
 import React from 'react';
 import RateModal from "./RateModal";
 import { useState, useEffect } from 'react';
+import { Vortex } from 'react-loader-spinner';
 import "./FriendPlaylist.css";
 import FriendSong from './FriendSong';
 
@@ -10,8 +11,10 @@ function FriendPlaylist( { curUser, friend, showPlaylist } ) {
     const [showModal, setShowModal] = useState(false);
     const [songID, setSongID] = useState();
     const [rated, setRated] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        setIsLoading(true);
         fetchUserSongs();
         fetchUserScore();
     }, [curUser, friend, showPlaylist]);
@@ -30,9 +33,13 @@ function FriendPlaylist( { curUser, friend, showPlaylist } ) {
         })
         .then(data => {
             setSongs(data);
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 1000)
         })
         .catch(error => {
             setSongs([]);
+            setIsLoading(false);
         });
     }
 
@@ -75,6 +82,17 @@ function FriendPlaylist( { curUser, friend, showPlaylist } ) {
     */
     const markRated = () => {
         setRated(!rated);
+    }
+
+    if (isLoading) {
+        return (
+            <div id="loadingContainer">
+                <div class="progress-bar">
+                    <div class="circle border">
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     return (
