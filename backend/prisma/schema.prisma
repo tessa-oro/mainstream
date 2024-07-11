@@ -29,6 +29,7 @@ model Song {
   artist String
   player String
   ratings Int[]
+  ratedBy String[]
   avgRating Decimal
   playlistUser User @relation(fields: [userID], references:[user], onDelete: Cascade)
   userID String

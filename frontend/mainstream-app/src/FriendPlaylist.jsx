@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import "./FriendPlaylist.css";
 import FriendSong from './FriendSong';
 
-function FriendPlaylist( { curUser } ) {
+function FriendPlaylist( { curUser, friend } ) {
     const [songs, setSongs] = useState([]);
     const [score, setScore] = useState("...");
     const [showModal, setShowModal] = useState(false);
@@ -19,7 +19,7 @@ function FriendPlaylist( { curUser } ) {
     * Fetches songs on user playlist
     */
     const fetchUserSongs = () => {
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/songs/${curUser}`)
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/songs/${friend}`)
         .then(response => {
              if (!response.ok) {
                  throw new Error(`HTTP error! status: ${response.status}`);
@@ -38,7 +38,7 @@ function FriendPlaylist( { curUser } ) {
     * Fetches a user's score
     */
     const fetchUserScore = () => {
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/${curUser}/score`)
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/${friend}/score`)
         .then(response => {
              if (!response.ok) {
                  throw new Error(`HTTP error! status: ${response.status}`);
@@ -71,18 +71,18 @@ function FriendPlaylist( { curUser } ) {
     return (
       <div id="playlistContainer">
         <div class="playlistHeaderContainer">
-            <h3 class="playlistHeader">{curUser}'s playlist</h3>
+            <h3 class="playlistHeader">{friend}'s playlist</h3>
             <div class="score">
                 <p class="scoreVal">{score}</p>
             </div>
         </div>
         <div id="songsWrapper">
             {songs.map((song) => (
-                <FriendSong player={song.player} goToRate={goToRate} songId={song.id}></FriendSong>
+                <FriendSong curUser={curUser} player={song.player} goToRate={goToRate} songId={song.id}></FriendSong>
             )                          
             )}
         </div>
-        {showModal && <RateModal curUser={curUser} songID={songID} closeModal={closeModal}></RateModal>}
+        {showModal && <RateModal curUser={curUser} friend={friend} songID={songID} closeModal={closeModal}></RateModal>}
       </div>
     )
   }
