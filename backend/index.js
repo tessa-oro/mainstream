@@ -67,19 +67,7 @@ app.post("/login", async (req, res) => {
         next()
     })
  }
- 
 
-function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
-    if (token == null) return res.sendStatus(401)
-    
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, userRecord) => {
-        if (err) return res.sendStatus(403)
-        req.user = userRecord
-        next()
-    })
-}
 
 app.post('/songs/:user/create/', async (req, res) => {
     const { user } = req.params;
@@ -96,24 +84,8 @@ app.post('/songs/:user/create/', async (req, res) => {
     res.json(newSong)
 })
 
-// app.get('/songs/:user/', async (req, res) => {
-//     const { user } = req.params;
-//     try {
-//       const songs = await prisma.song.findMany({
-//         where: { userID : user
-//         },
-//         orderBy: {
-//             id: 'desc'
-//         }
-//       });
-//       res.status(200).json(songs);
-//     } catch (error) {
-//       res.status(500).json({ error: "An error occurred while fetching the songs." });
-//     }
-// })
-
-app.get('/songs', authenticateToken, async (req, res) => {
-    const { user } = req.user;
+app.get('/songs/:user/', async (req, res) => {
+    const { user } = req.params;
     try {
       const songs = await prisma.song.findMany({
         where: { userID : user
