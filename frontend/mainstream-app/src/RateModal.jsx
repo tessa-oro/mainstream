@@ -2,7 +2,7 @@ import "./RateModal.css";
 import React from "react";
 import { useState, useEffect } from 'react';
 
-const RateModal = ({ curUser, friend, songID, closeModal}) => {
+const RateModal = ({ curUser, friend, songID, closeModal, markRated}) => {
     const [num, setNum] = useState("");
     const [check, setCheck] = useState(false);
     const [subScore, setSubScore] = useState(0);
@@ -28,6 +28,7 @@ const RateModal = ({ curUser, friend, songID, closeModal}) => {
                 } 
         })
         .then(data => {
+            markRated();
             closeModal();
         })
         .catch(error => {

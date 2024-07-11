@@ -9,7 +9,7 @@ function Playlist( { curUser } ) {
     useEffect(() => {
         fetchUserSongs();
         fetchUserScore();
-    });
+    }, [curUser]);
 
     /*
     * Fetches songs on user playlist
@@ -27,6 +27,8 @@ function Playlist( { curUser } ) {
             setSongs(data);
         })
         .catch(error => {
+            setSongs([]);
+            setScore("...");
         });
     }
 

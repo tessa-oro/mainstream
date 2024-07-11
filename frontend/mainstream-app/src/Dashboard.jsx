@@ -4,13 +4,13 @@ import "./Dashboard.css";
 import ViewFriends from './ViewFriends';
 import Profile from './Profile';
 
-function Dashboard( {curUser, login} ) {
+function Dashboard( {curUser, login, handleLogout} ) {
 
     return (
        <>
       <div id="dashboard">
         <ViewFriends curUser={curUser} login={login}></ViewFriends>
-        <Profile curUser={curUser}></Profile>
+        <Profile curUser={curUser} handleLogout={() => handleLogout()}></Profile>
       </div>
       </>
     )

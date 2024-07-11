@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import "./Profile.css";
 import Playlist from "./Playlist";
 
-function Profile( {curUser} ) {
+function Profile( {curUser, handleLogout} ) {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResult, setSearchResult] = useState([]);
     const [searched, setSearched] = useState(false);
@@ -93,6 +93,7 @@ function Profile( {curUser} ) {
     return (
       <div id="profileContainer">
         <h2 id="profileHeader">{curUser}</h2>
+        <button id="logoutButton" onClick={() => handleLogout()}>logout</button>
         <div id="searchSongSection">
         <p id="searchSongPrompt">Search songs to recommend to your friends!</p>
         <form onSubmit={(e) => handleSearch(e)} id="searchForm">
