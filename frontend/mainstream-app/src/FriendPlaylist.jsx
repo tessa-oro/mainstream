@@ -4,16 +4,17 @@ import { useState, useEffect } from 'react';
 import "./FriendPlaylist.css";
 import FriendSong from './FriendSong';
 
-function FriendPlaylist( { curUser, friend } ) {
+function FriendPlaylist( { curUser, friend, showPlaylist } ) {
     const [songs, setSongs] = useState([]);
     const [score, setScore] = useState("...");
     const [showModal, setShowModal] = useState(false);
     const [songID, setSongID] = useState();
+    const [rated, setRated] = useState(false);
 
     useEffect(() => {
         fetchUserSongs();
         fetchUserScore();
-    });
+    }, [curUser, friend, showPlaylist]);
 
     /*
     * Fetches songs on user playlist
@@ -31,6 +32,7 @@ function FriendPlaylist( { curUser, friend } ) {
             setSongs(data);
         })
         .catch(error => {
+            setSongs([]);
         });
     }
 
@@ -68,6 +70,13 @@ function FriendPlaylist( { curUser, friend } ) {
         setShowModal(false);
     }
 
+    /*
+    * Identifies a song as rated
+    */
+    const markRated = () => {
+        setRated(!rated);
+    }
+
     return (
       <div id="playlistContainer">
         <div class="playlistHeaderContainer">
@@ -78,11 +87,11 @@ function FriendPlaylist( { curUser, friend } ) {
         </div>
         <div id="songsWrapper">
             {songs.map((song) => (
-                <FriendSong curUser={curUser} player={song.player} goToRate={goToRate} songId={song.id}></FriendSong>
+                <FriendSong curUser={curUser} rated={rated} player={song.player} goToRate={goToRate} songId={song.id}></FriendSong>
             )                          
             )}
         </div>
-        {showModal && <RateModal curUser={curUser} friend={friend} songID={songID} closeModal={closeModal}></RateModal>}
+        {showModal && <RateModal markRated={() => markRated()} curUser={curUser} friend={friend} songID={songID} closeModal={closeModal}></RateModal>}
       </div>
     )
   }

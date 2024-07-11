@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react';
 import "./FriendSong.css";
 
 
-function FriendSong( { curUser, player, goToRate, songId } ) {
+function FriendSong( { curUser, player, goToRate, songId, rated } ) {
     const [ratedBy, setRatedBy] = useState([]);
 
     useEffect(() => {
         fetchRatedBy();
-    });
+    }, [curUser, rated, player]);
 
     /*
     * Fetches array of users who have rated song

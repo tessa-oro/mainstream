@@ -11,10 +11,11 @@ function ViewFriends( {curUser, login} ) {
     const [userToFollow, setUserToFollow] = useState("");
     const [showPlaylist, setShowPlaylist] = useState(false);
     const [selectedFollowing, setSelectedFollowing] = useState("");
+    const [showFollowing, setShowFollowing] = useState(false);
  
     useEffect(() => {
         fetchFollowing();
-    }, [login, showModal, following]);
+    }, [login, showModal, following, curUser]);
 
     /*
     * Fetches users that current user follows.
@@ -30,8 +31,13 @@ function ViewFriends( {curUser, login} ) {
         })
         .then(data => {
             setFollowing(data);
+            setShowFollowing(true);
         })
         .catch(error => {
+            setUserResults([]);
+            setShowPlaylist(false);
+            setSelectedFollowing("");
+            setShowFollowing(false);
         })
     }
 
@@ -96,10 +102,10 @@ function ViewFriends( {curUser, login} ) {
         <div id="followingContainer">
             <h3>Following</h3>
             {following.map((follow, index) => (
-                    <p onClick={() => displayPlaylist(follow.name)} id="following">{follow.name}</p>)                        
+                showFollowing && <p onClick={() => displayPlaylist(follow.name)} id="following">{follow.name}</p>)                        
             )}
         </div>
-        {showPlaylist && <FriendPlaylist curUser={curUser} friend={selectedFollowing}></FriendPlaylist>}
+        {showPlaylist && <FriendPlaylist showPlaylist={showPlaylist} curUser={curUser} friend={selectedFollowing}></FriendPlaylist>}
       </div>
     )
   }

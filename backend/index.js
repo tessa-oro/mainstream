@@ -165,7 +165,7 @@ app.get('/users/:searchUser', async (req, res) => {
       })
       res.status(200).json(listNames);
     } catch (error) {
-      res.status(500).json({ error: "An error occurred while fetching following." });
+      res.status(500).json({ error: "An error occurred while fetching search results." });
     }
 })
 
@@ -178,7 +178,7 @@ app.get('/user/:userId/score', async (req, res) => {
       });
       res.status(200).json(user.score);
     } catch (error) {
-      res.status(500).json({ error: "An error occurred while fetching following." });
+      res.status(500).json({ error: "An error occurred while fetching user score." });
     }
 })
 

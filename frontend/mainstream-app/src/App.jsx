@@ -16,11 +16,16 @@ function App() {
     setShowLogin(false);
   }
 
+  const handleLogout = () => {
+    setCurUser("");
+    setShowLogin(true);
+  }
+
   return (
     <>
       <Header></Header>
       { showLogin ? (<Login setAppUser={setAppUser} closeLogin={() => closeLogin()}></Login> ) : (<></>)}
-      <Dashboard curUser={curUser} login={showLogin}></Dashboard>
+      <Dashboard curUser={curUser} login={showLogin} handleLogout={() => handleLogout()}></Dashboard>
     </>
   )
 }
