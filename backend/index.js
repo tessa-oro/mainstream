@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 const express = require('express');
 const bcrypt = require('bcrypt');
 const saltRounds = 14;
+const jwt = require('jsonwebtoken');
 const app = express();
 const port = 3000;
 const cors = require('cors');
@@ -45,12 +46,26 @@ app.post("/login", async (req, res) => {
     })
     bcrypt.compare(password, userRecord.hashedPassword, function(err, result) {
         if (result) {
-            res.status(200).json({});
+            const accessToken = jwt.sign(userRecord, process.env.ACCESS_TOKEN_SECRET)
+            res.status(200).json({ accessToken: accessToken })
+            //res.status(200).json({});
         } else {
             res.status(500).json({"error": err})
         }
     })
 })
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if (token == null) return res.sendStatus(401)
+    
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, userRecord) => {
+        if (err) return res.sendStatus(403)
+        req.user = userRecord
+        next()
+    })
+}
 
 app.post('/songs/:user/create/', async (req, res) => {
     const { user } = req.params;
@@ -67,8 +82,24 @@ app.post('/songs/:user/create/', async (req, res) => {
     res.json(newSong)
 })
 
-app.get('/songs/:user/', async (req, res) => {
-    const { user } = req.params;
+// app.get('/songs/:user/', async (req, res) => {
+//     const { user } = req.params;
+//     try {
+//       const songs = await prisma.song.findMany({
+//         where: { userID : user
+//         },
+//         orderBy: {
+//             id: 'desc'
+//         }
+//       });
+//       res.status(200).json(songs);
+//     } catch (error) {
+//       res.status(500).json({ error: "An error occurred while fetching the songs." });
+//     }
+// })
+
+app.get('/songs', authenticateToken, async (req, res) => {
+    const { user } = req.user;
     try {
       const songs = await prisma.song.findMany({
         where: { userID : user
