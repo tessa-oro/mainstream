@@ -69,7 +69,6 @@ function Login( {closeLogin, setAppUser} ) {
         })
         .then(response => {
             if (response.ok) {
-                setResult("login success!");
                 closeLogin();
             } else {
                 setResult("Failed to login. Please double check username and password.");

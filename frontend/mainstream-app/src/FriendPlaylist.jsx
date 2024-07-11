@@ -10,8 +10,10 @@ function FriendPlaylist( { curUser, friend, showPlaylist } ) {
     const [showModal, setShowModal] = useState(false);
     const [songID, setSongID] = useState();
     const [rated, setRated] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        setIsLoading(true);
         fetchUserSongs();
         fetchUserScore();
     }, [curUser, friend, showPlaylist]);
@@ -30,9 +32,13 @@ function FriendPlaylist( { curUser, friend, showPlaylist } ) {
         })
         .then(data => {
             setSongs(data);
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 1000)
         })
         .catch(error => {
             setSongs([]);
+            setIsLoading(false);
         });
     }
 
@@ -75,6 +81,14 @@ function FriendPlaylist( { curUser, friend, showPlaylist } ) {
     */
     const markRated = () => {
         setRated(!rated);
+    }
+
+    if (isLoading) {
+        return (
+            <>
+                <p>loading...</p>
+            </>
+        )
     }
 
     return (
