@@ -92,23 +92,25 @@ function Profile( {curUser, handleLogout} ) {
 
     return (
       <div id="profileContainer">
+        <div id="logoutContainer">
+            <button id="logoutButton" onClick={() => handleLogout()}>logout</button>
+        </div>
         <h2 id="profileHeader">{curUser}</h2>
-        <button id="logoutButton" onClick={() => handleLogout()}>logout</button>
         <div id="searchSongSection">
-        <p id="searchSongPrompt">Search songs to recommend to your friends!</p>
-        <form onSubmit={(e) => handleSearch(e)} id="searchForm">
-            <div>
-                <input name="searchQ" required placeholder="Song title"></input>
-                <input name="searchA" required placeholder="Artist"></input>
-            </div>
-            <button id="goSearch" type="submit" value="Submit">Go</button>
-        </form>
-        {searchResult && <div>
-            {searchResult.map((searchResult, index) => (
-                <p id="searchResult" onClick={() => fetchSong(searchResult.id.videoId)}>{searchResult.snippet.title}</p>)                          
-            )}
-        </div>}
-        { searched && <button id="clearSearchButton" onClick={() => clearSearch()}>Clear search</button> }
+            <p id="searchSongPrompt">Search songs to recommend to your friends!</p>
+            <form onSubmit={(e) => handleSearch(e)} id="searchForm">
+                <div>
+                    <input name="searchQ" required placeholder="Song title"></input>
+                    <input name="searchA" required placeholder="Artist"></input>
+                </div>
+                <button id="goSearch" type="submit" value="Submit">Go</button>
+            </form>
+            {searchResult && <div>
+                {searchResult.map((searchResult, index) => (
+                    <p id="searchResult" onClick={() => fetchSong(searchResult.id.videoId)}>{searchResult.snippet.title}</p>)                          
+                )}
+            </div>}
+            { searched && <button id="clearSearchButton" onClick={() => clearSearch()}>Clear search</button> }
         </div>
         <Playlist curUser={curUser} songAdded={songAdded}></Playlist>
       </div>

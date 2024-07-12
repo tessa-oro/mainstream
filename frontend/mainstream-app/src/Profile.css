@@ -84,3 +84,27 @@
 #clearSearchButton:hover {
     background-color: #ae82ff;
 }
+
+#logoutContainer {
+    display: flex;
+    justify-content: right;
+}
+
+#logoutButton {
+    display: block;
+    background-color: #c3a3ff;
+    border-radius: 8px;
+    border: #ffffff00;
+    color: white;
+    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-top: 8px;
+    margin-right: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+#logoutButton:hover {
+    background-color: #ae82ff;
+}
