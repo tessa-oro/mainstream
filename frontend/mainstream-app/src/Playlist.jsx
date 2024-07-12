@@ -2,14 +2,14 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import "./Playlist.css";
 
-function Playlist( { curUser } ) {
+function Playlist( { refetch, curUser } ) {
     const [songs, setSongs] = useState([]);
     const [score, setScore] = useState("...");
 
     useEffect(() => {
         fetchUserSongs();
         fetchUserScore();
-    }, [curUser]);
+    }, [curUser, refetch]);
 
     /*
     * Fetches songs on user playlist
