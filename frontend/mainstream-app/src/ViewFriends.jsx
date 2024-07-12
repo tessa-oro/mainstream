@@ -100,7 +100,7 @@ function ViewFriends( {curUser, login} ) {
             </div>
         </div>
         <div id="followingContainer">
-            <h3>Following</h3>
+            <h3 id="followingHeader">Following</h3>
             {following.map((follow, index) => (
                 showFollowing && <p onClick={() => displayPlaylist(follow.name)} id="following">{follow.name}</p>)                        
             )}

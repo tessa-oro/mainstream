@@ -2,16 +2,37 @@
     width: 50%;
     text-align: center;
     background-color: #5ab9ea;
+    padding-top: 34.5px;
 }
 
 #followingContainer{
-    margin-top: 20px;
+    padding: 15px;
+    padding-bottom: 40px;
+    background-color: hsl(200, 91%, 75%);
+    border: 5px #055c87;
+    margin-bottom: 10px;
+}
+
+#followingHeader {
+    padding-bottom: 10px;
+    color: #1a8cc4;
+    font-weight: 200;
 }
 
 #following {
     display: inline;
+    color: #1a8cc4;
     padding: 10px;
-    padding-top: 20px;
+    margin: 5px;
+    border-radius: 10px;
+    background-color: #b7e6fe;
+    transition: 0.3s ease;
+    position: relative;
+}
+
+#following:hover {
+    cursor: pointer;
+    background-color: #dcf3ffe9;
 }
 
 #user {
@@ -19,11 +40,6 @@
 }
 
 #user:hover {
-    font-weight: bold;
-}
-
-#following:hover {
-    cursor: pointer;
     font-weight: bold;
 }
 
