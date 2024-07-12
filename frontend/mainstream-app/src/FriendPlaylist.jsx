@@ -17,7 +17,7 @@ function FriendPlaylist( { curUser, friend, showPlaylist } ) {
         setIsLoading(true);
         fetchUserSongs();
         fetchUserScore();
-    }, [curUser, friend, showPlaylist]);
+    }, [curUser, friend, showPlaylist, rated]);
 
     /*
     * Fetches songs on user playlist
