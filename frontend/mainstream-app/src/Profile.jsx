@@ -10,6 +10,7 @@ function Profile( {curUser, handleLogout} ) {
     const [toAddTitle, setToAddTitle] = useState("addLater");
     const [result, setResult] = useState("");
     const [songAdded, setSongAdded] = useState("");
+    const [clicked, setClicked] = useState(false);
 
     useEffect(() => {
         fetchSearch();
@@ -71,6 +72,7 @@ function Profile( {curUser, handleLogout} ) {
         })
         .then(response => {
             if (response.ok) {
+                setClicked(!clicked);
                 setResult("added to playlist!");
             } else {
                 setResult("failed to add song");
@@ -112,7 +114,7 @@ function Profile( {curUser, handleLogout} ) {
             </div>}
             { searched && <button id="clearSearchButton" onClick={() => clearSearch()}>Clear search</button> }
         </div>
-        <Playlist curUser={curUser} songAdded={songAdded}></Playlist>
+        <Playlist refetch={clicked} curUser={curUser}></Playlist>
       </div>
     )
 }
