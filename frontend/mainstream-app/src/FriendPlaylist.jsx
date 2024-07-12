@@ -56,7 +56,11 @@ function FriendPlaylist( { curUser, friend, showPlaylist } ) {
               } 
         })
         .then(data => {
-            setScore(parseFloat(data));
+            if (parseFloat(data) === 0) {
+                setScore("...");
+            } else {
+                setScore(parseFloat(data));
+            }
         })
         .catch(error => {
         });
