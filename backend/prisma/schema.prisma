@@ -64,4 +64,5 @@ model Interactions {
   userRef User @relation(fields: [user], references: [user])
   songRef SongItem @relation(fields: [songItem], references: [playerID])
   rating Int
+  @@unique([user, songItem])
 }
