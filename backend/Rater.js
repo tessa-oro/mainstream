@@ -1,9 +1,9 @@
 const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
 class Rater {
 
     constructor (engine) {
-        this.prisma = new PrismaClient();
         this.engine = engine;
     }
 
@@ -12,7 +12,7 @@ class Rater {
     */
     async add(user, song, rating) {
         try {
-            await this.prisma.interactions.create({
+            await prisma.interactions.create({
                 data: {
                     user: user,
                     songItem: song,
@@ -33,7 +33,7 @@ class Rater {
     */
     async songsByUser(user) {
         try {
-            const interactions = await this.prisma.interactions.findMany({
+            const interactions = await prisma.interactions.findMany({
                 where : { user: user }
             })
             let songs = [];
@@ -51,7 +51,7 @@ class Rater {
     */
     async usersBySong(song) {
         try {
-            const interactions = await this.prisma.interactions.findMany({
+            const interactions = await prisma.interactions.findMany({
                 where : { songItem: song }
             })
             let users = [];
