@@ -50,6 +50,17 @@ class Rater {
     * Look up users who have rated an song
     */
     async usersBySong(song) {
-
+        try {
+            const interactions = await this.prisma.interactions.findMany({
+                where : { songItem: song }
+            })
+            let users = [];
+            interactions.forEach((interaction) => {
+                users.push(interaction.user);
+            })
+            return users;
+        } catch (err) {
+            throw err;
+        }
     }
 }
