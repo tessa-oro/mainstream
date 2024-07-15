@@ -1,18 +1,55 @@
 const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
 
 class Rater {
 
+    constructor (engine) {
+        this.prisma = new PrismaClient();
+        this.engine = engine;
+    }
+
+    /*
+    * Adds a new rating to the interactions model
+    */
     async add(user, song, rating) {
         try {
-            await prisma.interactions.create({
+            await this.prisma.interactions.create({
                 data: {
                     user: user,
                     songItem: song,
                     rating: rating
                 }
-        })} catch (err) {
+            })
+            await Promise.all([
+                this.engine.similars.update(user),
+                this.engine.suggestions.update(user)
+            ])
+        } catch (err) {
             throw err;
         }
+    }
+
+    /*
+    * Look up songs rated by a user
+    */
+    async songsByUser(user) {
+        try {
+            const interactions = await this.prisma.interactions.findMany({
+                where : { user: user }
+            })
+            let songs = [];
+            interactions.forEach((interaction) => {
+                songs.push(interaction.songItem);
+            })
+            return songs;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    /*
+    * Look up users who have rated an song
+    */
+    async usersBySong(song) {
+
     }
 }
