@@ -6,7 +6,7 @@ class Similars {
     /*
     * Updates the set of similar users based on song ratings
     */
-    async update(user) {
+    async updateSimilars(user) {
         try {
             const userRatings = await prisma.interactions.findMany({ //get all the rating occurrences a user has made
                 where: { user: user }
@@ -29,10 +29,9 @@ class Similars {
             const sortedSimilarities = new Map(
                 Object.entries(similarities).sort((user1, user2) => user2[1] - user1[1])
             );
-            const jsonSimilarities = JSON.stringify(Array.from(sortedSimilarities));
             await prisma.user.update({ //update similarity scores in database
                 where: { user: user },
-                data: { similars: {set: jsonSimilarities}}
+                data: { similars: {set: Array.from(sortedSimilarities)}}
             });
             return similarities;
         } catch (err) {
@@ -69,5 +68,47 @@ class Similars {
         let numerator = (n*sumCrossP)-(sumR * sumOR)
         let denominator = Math.sqrt((n*sumRsq)-(sumR*sumR))((n*sumORsq)-(sumOR*sumOR))
         return numerator / denominator;
+    }
+
+    /*
+    * Get map of top 3 similar users while similarity is still positive
+    */
+    async getTopSimilars(user) {
+        try {
+            const curUser = await prisma.user.findUnique({
+                where : { user: user }
+            })
+            const similarities = new Map(curUser.similars);
+            const top3 = new Map();
+            let count = 0;
+            for (let [otherUser, similarity] of similarities) {
+                if (count === 3 || similarity <= 0) { //break out of loop if already have 3 user or similarity no longer positive
+                    break;
+                }
+                top3.set(otherUser, similarity);
+                count++;
+            }
+            return top3;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    /*
+    * Look up songs rated by a user
+    */
+    async songsByUser(user) {
+        try {
+            const interactions = await prisma.interactions.findMany({
+                where : { user: user }
+            })
+            let songs = [];
+            interactions.forEach((interaction) => {
+                songs.push(interaction.songItem);
+            })
+            return songs;
+        } catch (err) {
+            throw err;
+        }
     }
 }

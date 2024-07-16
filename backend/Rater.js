@@ -28,23 +28,6 @@ class Rater {
         }
     }
 
-    /*
-    * Look up songs rated by a user
-    */
-    async songsByUser(user) {
-        try {
-            const interactions = await prisma.interactions.findMany({
-                where : { user: user }
-            })
-            let songs = [];
-            interactions.forEach((interaction) => {
-                songs.push(interaction.songItem);
-            })
-            return songs;
-        } catch (err) {
-            throw err;
-        }
-    }
 
     /*
     * Look up users who have rated an song
