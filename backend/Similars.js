@@ -136,5 +136,38 @@ class Similars {
         }
     }
 
-    
+    /*
+    * Get the weighted scores for the songs the top similar users have rated
+    */
+    async getWeightedScores(user, top3) {
+        try {
+            const userSongs = this.songsByUser(songs);
+            let filteredInteractions = [];
+            for (let [otherUser, similarity] in top3) { //filtered interactions is an array of the interactions similar users have made with songs the user has not yet rated
+                filteredInteractions = [...filteredInteractions, ...this.filteredInteractionsByUser(otherUser, userSongs)];
+            }
+            const interactionsMap = new Map(); //turn filtered interactions into a map with key as songs and value as an array of user, rating pairs
+            filteredInteractions.forEach(interaction => {
+                if (!(interactionsMap.has(interaction.songItem))) {
+                    interactionsMap.set(interaction.songItem, []);
+                }
+                interactionsMap.get(interaction.songItem.push([interaction.user, interaction.rating]));
+            })
+            let weightedScores = new Map();
+            for (let [song, interactions] in interactionsMap) { //calculate the weighted score for each song based on the ratings given by each user and their similarity score
+                let sumSimScore = 0;
+                let sumWeightedRating = 0;
+                for (let interaction in interactions) { //go through each interaction made with song
+                    let simScore = top3.get(interaction[0]); //sets the similarity score for the user who made the interaction
+                    let rating = interaction[1]; //sets the rating given to the song in the interaction
+                    sumWeightedRating += simScore * rating;
+                    sumSimScore += simScore;
+                } 
+                let weightedAverage = sumWeightedRating / sumSimScore;
+                weightedScores.set(song, weightedAverage);
+            }
+        } catch (err) {
+            throw err;
+        }
+    }
 }
