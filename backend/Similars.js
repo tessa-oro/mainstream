@@ -95,13 +95,37 @@ class Similars {
     }
 
     /*
+    * Look up ratings made by a user
+    */
+    async interactionsByUser(user) {
+        const interactions = await prisma.interactions.findMany({
+            where : { user: user }
+        })
+        return interactions;
+    }
+
+    /*
+    * Takes in a user name and array of songs.
+    * Returns all ratings a user has made, excluding those where ths song is in the songs array.
+    */
+    async filteredInteractionsByUser(user, songs) {
+        const interactions = await prisma.interactions.findMany({
+            where : { 
+                user: user,
+                songItem: {
+                    notIn: songs
+                }
+             }
+        })
+        return interactions;
+    }
+
+    /*
     * Look up songs rated by a user
     */
     async songsByUser(user) {
         try {
-            const interactions = await prisma.interactions.findMany({
-                where : { user: user }
-            })
+            const interactions = this.interactionsByUser(user);
             let songs = [];
             interactions.forEach((interaction) => {
                 songs.push(interaction.songItem);
@@ -111,4 +135,6 @@ class Similars {
             throw err;
         }
     }
+
+    
 }
