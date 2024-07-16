@@ -171,4 +171,15 @@ class Similars {
             throw err;
         }
     }
+
+    /*
+    * Takes weighted scores map, which maps songs to their weighted score.
+    * Returns array of songs, order by highest recommendation based on weighted score.
+    */
+    sortByWeightedScores(weightedScoresMap) {
+        const sortedArray = Array.from(weightedScoresMap);
+        sortedArray.sort((score1, score2) => score1[1] - score2[1]);
+        const sortedSongs = sortedArray.map(song => song[0]);
+        return sortedSongs;
+    }
 }
