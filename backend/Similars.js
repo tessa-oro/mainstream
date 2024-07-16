@@ -136,20 +136,6 @@ class Similars {
         }
     }
 
-    //need to get similarity map from database
-    //get top 3 similar users while score still positive
-    //for each song the similar users have rated that are not in the 
-    //songs rated by current user, calculate weighted score
-    //return array sorted by weighted score
-    //need to get the interactions for all the songs user has not rated so we
-    //also get the rating given by other user
-    //for each other user, get their interactions. check if the song item in each interaction
-    //is in the usersongs. if it is not, calculate the weighted score of the song.
-    //then, add the song with its weighted score to a sorted mop.
-
-    //want duplicate interactions for calculating weighted average
-    //calculate the weighted average of this set of numbers by multiplying each value in the set by its weight, then adding up the products and dividing the products' sum by the sum of all weights.
-
     /*
     * Get the weighted scores for the songs the top similar users have rated
     */
