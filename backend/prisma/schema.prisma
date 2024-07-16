@@ -22,7 +22,7 @@ model User {
   following Following[]
   playlist Song[]
   interactions Interactions[]
-  similars String[]
+  similars Json
 }
 
 model Song {

@@ -23,12 +23,16 @@ class Similars {
                 others[interaction.user].push(interaction.rating);
             });
             const similarities = {};
-            for (const [otherUser, ratings] of Object.entries(others)) {
+            for (const [otherUser, ratings] of Object.entries(others)) { //calculate and map the similarity of each user
                 similarities[otherUser] = this.computePearson(userRatings, ratings);
             }
-            await prisma.user.update({
+            const sortedSimilarities = new Map(
+                Object.entries(similarities).sort((user1, user2) => user2[1] - user1[1])
+            );
+            const jsonSimilarities = JSON.stringify(Array.from(sortedSimilarities));
+            await prisma.user.update({ //update similarity scores in database
                 where: { user: user },
-                data: { similars: {set: similarities}}
+                data: { similars: {set: jsonSimilarities}}
             });
             return similarities;
         } catch (err) {
