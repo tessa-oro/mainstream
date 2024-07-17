@@ -1,5 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const Recommended = require('./Recommended');
+const recommended = new Recommended(prisma);
 const express = require('express');
 const bcrypt = require('bcrypt');
 const saltRounds = 14;
@@ -12,13 +14,14 @@ app.use(express.json());
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true
-}));
+}))
 
 app.get('/users', async (req, res) => {
     const users = await prisma.user.findMany();
     res.status(200).json(users);
 })
 
+//create a user
 app.post('/create', async (req, res) => {
     const { user, password } = req.body;
     bcrypt.hash(password, saltRounds, async function(err, hashed) {
@@ -28,7 +31,9 @@ app.post('/create', async (req, res) => {
                     user,
                     hashedPassword: hashed,
                     score: 0,
-                    numRatedSongs: 0
+                    numRatedSongs: 0,
+                    similars: {},
+                    recommended: []
                 }
             })
             res.status(200).json({});
@@ -38,6 +43,7 @@ app.post('/create', async (req, res) => {
     })
 })
 
+//authenticate a user
 app.post("/login", async (req, res) => {
     const { user, password } = req.body;
     const userRecord = await prisma.user.findUnique({
@@ -52,6 +58,7 @@ app.post("/login", async (req, res) => {
     })
 })
 
+//add a song to user playlist
 app.post('/songs/:user/create/', async (req, res) => {
     const { user } = req.params;
     const { title, player } = req.body;
@@ -67,6 +74,7 @@ app.post('/songs/:user/create/', async (req, res) => {
     res.json(newSong)
 })
 
+//get a user playlist
 app.get('/songs/:user/', async (req, res) => {
     const { user } = req.params;
     try {
@@ -149,6 +157,7 @@ app.get('/following/:user', async (req, res) => {
     }
 })
 
+//search for a user by username
 app.get('/users/:searchUser', async (req, res) => {
     const { searchUser } = req.params;
     try {
@@ -169,6 +178,7 @@ app.get('/users/:searchUser', async (req, res) => {
     }
 })
 
+//get a user's score
 app.get('/user/:userId/score', async (req, res) => {
     const { userId } = req.params;
     try {
@@ -182,6 +192,7 @@ app.get('/user/:userId/score', async (req, res) => {
     }
 })
 
+//get the songs a user has rated
 app.get('/song/ratedBy/:songId', async (req, res) => {
     const { songId } = req.params;
     try {
@@ -194,6 +205,7 @@ app.get('/song/ratedBy/:songId', async (req, res) => {
     }
 })
 
+//add a new rating to a song and update the user score
 app.patch('/song/rate/:userId/:by/:id/:num', async (req, res) => {
     const { userId, by, id, num } = req.params;
     try {
@@ -227,13 +239,14 @@ app.patch('/song/rate/:userId/:by/:id/:num', async (req, res) => {
             data: {
                 score: newScore
             }
-        });
+        })
         res.status(200).json([updatedSong, updatedUser]);
     } catch (error) {
             res.status(500).json({error : "could not rate song"});
     }
 })
 
+//calculate the average rating for a song
 const updateAverage = ( currAvg, currNumEntries, newEntry ) => {
     const currTotal = (currAvg * currNumEntries);
     const newLength = currNumEntries + 1;
@@ -241,6 +254,7 @@ const updateAverage = ( currAvg, currNumEntries, newEntry ) => {
     return newAvg;
 }
 
+//calculate the user score
 const updateUserScore = ( user ) => {
     let total = 0;
     let count = 0;
@@ -253,6 +267,37 @@ const updateUserScore = ( user ) => {
     let score = (total / count).toFixed(1);
     return (score);
 }
+
+app.patch('/recommended/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+        recommended.updateSimilars(userId);
+        const top3 = recommended.getTopSimilars(userId);
+        const weightedScoresMap = recommended.getWeightedScores(top3);
+        const songsToRecommend = recommended.sortByWeightedScores(weightedScoresMap);
+        const updatedUser = await prisma.user.update({
+            where: {user: userId},
+            data: {
+                recommended: songsToRecommend
+            }
+        })
+        res.json(songsToRecommend);
+    } catch (error) {
+        res.status(500).json({error: "An error occurred while updating recommended songs."})
+    }
+})
+
+app.get('/recommended/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const user = await prisma.user.findUnique({
+        where: { user: userId }
+        });
+        res.status(200).json(user.recommended);
+    } catch (error) {
+        res.status(500).json({ error: "An error occurred while fetching recommended songs." });
+    }
+})
 
 app.listen(port, () => {
     console.log(`starting on port: ${port}`);

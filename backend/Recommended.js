@@ -1,18 +1,21 @@
 const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
 
-class Similars {
+class Recommended {
+
+    constructor(prisma) {
+        this.prisma = prisma;
+    }
 
     /*
-    * Updates the set of similar users based on song ratings
+    * Takes in user and updates their set of similar users in database based on song ratings
     */
     async updateSimilars(user) {
         try {
-            const userRatings = await prisma.interactions.findMany({ //get all the rating occurrences a user has made
+            const userRatings = await this.prisma.interactions.findMany({ //get all the rating occurrences a user has made
                 where: { user: user }
             });
             const userSongs = userRatings.map(rating => rating.songItem); //get all the songs a user had rated
-            const allRatings = await prisma.interactions.findMany({ //get all the rating occurrences made by other users for the songs a user has rated
+            const allRatings = await this.prisma.interactions.findMany({ //get all the rating occurrences made by other users for the songs a user has rated
                 where: {songItem: { in: userSongs }, NOT: { user }}
             });
             const others = {};
@@ -29,7 +32,7 @@ class Similars {
             const sortedSimilarities = new Map(
                 Object.entries(similarities).sort((user1, user2) => user2[1] - user1[1])
             );
-            await prisma.user.update({ //update similarity scores in database
+            await this.prisma.user.update({ //update similarity scores in database
                 where: { user: user },
                 data: { similars: {set: Array.from(sortedSimilarities)}}
             });
@@ -75,7 +78,7 @@ class Similars {
     */
     async getTopSimilars(user) {
         try {
-            const curUser = await prisma.user.findUnique({
+            const curUser = await this.prisma.user.findUnique({
                 where : { user: user }
             })
             const similarities = new Map(curUser.similars);
@@ -98,7 +101,7 @@ class Similars {
     * Look up ratings made by a user
     */
     async interactionsByUser(user) {
-        const interactions = await prisma.interactions.findMany({
+        const interactions = await this.prisma.interactions.findMany({
             where : { user: user }
         })
         return interactions;
@@ -109,7 +112,7 @@ class Similars {
     * Returns all ratings a user has made, excluding those where ths song is in the songs array.
     */
     async filteredInteractionsByUser(user, songs) {
-        const interactions = await prisma.interactions.findMany({
+        const interactions = await this.prisma.interactions.findMany({
             where : { 
                 user: user,
                 songItem: {
@@ -183,3 +186,5 @@ class Similars {
         return sortedSongs;
     }
 }
+
+module.exports = Recommended;

@@ -23,6 +23,7 @@ model User {
   playlist Song[]
   interactions Interactions[]
   similars Json
+  recommended String[]
 }
 
 model Song {
