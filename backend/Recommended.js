@@ -81,7 +81,7 @@ class Recommended {
             const curUser = await this.prisma.user.findUnique({
                 where: { user: user }
             })
-            const similarities = new Map(curUser.similars);
+            const similarities = new Map(Object.entries(curUser.similars));
             const top3 = new Map();
             let count = 0;
             for (let [otherUser, similarity] of similarities) {
@@ -128,7 +128,7 @@ class Recommended {
     */
     async songsByUser(user) {
         try {
-            const interactions = this.interactionsByUser(user);
+            const interactions = await this.interactionsByUser(user);
             let songs = [];
             interactions.forEach((interaction) => {
                 songs.push(interaction.songItem);
@@ -144,10 +144,10 @@ class Recommended {
     */
     async getWeightedScores(user, top3) {
         try {
-            const userSongs = this.songsByUser(songs);
+            const userSongs = await this.songsByUser(user);
             let filteredInteractions = [];
             for (let [otherUser, similarity] in top3) { //filtered interactions is an array of the interactions similar users have made with songs the user has not yet rated
-                filteredInteractions = [...filteredInteractions, ...this.filteredInteractionsByUser(otherUser, userSongs)];
+                filteredInteractions = [...filteredInteractions, ...await this.filteredInteractionsByUser(otherUser, userSongs)];
             }
             const interactionsMap = new Map(); //turn filtered interactions into a map with key as songs and value as an array of user, rating pairs
             filteredInteractions.forEach(interaction => {

@@ -74,6 +74,7 @@ function Profile({ curUser, handleLogout }) {
             .then(response => {
                 if (response.ok) {
                     setClicked(!clicked);
+                    addSongItem(playerToAdd);
                     setResult("added to playlist!");
                 } else {
                     setResult("failed to add song");
@@ -81,6 +82,27 @@ function Profile({ curUser, handleLogout }) {
             })
             .catch(error => {
                 setResult("failed to add song");
+            });
+    }
+
+    const addSongItem = (playerToAdd) => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/songItem`,
+            {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    playerID: playerToAdd
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log(playerToAdd);
+                }
+                createInteraction(playerToAdd);
+            })
+            .catch(error => {
             });
     }
 

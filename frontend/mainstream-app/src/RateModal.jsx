@@ -2,7 +2,7 @@ import "./RateModal.css";
 import React from "react";
 import { useState, useEffect } from 'react';
 
-const RateModal = ({ curUser, friend, songID, closeModal, markRated }) => {
+const RateModal = ({ curUser, friend, songID, closeModal, markRated, player }) => {
     const [num, setNum] = useState("");
     const [check, setCheck] = useState(false);
     const [subScore, setSubScore] = useState(0);
@@ -12,7 +12,8 @@ const RateModal = ({ curUser, friend, songID, closeModal, markRated }) => {
     */
     const handleRate = (e) => {
         e.preventDefault();
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/song/rate/${friend}/${curUser}/${songID}/${(num - subScore) > 0 ? (num - subScore) : (1)}`,
+        let rating = (num - subScore) > 0 ? (num - subScore) : (1);
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/song/rate/${friend}/${curUser}/${songID}/${rating}`,
             {
                 method: "PATCH",
                 headers: {
@@ -29,10 +30,33 @@ const RateModal = ({ curUser, friend, songID, closeModal, markRated }) => {
         })
         .then(data => {
             markRated();
+            createInteraction(rating);
+        })
+        .then(done => {
             closeModal();
         })
         .catch(error => {
         });
+    }
+
+    /*
+    * Stores interaction in database when song is rated
+    */
+    const createInteraction = (rating) => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/interaction`,
+            {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    user: curUser,
+                    songItem: player,
+                    rating: rating
+                }),
+            })
+            .catch(error => {
+            });
     }
 
     /*

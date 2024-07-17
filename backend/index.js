@@ -74,6 +74,17 @@ app.post('/songs/:user/create/', async (req, res) => {
     res.json(newSong)
 })
 
+//create a song item
+app.post('/songItem', async (req, res) => {
+        const { playerID } = req.body;
+        const newSong = await prisma.songItem.create({
+            data: {
+                playerID
+            }
+        })
+        res.json(newSong)
+})
+
 //get a user playlist
 app.get('/songs/:user/', async (req, res) => {
     const { user } = req.params;
@@ -228,7 +239,7 @@ app.patch('/song/rate/:userId/:by/:id/:num', async (req, res) => {
             data: {
                 ratings: addRating,
                 ratedBy: addRatedBy,
-                avgRating: newAvg,
+                avgRating: newAvg
             }
         })
         const user = await prisma.user.findUnique({
@@ -249,6 +260,20 @@ app.patch('/song/rate/:userId/:by/:id/:num', async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: "could not rate song" });
     }
+})
+
+//create a new interaction
+app.post('/interaction', async (req, res) => {
+    
+        const { user, songItem, rating } = req.body;
+        const newInteraction = await prisma.interactions.create({
+            data: {
+                user, 
+                songItem, 
+                rating
+            }
+        })
+        res.status(200).json(newInteraction);
 })
 
 //calculate the average rating for a song

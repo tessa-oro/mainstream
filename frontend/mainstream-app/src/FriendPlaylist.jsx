@@ -10,6 +10,7 @@ function FriendPlaylist({ curUser, friend, showPlaylist }) {
     const [score, setScore] = useState("...");
     const [showModal, setShowModal] = useState(false);
     const [songID, setSongID] = useState();
+    const [songPlayer, setSongPlayer] = useState("");
     const [rated, setRated] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -69,8 +70,9 @@ function FriendPlaylist({ curUser, friend, showPlaylist }) {
     /*
     * Opens rate modal for selected song to rate
     */
-    const goToRate = (id) => {
+    const goToRate = (id, player) => {
         setSongID(id);
+        setSongPlayer(player);
         setShowModal(true);
     }
 
@@ -113,7 +115,7 @@ function FriendPlaylist({ curUser, friend, showPlaylist }) {
                 )
                 )}
             </div>
-            {showModal && <RateModal markRated={() => markRated()} curUser={curUser} friend={friend} songID={songID} closeModal={closeModal}></RateModal>}
+            {showModal && <RateModal markRated={() => markRated()} curUser={curUser} friend={friend} songID={songID} player={songPlayer} closeModal={closeModal}></RateModal>}
         </div>
     )
 }
