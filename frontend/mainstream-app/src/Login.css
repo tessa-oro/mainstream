@@ -16,7 +16,7 @@
     padding-bottom: 60px;
     padding-left: 30px;
     padding-right: 30px;
-} 
+}
 
 #overlay {
     position: fixed;
@@ -41,7 +41,7 @@
 
 .formInput {
     border-radius: 7px;
-    border:rgb(181, 160, 249);
+    border: rgb(181, 160, 249);
     padding: 2px;
 }
 

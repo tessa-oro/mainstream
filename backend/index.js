@@ -24,7 +24,7 @@ app.get('/users', async (req, res) => {
 //create a user
 app.post('/create', async (req, res) => {
     const { user, password } = req.body;
-    bcrypt.hash(password, saltRounds, async function(err, hashed) {
+    bcrypt.hash(password, saltRounds, async function (err, hashed) {
         try {
             await prisma.user.create({
                 data: {
@@ -38,7 +38,7 @@ app.post('/create', async (req, res) => {
             })
             res.status(200).json({});
         } catch (e) {
-            res.status(500).json({"error": e.message});
+            res.status(500).json({ "error": e.message });
         }
     })
 })
@@ -47,13 +47,13 @@ app.post('/create', async (req, res) => {
 app.post("/login", async (req, res) => {
     const { user, password } = req.body;
     const userRecord = await prisma.user.findUnique({
-        where : { user }
+        where: { user }
     })
-    bcrypt.compare(password, userRecord.hashedPassword, function(err, result) {
+    bcrypt.compare(password, userRecord.hashedPassword, function (err, result) {
         if (result) {
             res.status(200).json({});
         } else {
-            res.status(500).json({"error": err})
+            res.status(500).json({ "error": err })
         }
     })
 })
@@ -63,13 +63,13 @@ app.post('/songs/:user/create/', async (req, res) => {
     const { user } = req.params;
     const { title, player } = req.body;
     const newSong = await prisma.song.create({
-      data: {
-        title,
-        player,
-        artist : "placeholder",
-        avgRating: 0,
-        userID : user
-      }
+        data: {
+            title,
+            player,
+            artist: "placeholder",
+            avgRating: 0,
+            userID: user
+        }
     })
     res.json(newSong)
 })
@@ -78,16 +78,17 @@ app.post('/songs/:user/create/', async (req, res) => {
 app.get('/songs/:user/', async (req, res) => {
     const { user } = req.params;
     try {
-      const songs = await prisma.song.findMany({
-        where: { userID : user
-        },
-        orderBy: {
-            id: 'desc'
-        }
-      });
-      res.status(200).json(songs);
+        const songs = await prisma.song.findMany({
+            where: {
+                userID: user
+            },
+            orderBy: {
+                id: 'desc'
+            }
+        });
+        res.status(200).json(songs);
     } catch (error) {
-      res.status(500).json({ error: "An error occurred while fetching the songs." });
+        res.status(500).json({ error: "An error occurred while fetching the songs." });
     }
 })
 
@@ -98,7 +99,7 @@ app.post('/follower/:user', async (req, res) => {
         const { name } = req.body;
         const newFollower = await prisma.follower.create({
             data: {
-                followsName : user,
+                followsName: user,
                 name
             }
         })
@@ -115,7 +116,7 @@ app.post('/following/:user', async (req, res) => {
         const { name } = req.body;
         const newFollowing = await prisma.following.create({
             data: {
-                followedByName : user,
+                followedByName: user,
                 name,
             }
         })
@@ -134,26 +135,28 @@ app.get('/followers/:user', async (req, res) => {
     const { user } = req.params;
     try {
         const followers = await prisma.follower.findMany({
-          where: { followsName : user 
-          }
+            where: {
+                followsName: user
+            }
         });
         res.status(200).json(followers);
-      } catch (error) {
+    } catch (error) {
         res.status(500).json({ error: "An error occurred while fetching followers." });
-      }
+    }
 })
 
 //get user's following
 app.get('/following/:user', async (req, res) => {
     const { user } = req.params;
     try {
-      const following = await prisma.following.findMany({
-        where: { followedByName : user 
-        }
-      });
-      res.status(200).json(following);
+        const following = await prisma.following.findMany({
+            where: {
+                followedByName: user
+            }
+        });
+        res.status(200).json(following);
     } catch (error) {
-      res.status(500).json({ error: "An error occurred while fetching following." });
+        res.status(500).json({ error: "An error occurred while fetching following." });
     }
 })
 
@@ -161,20 +164,21 @@ app.get('/following/:user', async (req, res) => {
 app.get('/users/:searchUser', async (req, res) => {
     const { searchUser } = req.params;
     try {
-      const userList = await prisma.user.findMany({
-        where: { user: {
-                contains: searchUser,
-                mode: 'insensitive'
-            } 
-        }
-      });
-      const listNames = [];
-      userList.forEach((name) => {
-        listNames.push(name.user);
-      })
-      res.status(200).json(listNames);
+        const userList = await prisma.user.findMany({
+            where: {
+                user: {
+                    contains: searchUser,
+                    mode: 'insensitive'
+                }
+            }
+        });
+        const listNames = [];
+        userList.forEach((name) => {
+            listNames.push(name.user);
+        })
+        res.status(200).json(listNames);
     } catch (error) {
-      res.status(500).json({ error: "An error occurred while fetching search results." });
+        res.status(500).json({ error: "An error occurred while fetching search results." });
     }
 })
 
@@ -182,13 +186,14 @@ app.get('/users/:searchUser', async (req, res) => {
 app.get('/user/:userId/score', async (req, res) => {
     const { userId } = req.params;
     try {
-      const user = await prisma.user.findUnique({
-        where: { user: userId
-        }
-      });
-      res.status(200).json(user.score);
+        const user = await prisma.user.findUnique({
+            where: {
+                user: userId
+            }
+        });
+        res.status(200).json(user.score);
     } catch (error) {
-      res.status(500).json({ error: "An error occurred while fetching user score." });
+        res.status(500).json({ error: "An error occurred while fetching user score." });
     }
 })
 
@@ -197,7 +202,7 @@ app.get('/song/ratedBy/:songId', async (req, res) => {
     const { songId } = req.params;
     try {
         const song = await prisma.song.findUnique({
-        where: { id: parseInt(songId) }
+            where: { id: parseInt(songId) }
         });
         res.status(200).json(song.ratedBy);
     } catch (error) {
@@ -210,44 +215,44 @@ app.patch('/song/rate/:userId/:by/:id/:num', async (req, res) => {
     const { userId, by, id, num } = req.params;
     try {
         const song = await prisma.song.findUnique({
-            where: {id: parseInt(id)}
+            where: { id: parseInt(id) }
         });
         if (!song) {
-            return res.status(404).json({error: "Song not found"});
+            return res.status(404).json({ error: "Song not found" });
         }
         const addRating = [...song.ratings, parseInt(num)];
         const addRatedBy = [...song.ratedBy, by];
-        const newAvg = updateAverage( song.avgRating, song.ratings.length, num );
+        const newAvg = updateAverage(song.avgRating, song.ratings.length, num);
         const updatedSong = await prisma.song.update({
             where: { id: parseInt(id) },
             data: {
-            ratings: addRating,
-            ratedBy: addRatedBy,
-            avgRating: newAvg,
+                ratings: addRating,
+                ratedBy: addRatedBy,
+                avgRating: newAvg,
             }
         })
         const user = await prisma.user.findUnique({
-            where: {user: userId},
+            where: { user: userId },
             include: { playlist: true }
         });
         if (!user) {
-            return res.status(404).json({error: "User not found"});
+            return res.status(404).json({ error: "User not found" });
         }
         const newScore = updateUserScore(user);
         const updatedUser = await prisma.user.update({
-            where: {user: userId},
+            where: { user: userId },
             data: {
                 score: newScore
             }
         })
         res.status(200).json([updatedSong, updatedUser]);
     } catch (error) {
-            res.status(500).json({error : "could not rate song"});
+        res.status(500).json({ error: "could not rate song" });
     }
 })
 
 //calculate the average rating for a song
-const updateAverage = ( currAvg, currNumEntries, newEntry ) => {
+const updateAverage = (currAvg, currNumEntries, newEntry) => {
     const currTotal = (currAvg * currNumEntries);
     const newLength = currNumEntries + 1;
     const newAvg = ((parseInt(currTotal) + parseInt(newEntry)) / newLength).toFixed(2);
@@ -255,7 +260,7 @@ const updateAverage = ( currAvg, currNumEntries, newEntry ) => {
 }
 
 //calculate the user score
-const updateUserScore = ( user ) => {
+const updateUserScore = (user) => {
     let total = 0;
     let count = 0;
     user.playlist.forEach((song) => {
@@ -277,14 +282,14 @@ app.patch('/recommended/:userId', async (req, res) => {
         const weightedScoresMap = recommended.getWeightedScores(top3);
         const songsToRecommend = recommended.sortByWeightedScores(weightedScoresMap);
         const updatedUser = await prisma.user.update({
-            where: {user: userId},
+            where: { user: userId },
             data: {
                 recommended: songsToRecommend
             }
         })
         res.json(songsToRecommend);
     } catch (error) {
-        res.status(500).json({error: "An error occurred while updating recommended songs."})
+        res.status(500).json({ error: "An error occurred while updating recommended songs." })
     }
 })
 
@@ -293,7 +298,7 @@ app.get('/recommended/:userId', async (req, res) => {
     const { userId } = req.params;
     try {
         const user = await prisma.user.findUnique({
-        where: { user: userId }
+            where: { user: userId }
         });
         res.status(200).json(user.recommended);
     } catch (error) {

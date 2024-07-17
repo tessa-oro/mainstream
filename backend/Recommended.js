@@ -16,7 +16,7 @@ class Recommended {
             });
             const userSongs = userRatings.map(rating => rating.songItem); //get all the songs a user had rated
             const allRatings = await this.prisma.interactions.findMany({ //get all the rating occurrences made by other users for the songs a user has rated
-                where: {songItem: { in: userSongs }, NOT: { user }}
+                where: { songItem: { in: userSongs }, NOT: { user } }
             });
             const others = {};
             allRatings.forEach(interaction => { //map the rating for all rating occurrences to the user who made the rating
@@ -34,7 +34,7 @@ class Recommended {
             );
             await this.prisma.user.update({ //update similarity scores in database
                 where: { user: user },
-                data: { similars: {set: Array.from(sortedSimilarities)}}
+                data: { similars: { set: Array.from(sortedSimilarities) } }
             });
             return similarities;
         } catch (err) {
@@ -51,7 +51,7 @@ class Recommended {
         userRatings.forEach(rating => {
             otherRatings.forEach(otherRating => {
                 if (rating.songItem == otherRating.songItem) {
-                    common[rating.songItem] = { user: rating.rating, other: otherRating.rating}
+                    common[rating.songItem] = { user: rating.rating, other: otherRating.rating }
                     n += 1;
                 }
             })
@@ -68,8 +68,8 @@ class Recommended {
             sumORsq += ratings.other * ratings.other;
             sumCrossP += ratings.user * ratings.other;
         })
-        let numerator = (n*sumCrossP)-(sumR * sumOR)
-        let denominator = Math.sqrt((n*sumRsq)-(sumR*sumR))((n*sumORsq)-(sumOR*sumOR))
+        let numerator = (n * sumCrossP) - (sumR * sumOR)
+        let denominator = Math.sqrt((n * sumRsq) - (sumR * sumR))((n * sumORsq) - (sumOR * sumOR))
         return numerator / denominator;
     }
 
@@ -79,7 +79,7 @@ class Recommended {
     async getTopSimilars(user) {
         try {
             const curUser = await this.prisma.user.findUnique({
-                where : { user: user }
+                where: { user: user }
             })
             const similarities = new Map(curUser.similars);
             const top3 = new Map();
@@ -102,7 +102,7 @@ class Recommended {
     */
     async interactionsByUser(user) {
         const interactions = await this.prisma.interactions.findMany({
-            where : { user: user }
+            where: { user: user }
         })
         return interactions;
     }
@@ -113,12 +113,12 @@ class Recommended {
     */
     async filteredInteractionsByUser(user, songs) {
         const interactions = await this.prisma.interactions.findMany({
-            where : { 
+            where: {
                 user: user,
                 songItem: {
                     notIn: songs
                 }
-             }
+            }
         })
         return interactions;
     }
@@ -165,7 +165,7 @@ class Recommended {
                     let rating = interaction[1]; //sets the rating given to the song in the interaction
                     sumWeightedRating += simScore * rating;
                     sumSimScore += simScore;
-                } 
+                }
                 let weightedAverage = sumWeightedRating / sumSimScore;
                 weightedScores.set(song, weightedAverage);
             }

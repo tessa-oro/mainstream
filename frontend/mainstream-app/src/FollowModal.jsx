@@ -12,26 +12,26 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
     */
     const addToFollowing = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/following/${follower}`,
-        {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name: following
-            }),
-        })
-        .then(response => {
-            if (response.ok) {
-                setResult(`following ${following}!`);
-            } else {
-                setResult("already following");
-            }
-        })
-        .catch(error => {
-            setResult("could not follow");
-        });
+            {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: following
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    setResult(`following ${following}!`);
+                } else {
+                    setResult("already following");
+                }
+            })
+            .catch(error => {
+                setResult("could not follow");
+            });
     }
 
     /*
@@ -39,26 +39,26 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
     */
     const addToFollowers = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/follower/${following}`,
-        {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name: follower
-            }),
-        })
-        .then(response => {
-            if (response.ok) {
-                setResult("following!");
-                closeModal();
-            } else {
+            {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: follower
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    setResult("following!");
+                    closeModal();
+                } else {
+                    setResult("already following");
+                }
+            })
+            .catch(error => {
                 setResult("already following");
-            }
-        })
-        .catch(error => {
-            setResult("already following");
-        });
+            });
     }
 
     /*
@@ -78,7 +78,7 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
                     <button onClick={closeModal}>cancel</button>
                 </div>
                 <div>
-                {result && <p id="result">{result}</p>}
+                    {result && <p id="result">{result}</p>}
                 </div>
             </div>
             <div id="overlay"></div>

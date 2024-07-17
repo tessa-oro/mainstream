@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import "./Playlist.css";
 
-function Playlist( { refetch, curUser } ) {
+function Playlist({ refetch, curUser }) {
     const [songs, setSongs] = useState([]);
     const [score, setScore] = useState("...");
 
@@ -17,11 +17,11 @@ function Playlist( { refetch, curUser } ) {
     const fetchUserSongs = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/songs/${curUser}`)
         .then(response => {
-             if (!response.ok) {
-                 throw new Error(`HTTP error! status: ${response.status}`);
-             } else {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
                 return response.json();
-              } 
+            }
         })
         .then(data => {
             setSongs(data);
@@ -38,11 +38,11 @@ function Playlist( { refetch, curUser } ) {
     const fetchUserScore = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/${curUser}/score`)
         .then(response => {
-             if (!response.ok) {
-                 throw new Error(`HTTP error! status: ${response.status}`);
-             } else {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
                 return response.json();
-              } 
+            }
         })
         .then(data => {
             if (parseFloat(data) === 0) {
@@ -56,18 +56,18 @@ function Playlist( { refetch, curUser } ) {
     }
 
     return (
-      <div id="playlistContainer">
-        <div class="playlistHeaderContainer">
-            <h3 class="playlistHeader">{curUser}'s playlist</h3>
-            <div class="score">
-                <p class="scoreVal">{score}</p>
+        <div id="playlistContainer">
+            <div class="playlistHeaderContainer">
+                <h3 class="playlistHeader">{curUser}'s playlist</h3>
+                <div class="score">
+                    <p class="scoreVal">{score}</p>
+                </div>
             </div>
+            {songs.map((song) => (
+                <div id="songPlayer" dangerouslySetInnerHTML={{ __html: song.player }} />)
+            )}
         </div>
-        {songs.map((song) => (
-            <div id="songPlayer" dangerouslySetInnerHTML={{ __html: song.player }} />)                          
-        )}
-      </div>
     )
-  }
-  
+}
+
 export default Playlist;

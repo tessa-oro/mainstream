@@ -5,7 +5,7 @@ import "./ViewFriends.css";
 import FollowModal from "./FollowModal";
 import FriendPlaylist from "./FriendPlaylist";
 
-function ViewFriends( {curUser, login} ) {
+function ViewFriends({ curUser, login }) {
     const [following, setFollowing] = useState([]);
     const [userResults, setUserResults] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -13,7 +13,7 @@ function ViewFriends( {curUser, login} ) {
     const [showPlaylist, setShowPlaylist] = useState(false);
     const [selectedFollowing, setSelectedFollowing] = useState("");
     const [showFollowing, setShowFollowing] = useState(false);
- 
+
     useEffect(() => {
         fetchFollowing();
     }, [login, showModal, following, curUser]);
@@ -24,11 +24,11 @@ function ViewFriends( {curUser, login} ) {
     const fetchFollowing = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/following/${curUser}`)
         .then(response => {
-             if (!response.ok) {
-                 throw new Error(`HTTP error! status: ${response.status}`);
-             } else {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
                 return response.json();
-              } 
+            }
         })
         .then(data => {
             setFollowing(data);
@@ -55,13 +55,13 @@ function ViewFriends( {curUser, login} ) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 } else {
                     return response.json();
-                } 
+                }
             })
             .then(data => {
                 setUserResults(data);
             })
             .catch(error => {
-                
+
             });
         } else {
             setUserResults([]);
@@ -85,33 +85,33 @@ function ViewFriends( {curUser, login} ) {
     }
 
     return (
-      <div id="viewFriendsContainer">
-        <h2 id="discoverHeader">Discover</h2>
-        <Link to='/recPage'>
-            <button>Get recommendations</button>
-        </Link>
-        <div id="searchUsersContainer">
-            <form onSubmit={(e) => getUsers(e)} id="searchUsersForm">
-                <label id="searchUsersPrompt">Search users to follow: </label>
-                <input type="text" placeholder="Search by username" name="searchUser"></input>
-            </form>
-            { showModal && <FollowModal closeModal={() => followModal()} userToFollow={userToFollow} curUser={curUser}/>}
-            <div>
-                {userResults && userResults.map((user) => (
-                    (user !== curUser) &&
-                        <p onClick={() => followModal(user)} id="user">{user}</p>          
-                ))}
+        <div id="viewFriendsContainer">
+            <h2 id="discoverHeader">Discover</h2>
+            <Link to='/recPage'>
+                <button>Get recommendations</button>
+            </Link>
+            <div id="searchUsersContainer">
+                <form onSubmit={(e) => getUsers(e)} id="searchUsersForm">
+                    <label id="searchUsersPrompt">Search users to follow: </label>
+                    <input type="text" placeholder="Search by username" name="searchUser"></input>
+                </form>
+                {showModal && <FollowModal closeModal={() => followModal()} userToFollow={userToFollow} curUser={curUser} />}
+                <div>
+                    {userResults && userResults.map((user) => (
+                        (user !== curUser) &&
+                        <p onClick={() => followModal(user)} id="user">{user}</p>
+                    ))}
+                </div>
             </div>
+            <div id="followingContainer">
+                <h3 id="followingHeader">Following</h3>
+                {following.map((follow, index) => (
+                    showFollowing && <p onClick={() => displayPlaylist(follow.name)} id="following">{follow.name}</p>)
+                )}
+            </div>
+            {showPlaylist && <FriendPlaylist showPlaylist={showPlaylist} curUser={curUser} friend={selectedFollowing}></FriendPlaylist>}
         </div>
-        <div id="followingContainer">
-            <h3 id="followingHeader">Following</h3>
-            {following.map((follow, index) => (
-                showFollowing && <p onClick={() => displayPlaylist(follow.name)} id="following">{follow.name}</p>)                        
-            )}
-        </div>
-        {showPlaylist && <FriendPlaylist showPlaylist={showPlaylist} curUser={curUser} friend={selectedFollowing}></FriendPlaylist>}
-      </div>
     )
-  }
-  
+}
+
 export default ViewFriends;

@@ -5,7 +5,7 @@ import { Vortex } from 'react-loader-spinner';
 import "./FriendPlaylist.css";
 import FriendSong from './FriendSong';
 
-function FriendPlaylist( { curUser, friend, showPlaylist } ) {
+function FriendPlaylist({ curUser, friend, showPlaylist }) {
     const [songs, setSongs] = useState([]);
     const [score, setScore] = useState("...");
     const [showModal, setShowModal] = useState(false);
@@ -25,11 +25,11 @@ function FriendPlaylist( { curUser, friend, showPlaylist } ) {
     const fetchUserSongs = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/songs/${friend}`)
         .then(response => {
-             if (!response.ok) {
-                 throw new Error(`HTTP error! status: ${response.status}`);
-             } else {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
                 return response.json();
-              } 
+            }
         })
         .then(data => {
             setSongs(data);
@@ -49,11 +49,11 @@ function FriendPlaylist( { curUser, friend, showPlaylist } ) {
     const fetchUserScore = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/${friend}/score`)
         .then(response => {
-             if (!response.ok) {
-                 throw new Error(`HTTP error! status: ${response.status}`);
-             } else {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
                 return response.json();
-              } 
+            }
         })
         .then(data => {
             if (parseFloat(data) === 0) {
@@ -65,7 +65,7 @@ function FriendPlaylist( { curUser, friend, showPlaylist } ) {
         .catch(error => {
         });
     }
-    
+
     /*
     * Opens rate modal for selected song to rate
     */
@@ -100,22 +100,22 @@ function FriendPlaylist( { curUser, friend, showPlaylist } ) {
     }
 
     return (
-      <div id="playlistContainer">
-        <div class="playlistHeaderContainer">
-            <h3 class="playlistHeader">{friend}'s playlist</h3>
-            <div class="score">
-                <p class="scoreVal">{score}</p>
+        <div id="playlistContainer">
+            <div class="playlistHeaderContainer">
+                <h3 class="playlistHeader">{friend}'s playlist</h3>
+                <div class="score">
+                    <p class="scoreVal">{score}</p>
+                </div>
             </div>
+            <div id="songsWrapper">
+                {songs.map((song) => (
+                    <FriendSong curUser={curUser} rated={rated} player={song.player} goToRate={goToRate} songId={song.id}></FriendSong>
+                )
+                )}
+            </div>
+            {showModal && <RateModal markRated={() => markRated()} curUser={curUser} friend={friend} songID={songID} closeModal={closeModal}></RateModal>}
         </div>
-        <div id="songsWrapper">
-            {songs.map((song) => (
-                <FriendSong curUser={curUser} rated={rated} player={song.player} goToRate={goToRate} songId={song.id}></FriendSong>
-            )                          
-            )}
-        </div>
-        {showModal && <RateModal markRated={() => markRated()} curUser={curUser} friend={friend} songID={songID} closeModal={closeModal}></RateModal>}
-      </div>
     )
-  }
-  
+}
+
 export default FriendPlaylist;
