@@ -268,15 +268,7 @@ const updateUserScore = ( user ) => {
     return (score);
 }
 
-//order of events:
-//user clicks on recommended songs
-//call update similars for the user
-//call get top similars for the user (returns top3)
-//call get weighted scores for user (takes in user and top3) (returns weighted scores map)
-//call sort by weighted scores (takes in weighted scores map) (returns array of strings of recommended songs)
-//update recommended in user database to be string of recommended songs
-//fetch and display recommended songs
-
+//update the recommended songs for a user
 app.patch('/recommended/:userId', async (req, res) => {
     const { userId } = req.params;
     try {
@@ -296,6 +288,7 @@ app.patch('/recommended/:userId', async (req, res) => {
     }
 })
 
+//get the recommended songs for a user
 app.get('/recommended/:userId', async (req, res) => {
     const { userId } = req.params;
     try {
