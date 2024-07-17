@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import "./ViewFriends.css";
 import FollowModal from "./FollowModal";
 import FriendPlaylist from "./FriendPlaylist";
@@ -86,6 +87,9 @@ function ViewFriends( {curUser, login} ) {
     return (
       <div id="viewFriendsContainer">
         <h2 id="discoverHeader">Discover</h2>
+        <Link to='/recPage'>
+            <button>Get recommendations</button>
+        </Link>
         <div id="searchUsersContainer">
             <form onSubmit={(e) => getUsers(e)} id="searchUsersForm">
                 <label id="searchUsersPrompt">Search users to follow: </label>
