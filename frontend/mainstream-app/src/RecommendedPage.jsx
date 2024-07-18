@@ -10,7 +10,7 @@ function RecommendedPage( {curUser} ) {
     useEffect(() => {
         updateRecommendedSongs();
         fetchRecommendedSongs();
-    }, []);
+    }, [showRecommend]);
 
     /*
     * Update the songs recommended for a user using PATCH
@@ -56,8 +56,8 @@ function RecommendedPage( {curUser} ) {
     }
 
     return (
-      <>
-        <p>Recommended</p>
+      <div id="recommendedContainer">
+        <h2>Recommended</h2>
         <Link to='/'>
             <button>back</button>
         </Link>
@@ -66,7 +66,7 @@ function RecommendedPage( {curUser} ) {
                 <div id="songPlayer" dangerouslySetInnerHTML={{ __html: recommendation }} />
             ))}
         </div>
-      </>
+      </div>
     )
   }
   
