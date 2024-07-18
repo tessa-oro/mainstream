@@ -7,17 +7,17 @@ class UserAnalysis {
     async textapi(inputText) {
         const fetch = (await import('node-fetch')).default;
         const FormData = require('form-data');
+        require('dotenv').config();
     
         const data = new FormData();
         data.append('text', inputText);
-        data.append('language', 'english');
     
-        const url = 'https://japerk-text-processing.p.rapidapi.com/sentiment/';
+        const url = 'https://twinword-emotion-analysis-v1.p.rapidapi.com/analyze/';
         const options = {
         method: 'POST',
         headers: {
-            'x-rapidapi-key': '60caffb22cmsh4549d89b2643826p19684djsncc8300b7fec4',
-            'x-rapidapi-host': 'japerk-text-processing.p.rapidapi.com',
+            'x-rapidapi-key': process.env.RAPID_API_KEY,
+            'x-rapidapi-host': 'twinword-emotion-analysis-v1.p.rapidapi.com',
             ...data.getHeaders(),
         },
         body: data
@@ -36,7 +36,7 @@ class UserAnalysis {
             const transcript = await getTranscript(videoId);
             let transcriptString = "";
             transcript.forEach(line => {
-                transcriptString += line.text;
+                transcriptString += line.text.replace(/♪/g, '');
             })
             return transcriptString;
         } catch (error) {}

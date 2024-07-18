@@ -349,6 +349,8 @@ app.get('/recommended/:userId', async (req, res) => {
     }
 })
 
-app.listen(port, () => {
+app.listen(port, async () => {
     console.log(`starting on port: ${port}`);
+    const song = await userAnalysis.convertTranscript('ptznWGs4GKg');
+    userAnalysis.textapi(song);
 })
