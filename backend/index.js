@@ -268,7 +268,7 @@ app.patch('/song/rate/:userId/:by/:id/:num', async (req, res) => {
 
 //create a new interaction
 app.post('/interaction', async (req, res) => {
-    
+    try {
         const { user, songItem, rating } = req.body;
         const newInteraction = await prisma.interactions.create({
             data: {
@@ -278,6 +278,9 @@ app.post('/interaction', async (req, res) => {
             }
         })
         res.status(200).json(newInteraction);
+    } catch (error) {
+        res.status(500).json({ error: "could not create interaction" });
+    }
 })
 
 //calculate the average rating for a song

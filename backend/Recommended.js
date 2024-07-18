@@ -68,7 +68,7 @@ class Recommended {
             sumORsq += ratings.other * ratings.other;
             sumCrossP += ratings.user * ratings.other;
         })
-        let numerator = (n * sumCrossP) - (sumR * sumOR)
+        let numerator = (n * sumCrossP) - (sumR * sumOR);
         let denominator = Math.sqrt(((n * sumRsq) - (sumR * sumR))*((n * sumORsq) - (sumOR * sumOR)));
         if (denominator === 0) {
             return 0;
@@ -172,7 +172,9 @@ class Recommended {
                     sumSimScore += simScore;
                 }
                 let weightedAverage = sumWeightedRating / sumSimScore;
-                weightedScores.set(song, weightedAverage);
+                if (weightedAverage > 5) {
+                    weightedScores.set(song, weightedAverage);
+                }
             }
             return weightedScores;
         } catch (err) {
@@ -186,7 +188,7 @@ class Recommended {
     */
     sortByWeightedScores(weightedScoresMap) {
         const sortedArray = Array.from(weightedScoresMap);
-        sortedArray.sort((score1, score2) => score1[1] - score2[1]);
+        sortedArray.sort((score1, score2) => score2[1] - score1[1]);
         const sortedSongs = sortedArray.map(song => song[0]);
         return sortedSongs;
     }
