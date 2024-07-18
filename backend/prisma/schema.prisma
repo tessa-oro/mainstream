@@ -21,6 +21,9 @@ model User {
   followers Follower[]
   following Following[]
   playlist Song[]
+  interactions Interactions[]
+  similars Json
+  recommended String[]
 }
 
 model Song {
@@ -49,4 +52,18 @@ model Following {
   followedByName String
   name String
   @@unique([followedByName, name])
+}
+
+model SongItem {
+  playerID String @id
+  interactions Interactions[]
+}
+
+model Interactions {
+  id Int @id @default(autoincrement())
+  user String
+  songItem String
+  userRef User @relation(fields: [user], references: [user])
+  songRef SongItem @relation(fields: [songItem], references: [playerID])
+  rating Int
 }

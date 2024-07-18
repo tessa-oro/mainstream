@@ -24,7 +24,7 @@ function App() {
   return (
     <>
       <Header></Header>
-      { showLogin ? (<Login setAppUser={setAppUser} closeLogin={() => closeLogin()}></Login> ) : (<></>)}
+      {showLogin ? (<Login setAppUser={setAppUser} closeLogin={() => closeLogin()}></Login>) : (<></>)}
       <Dashboard curUser={curUser} login={showLogin} handleLogout={() => handleLogout()}></Dashboard>
     </>
   )

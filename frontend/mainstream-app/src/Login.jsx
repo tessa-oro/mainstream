@@ -2,9 +2,9 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import "./Login.css"
 
-function Login( {closeLogin, setAppUser} ) {
+function Login({ closeLogin, setAppUser }) {
     const [user, setUser] = useState("");
-    const [password, setPassword ] = useState("");
+    const [password, setPassword] = useState("");
     const [result, setResult] = useState("");
 
     useEffect(() => {
@@ -30,26 +30,26 @@ function Login( {closeLogin, setAppUser} ) {
     */
     const handleCreate = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/create`,
-        {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                user,
-                password,
-            }),
-        })
-        .then(response => {
-            if (response.ok) {
-                handleLogin();
-            } else {
-                setResult("faled to create.");
-            }
-        })
-        .catch(error => {
-            setResult("Username taken.");
-        });
+            {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    user,
+                    password,
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    handleLogin();
+                } else {
+                    setResult("faled to create.");
+                }
+            })
+            .catch(error => {
+                setResult("Username taken.");
+            });
     }
 
     /*
@@ -57,56 +57,56 @@ function Login( {closeLogin, setAppUser} ) {
     */
     const handleLogin = async () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/login`,
-        {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                user,
-                password,
-            }),
-        })
-        .then(response => {
-            if (response.ok) {
-                closeLogin();
-            } else {
+            {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    user,
+                    password,
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    closeLogin();
+                } else {
+                    setResult("Failed to login. Please double check username and password.");
+                }
+            })
+            .catch(error => {
                 setResult("Failed to login. Please double check username and password.");
-            }
-        })
-        .catch(error => {
-            setResult("Failed to login. Please double check username and password.");
-        });
-        setAppUser(user);
+            });
+            setAppUser(user);
     }
 
     return (
         <>
-        <div id="createLogin">
-            <div id="loginContent">
-                <h2 id="loginTitle">Login</h2>
-                <div class="loginInput">
-                    <label>username: </label>
-                    <input type="text" className="formInput" name="username" value={user} 
-                    onChange={handleChangeUser} required></input>
-                </div>
-                <div class="loginInput">
-                    <label>password: </label>
-                    <input type="text" className="formInput" name="password" value={password} 
-                    onChange={handleChangePassword} required></input>
-                </div>
-                <div id="loginSubmit">
-                    <button onClick={handleLogin} class="formSubmit">Login</button>
-                    <p id="or">or</p>
-                    <button onClick={handleCreate} class="formSubmit">Create account</button>
-                </div>
-                <div>
-                    { result && <p>{result}</p>}
+            <div id="createLogin">
+                <div id="loginContent">
+                    <h2 id="loginTitle">Login</h2>
+                    <div class="loginInput">
+                        <label>username: </label>
+                        <input type="text" className="formInput" name="username" value={user}
+                            onChange={handleChangeUser} required></input>
+                    </div>
+                    <div class="loginInput">
+                        <label>password: </label>
+                        <input type="text" className="formInput" name="password" value={password}
+                            onChange={handleChangePassword} required></input>
+                    </div>
+                    <div id="loginSubmit">
+                        <button onClick={handleLogin} class="formSubmit">Login</button>
+                        <p id="or">or</p>
+                        <button onClick={handleCreate} class="formSubmit">Create account</button>
+                    </div>
+                    <div>
+                        {result && <p>{result}</p>}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="overlay"></div>
-    </>
+            <div id="overlay"></div>
+        </>
     );
 }
 
