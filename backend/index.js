@@ -63,12 +63,20 @@ app.post("/login", async (req, res) => {
 //add a song to user playlist
 app.post('/songs/:user/create/', async (req, res) => {
     const { user } = req.params;
-    const { player, stats, tags } = req.body;
+    const { player, stats, tags, vidID } = req.body;
+    const transcript = await userAnalysis.convertTranscript(vidID);
+    let emoScore;
+    if (transcript) {
+        emoScore = await userAnalysis.textapi(transcript);
+    } else {
+        emoScore = {};
+    }
     const newSong = await prisma.song.create({
         data: {
             player,
             stats,
             tags,
+            emotionScores: JSON.parse(emoScore),
             avgRating: 0,
             userID: user
         }
@@ -351,6 +359,4 @@ app.get('/recommended/:userId', async (req, res) => {
 
 app.listen(port, async () => {
     console.log(`starting on port: ${port}`);
-    const song = await userAnalysis.convertTranscript('ptznWGs4GKg');
-    userAnalysis.textapi(song);
 })

@@ -39,7 +39,9 @@ class UserAnalysis {
                 transcriptString += line.text.replace(/♪/g, '');
             })
             return transcriptString;
-        } catch (error) {}
+        } catch (error) {
+            return false;
+        }
     }
 }
 

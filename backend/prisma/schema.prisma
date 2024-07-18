@@ -31,6 +31,7 @@ model Song {
   player String
   stats Json
   tags String[]
+  emotionScores Json
   ratings Int[]
   ratedBy String[]
   avgRating Decimal

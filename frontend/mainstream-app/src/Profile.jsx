@@ -50,7 +50,7 @@ function Profile({ curUser, handleLogout }) {
         .then(response => response.json())
         .then(response => {
             const songData = response.items[0];
-            addSongToUser(songData.player.embedHtml, songData.statistics, songData.snippet.tags);
+            addSongToUser(songData.player.embedHtml, songData.statistics, songData.snippet.tags, vidID);
             setSongAdded(response.items[0].player.embedHtml);
         })
         .catch(err => { });
@@ -59,7 +59,7 @@ function Profile({ curUser, handleLogout }) {
     /*
     * Adds the selected song to the user playlist in database
     */
-    const addSongToUser = (playerToAdd, stats, tags) => {
+    const addSongToUser = (playerToAdd, stats, tags, vidID) => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/songs/${curUser}/create/`,
             {
                 method: 'POST',
@@ -69,7 +69,8 @@ function Profile({ curUser, handleLogout }) {
                 body: JSON.stringify({
                     player: playerToAdd,
                     stats: stats,
-                    tags: tags
+                    tags: tags,
+                    vidID: vidID
                 }),
             })
             .then(response => {
