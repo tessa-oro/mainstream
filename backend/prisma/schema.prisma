@@ -63,7 +63,7 @@ model Interactions {
   id Int @id @default(autoincrement())
   user String
   songItem String
-  userRef User @relation(fields: [user], references: [user])
-  songRef SongItem @relation(fields: [songItem], references: [playerID])
+  userRef User @relation(fields: [user], references: [user], onDelete: Cascade)
+  songRef SongItem @relation(fields: [songItem], references: [playerID], onDelete: Cascade)
   rating Int
 }
