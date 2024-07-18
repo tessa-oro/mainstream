@@ -76,6 +76,7 @@ app.post('/songs/:user/create/', async (req, res) => {
 
 //create a song item
 app.post('/songItem', async (req, res) => {
+    try {
         const { playerID } = req.body;
         const newSong = await prisma.songItem.create({
             data: {
@@ -83,6 +84,9 @@ app.post('/songItem', async (req, res) => {
             }
         })
         res.json(newSong)
+    } catch (error) {
+        res.status(500).json({ error: "Item already created" });
+    }
 })
 
 //get a user playlist
@@ -302,9 +306,9 @@ const updateUserScore = (user) => {
 app.patch('/recommended/:userId', async (req, res) => {
     const { userId } = req.params;
     try {
-        recommended.updateSimilars(userId);
-        const top3 = recommended.getTopSimilars(userId);
-        const weightedScoresMap = recommended.getWeightedScores(top3);
+        await recommended.updateSimilars(userId);
+        const top3 = await recommended.getTopSimilars(userId);
+        const weightedScoresMap = await recommended.getWeightedScores(userId, top3);
         const songsToRecommend = recommended.sortByWeightedScores(weightedScoresMap);
         const updatedUser = await prisma.user.update({
             where: { user: userId },

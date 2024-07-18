@@ -5,11 +5,12 @@ import "./RecommendedPage.css";
 
 function RecommendedPage( {curUser} ) {
     const [recommendedSongs, setRecommendedSongs] = useState([]);
+    const [showRecommend, setShowRecommend] = useState(false);
 
     useEffect(() => {
         updateRecommendedSongs();
         fetchRecommendedSongs();
-    });
+    }, []);
 
     /*
     * Update the songs recommended for a user using PATCH
@@ -48,6 +49,7 @@ function RecommendedPage( {curUser} ) {
         })
         .then(data => {
             setRecommendedSongs(data);
+            setShowRecommend(true);
         })
         .catch(error => {
         });
@@ -59,6 +61,11 @@ function RecommendedPage( {curUser} ) {
         <Link to='/'>
             <button>back</button>
         </Link>
+        <div>
+            {showRecommend && recommendedSongs.map((recommendation) => (
+                <div id="songPlayer" dangerouslySetInnerHTML={{ __html: recommendation }} />
+            ))}
+        </div>
       </>
     )
   }

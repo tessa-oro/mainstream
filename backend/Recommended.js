@@ -23,18 +23,18 @@ class Recommended {
                 if (!others[interaction.user]) {
                     others[interaction.user] = [];
                 }
-                others[interaction.user].push(interaction.rating);
+                others[interaction.user].push([interaction.songItem, interaction.rating]);
             });
             const similarities = {};
-            for (const [otherUser, ratings] of Object.entries(others)) { //calculate and map the similarity of each user
-                similarities[otherUser] = this.computePearson(userRatings, ratings);
+            for (const [otherUser, ratingData] of Object.entries(others)) { //calculate and map the similarity of each user
+                similarities[otherUser] = await this.computePearson(userRatings, ratingData);
             }
             const sortedSimilarities = new Map(
                 Object.entries(similarities).sort((user1, user2) => user2[1] - user1[1])
             );
             await this.prisma.user.update({ //update similarity scores in database
                 where: { user: user },
-                data: { similars: { set: Array.from(sortedSimilarities) } }
+                data: { similars: Array.from(sortedSimilarities) }
             });
             return similarities;
         } catch (err) {
@@ -50,8 +50,8 @@ class Recommended {
         let n = 0; //number of common ratings
         userRatings.forEach(rating => {
             otherRatings.forEach(otherRating => {
-                if (rating.songItem == otherRating.songItem) {
-                    common[rating.songItem] = { user: rating.rating, other: otherRating.rating }
+                if (rating.songItem == otherRating[0]) {
+                    common[rating.songItem] = { user: rating.rating, other: otherRating[1] }
                     n += 1;
                 }
             })
@@ -61,7 +61,7 @@ class Recommended {
         let sumRsq = 0; //sum of squared user ratings
         let sumORsq = 0; //sum of squared other user ratings
         let sumCrossP = 0; //sum of cross products
-        common.forEach((ratings, _) => {
+        Object.entries(common).forEach(([songItem, ratings]) => {
             sumR += ratings.user;
             sumOR += ratings.other;
             sumRsq += ratings.user * ratings.user;
@@ -69,8 +69,12 @@ class Recommended {
             sumCrossP += ratings.user * ratings.other;
         })
         let numerator = (n * sumCrossP) - (sumR * sumOR)
-        let denominator = Math.sqrt((n * sumRsq) - (sumR * sumR))((n * sumORsq) - (sumOR * sumOR))
-        return numerator / denominator;
+        let denominator = Math.sqrt(((n * sumRsq) - (sumR * sumR))*((n * sumORsq) - (sumOR * sumOR)));
+        if (denominator === 0) {
+            return 0;
+        }
+        let pearson = numerator / denominator;
+        return pearson;
     }
 
     /*
@@ -81,7 +85,7 @@ class Recommended {
             const curUser = await this.prisma.user.findUnique({
                 where: { user: user }
             })
-            const similarities = new Map(Object.entries(curUser.similars));
+            const similarities = curUser.similars;
             const top3 = new Map();
             let count = 0;
             for (let [otherUser, similarity] of similarities) {
@@ -146,21 +150,22 @@ class Recommended {
         try {
             const userSongs = await this.songsByUser(user);
             let filteredInteractions = [];
-            for (let [otherUser, similarity] in top3) { //filtered interactions is an array of the interactions similar users have made with songs the user has not yet rated
-                filteredInteractions = [...filteredInteractions, ...await this.filteredInteractionsByUser(otherUser, userSongs)];
+            for (let [otherUser, similarity] of top3) { //filtered interactions is an array of the interactions similar users have made with songs the user has not yet rated
+                let newInteractions = await this.filteredInteractionsByUser(otherUser, userSongs);
+                filteredInteractions = [...filteredInteractions, ...newInteractions];
             }
             const interactionsMap = new Map(); //turn filtered interactions into a map with key as songs and value as an array of user, rating pairs
             filteredInteractions.forEach(interaction => {
                 if (!(interactionsMap.has(interaction.songItem))) {
                     interactionsMap.set(interaction.songItem, []);
                 }
-                interactionsMap.get(interaction.songItem.push([interaction.user, interaction.rating]));
+                interactionsMap.get(interaction.songItem).push([interaction.user, interaction.rating]);
             })
             let weightedScores = new Map();
-            for (let [song, interactions] in interactionsMap) { //calculate the weighted score for each song based on the ratings given by each user and their similarity score
+            for (let [song, interactions] of interactionsMap) { //calculate the weighted score for each song based on the ratings given by each user and their similarity score
                 let sumSimScore = 0;
                 let sumWeightedRating = 0;
-                for (let interaction in interactions) { //go through each interaction made with song
+                for (let interaction of interactions) { //go through each interaction made with song
                     let simScore = top3.get(interaction[0]); //sets the similarity score for the user who made the interaction
                     let rating = interaction[1]; //sets the rating given to the song in the interaction
                     sumWeightedRating += simScore * rating;
