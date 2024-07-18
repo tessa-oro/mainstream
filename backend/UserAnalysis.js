@@ -2,7 +2,6 @@ class UserAnalysis {
 
     constructor(prisma) {
         this.prisma = prisma;
-        this.getTranscript(videoId) = require('youtube-transcript-api');
     }
 
     async textapi(inputText) {
@@ -31,6 +30,17 @@ class UserAnalysis {
         } catch (error) {}
     }
 
+    async convertTranscript(videoId) {
+        try {
+            const { getTranscript } = require('youtube-transcript-api');
+            const transcript = await getTranscript(videoId);
+            let transcriptString = "";
+            transcript.forEach(line => {
+                transcriptString += line.text;
+            })
+            return transcriptString;
+        } catch (error) {}
+    }
 }
 
 module.exports = UserAnalysis;
