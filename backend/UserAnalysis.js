@@ -4,6 +4,9 @@ class UserAnalysis {
         this.prisma = prisma;
     }
 
+    /*
+    * Returns the emotional scores for the inputted text
+    */
     async textapi(inputText) {
         const fetch = (await import('node-fetch')).default;
         const FormData = require('form-data');
@@ -30,6 +33,10 @@ class UserAnalysis {
         } catch (error) {}
     }
 
+    /*
+    * Gets the transcript of a youtube video and converts it to a string of just the text.
+    * Returns the string of text or false if not transcript available.
+    */
     async convertTranscript(videoId) {
         try {
             const { getTranscript } = require('youtube-transcript-api');
