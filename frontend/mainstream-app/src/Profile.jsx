@@ -45,11 +45,12 @@ function Profile({ curUser, handleLogout }) {
     * Fetches video info for the selected song and sets the embed html to add to database
     */
     const fetchSong = (vidID) => {
-        let url = `https://www.googleapis.com/youtube/v3/videos?part=player,statistics&id=${vidID}&key=${import.meta.env.VITE_API_KEY}`;
+        let url = `https://www.googleapis.com/youtube/v3/videos?part=player,statistics,snippet&id=${vidID}&key=${import.meta.env.VITE_API_KEY}`;
         fetch(url)
         .then(response => response.json())
         .then(response => {
-            addSongToUser(response.items[0].player.embedHtml, response.items[0].statistics);
+            const songData = response.items[0];
+            addSongToUser(songData.player.embedHtml, songData.statistics, songData.snippet.tags);
             setSongAdded(response.items[0].player.embedHtml);
         })
         .catch(err => { });
@@ -58,7 +59,7 @@ function Profile({ curUser, handleLogout }) {
     /*
     * Adds the selected song to the user playlist in database
     */
-    const addSongToUser = (playerToAdd, stats) => {
+    const addSongToUser = (playerToAdd, stats, tags) => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/songs/${curUser}/create/`,
             {
                 method: 'POST',
@@ -67,7 +68,8 @@ function Profile({ curUser, handleLogout }) {
                 },
                 body: JSON.stringify({
                     player: playerToAdd,
-                    stats: stats
+                    stats: stats,
+                    tags: tags
                 }),
             })
             .then(response => {

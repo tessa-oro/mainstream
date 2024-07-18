@@ -30,6 +30,7 @@ model Song {
   id Int @id @default(autoincrement())
   player String
   stats Json
+  tags String[]
   ratings Int[]
   ratedBy String[]
   avgRating Decimal

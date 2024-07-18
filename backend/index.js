@@ -61,11 +61,12 @@ app.post("/login", async (req, res) => {
 //add a song to user playlist
 app.post('/songs/:user/create/', async (req, res) => {
     const { user } = req.params;
-    const { player, stats } = req.body;
+    const { player, stats, tags } = req.body;
     const newSong = await prisma.song.create({
         data: {
             player,
             stats,
+            tags,
             avgRating: 0,
             userID: user
         }
