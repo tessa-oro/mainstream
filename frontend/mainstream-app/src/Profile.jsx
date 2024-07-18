@@ -98,9 +98,8 @@ function Profile({ curUser, handleLogout }) {
             })
             .then(response => {
                 if (response.ok) {
-                    console.log(playerToAdd);
+                    createInteraction(playerToAdd);
                 }
-                createInteraction(playerToAdd);
             })
             .catch(error => {
             });
