@@ -61,17 +61,25 @@ app.post("/login", async (req, res) => {
 //add a song to user playlist
 app.post('/songs/:user/create/', async (req, res) => {
     const { user } = req.params;
-    const { title, player } = req.body;
+    const { player, stats } = req.body;
     const newSong = await prisma.song.create({
         data: {
-            title,
             player,
-            artist: "placeholder",
+            stats,
             avgRating: 0,
             userID: user
         }
     })
     res.json(newSong)
+})
+
+//delete a user
+app.delete('/user/:userId/delete', async (req, res) => {
+    const { userId } = req.params
+    const deletedUser= await prisma.user.delete({
+      where: { user: userId }
+    })
+    res.json(deletedUser)
 })
 
 //create a song item
@@ -83,7 +91,7 @@ app.post('/songItem', async (req, res) => {
                 playerID
             }
         })
-        res.json(newSong)
+        res.json(newSong);
     } catch (error) {
         res.status(500).json({ error: "Item already created" });
     }

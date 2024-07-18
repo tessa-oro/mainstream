@@ -28,9 +28,8 @@ model User {
 
 model Song {
   id Int @id @default(autoincrement())
-  title String
-  artist String
   player String
+  stats Json
   ratings Int[]
   ratedBy String[]
   avgRating Decimal
@@ -63,7 +62,7 @@ model Interactions {
   id Int @id @default(autoincrement())
   user String
   songItem String
-  userRef User @relation(fields: [user], references: [user])
-  songRef SongItem @relation(fields: [songItem], references: [playerID])
+  userRef User @relation(fields: [user], references: [user], onDelete: Cascade)
+  songRef SongItem @relation(fields: [songItem], references: [playerID], onDelete: Cascade)
   rating Int
 }

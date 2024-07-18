@@ -7,7 +7,6 @@ function Profile({ curUser, handleLogout }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResult, setSearchResult] = useState([]);
     const [searched, setSearched] = useState(false);
-    const [toAddTitle, setToAddTitle] = useState("addLater");
     const [result, setResult] = useState("");
     const [songAdded, setSongAdded] = useState("");
     const [clicked, setClicked] = useState(false);
@@ -46,11 +45,11 @@ function Profile({ curUser, handleLogout }) {
     * Fetches video info for the selected song and sets the embed html to add to database
     */
     const fetchSong = (vidID) => {
-        let url = `https://www.googleapis.com/youtube/v3/videos?part=player&id=${vidID}&key=${import.meta.env.VITE_API_KEY}`;
+        let url = `https://www.googleapis.com/youtube/v3/videos?part=player,statistics&id=${vidID}&key=${import.meta.env.VITE_API_KEY}`;
         fetch(url)
         .then(response => response.json())
         .then(response => {
-            addSongToUser(response.items[0].player.embedHtml);
+            addSongToUser(response.items[0].player.embedHtml, response.items[0].statistics);
             setSongAdded(response.items[0].player.embedHtml);
         })
         .catch(err => { });
@@ -59,7 +58,7 @@ function Profile({ curUser, handleLogout }) {
     /*
     * Adds the selected song to the user playlist in database
     */
-    const addSongToUser = (playerToAdd) => {
+    const addSongToUser = (playerToAdd, stats) => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/songs/${curUser}/create/`,
             {
                 method: 'POST',
@@ -67,8 +66,8 @@ function Profile({ curUser, handleLogout }) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    title: toAddTitle,
-                    player: playerToAdd
+                    player: playerToAdd,
+                    stats: stats
                 }),
             })
             .then(response => {
