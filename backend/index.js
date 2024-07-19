@@ -35,7 +35,8 @@ app.post('/create', async (req, res) => {
                     score: 0,
                     numRatedSongs: 0,
                     similars: {},
-                    recommended: []
+                    recommended: [],
+                    emotionPQ: {}
                 }
             })
             res.status(200).json({});
