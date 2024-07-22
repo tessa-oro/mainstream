@@ -16,7 +16,7 @@ function ViewFriends({ curUser, login }) {
 
     useEffect(() => {
         fetchFollowing();
-    }, [login, showModal, following, curUser]);
+    }, [login, showModal, curUser]);
 
     /*
     * Fetches users that current user follows.

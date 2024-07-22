@@ -145,7 +145,7 @@ function Profile({ curUser, handleLogout }) {
                 {searched && <button id="clearSearchButton" onClick={() => clearSearch()}>Clear search</button>}
             </div>
             <button id="analyzeButton" onClick={() => changeModal()} >Analyze my music taste</button>
-            { showAnalysis && <UserAnalysisModal closeModal={() => changeModal()} ></UserAnalysisModal> }
+            { showAnalysis && <UserAnalysisModal closeModal={() => changeModal()} curUser={curUser}></UserAnalysisModal> }
             <Playlist refetch={clicked} curUser={curUser}></Playlist>
         </div>
     )

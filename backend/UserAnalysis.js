@@ -10,20 +10,19 @@ class UserAnalysis {
     async textapi(inputText) {
         const fetch = (await import('node-fetch')).default;
         const FormData = require('form-data');
-        require('dotenv').config();
 
         const data = new FormData();
         data.append('text', inputText);
 
         const url = 'https://twinword-emotion-analysis-v1.p.rapidapi.com/analyze/';
         const options = {
-            method: 'POST',
-            headers: {
-                'likes-rapidapi-key': process.env.RAPID_API_KEY,
-                'likes-rapidapi-host': 'twinword-emotion-analysis-v1.p.rapidapi.com',
-                ...data.getHeaders(),
-            },
-            body: data
+        method: 'POST',
+        headers: {
+            'x-rapidapi-key': process.env.RAPID_API_KEY,
+            'x-rapidapi-host': 'twinword-emotion-analysis-v1.p.rapidapi.com',
+            ...data.getHeaders(),
+        },
+        body: data
         };
 
         try {
@@ -55,9 +54,12 @@ class UserAnalysis {
     * Get user playlist
     */
     async getPlaylist(username) {
-        const user = await prisma.user.findUnique({
+        const user = await this.prisma.user.findUnique({
             where: {
                 user: username
+            },
+            include: {
+                playlist: true
             }
         });
         return user.playlist;
@@ -137,7 +139,7 @@ class UserAnalysis {
         /*
         * Function to calculate and return the standard deviation of an emotion's scores
         */
-        standardDeviation = (emotion) => {
+        const standardDeviation = (emotion) => {
             const mean = emotion.reduce((sum, value) => sum + value, 0) / emotion.length;
             const variance = emotion.reduce((sum, value) => sum + Math.pow(value - mean, 2), 0) / emotion.length;
             return Math.sqrt(variance);
@@ -155,7 +157,7 @@ class UserAnalysis {
         /*
         * Function to calculate Pearson correlation coefficient for likes and views of a song
         */
-        computePearson = (likesData, viewsData) => {
+        const computePearson = (likesData, viewsData) => {
             const avgLikes = likesData.reduce((sum, likesI) => sum + likesI, 0) / likesData.length;
             const avgViews = viewsData.reduce((sum, viewsI) => sum + viewsI, 0) / viewsData.length;
             const numerator = likesData.reduce((sum, likesI, i) => sum + (likesI - avgLikes) * (viewsData[i] - avgViews), 0);
@@ -174,9 +176,9 @@ class UserAnalysis {
         /*
         * K-means clustering for emotion scores
         */
-        kMeansCluster = (data, k) => {
+        const kMeansCluster = (data, k) => {
             const maxIterations = 100;  // Number of iterations for convergence
-            let centroids = data.slice(0, k);  // Initialize centroids
+            let centroids = data.slice(0, k).map(point => point.emotions);  // Initialize centroids
             let clusters = new Array(k).fill().map(() => []);
             for (let i = 0; i < maxIterations; i++) {
                 clusters.forEach(cluster => cluster.length = 0);  // Reset clusters
@@ -184,7 +186,7 @@ class UserAnalysis {
                     let minDist = Infinity;
                     let clusterIndex = 0;
                     centroids.forEach((centroid, index) => {
-                        const dist = Math.sqrt(Object.keys(point).reduce((sum, key) => sum + Math.pow(point[key] - centroid[key], 2), 0));
+                        const dist = Math.sqrt(Object.keys(point.emotions).reduce((sum, key) => sum + Math.pow(point.emotions[key] - centroid[key], 2), 0));
                         if (dist < minDist) {
                             minDist = dist;
                             clusterIndex = index;
@@ -192,10 +194,13 @@ class UserAnalysis {
                     });
                     clusters[clusterIndex].push(point);
                 });
-                centroids = clusters.map(cluster => { // Update centroids based on the average of the clusters
+                centroids = clusters.map((cluster) => { // Update centroids based on the average of the clusters
+                    if (cluster.length === 0) {
+                        return data[Math.floor(Math.random() * data.length)].emotions;
+                    }
                     const average = {};
-                    Object.keys(cluster[0]).forEach(key => {
-                        average[key] = cluster.reduce((sum, point) => sum + point[key], 0) / cluster.length;
+                    Object.keys(cluster[0].emotions).forEach(key => {
+                        average[key] = cluster.reduce((sum, point) => sum + point.emotions[key], 0) / cluster.length;
                     });
                     return average;
                 });
@@ -204,7 +209,10 @@ class UserAnalysis {
         }
 
         // Perform k-means clustering on the emotion data
-        const emotionData = playlist.map(song => song.emotionScores.emotion_scores);
+        const emotionData = playlist.map(song => ({
+            emotions: song.emotionScores.emotion_scores,
+            songInfo: song.tags.join(' ')
+        }));
         const clusters = kMeansCluster(emotionData, 3);
 
         let personalityInsights = '';
@@ -226,9 +234,9 @@ class UserAnalysis {
 
         // Insights based on standard deviation of emotions
         if (stdDevEmotions.joy > 0.2 && stdDevEmotions.anger > 0.2 && stdDevEmotions.sadness > 0.2) {
-            personalityInsights += "You like tend to tap in to all of your emotions when listening to music. ";
+            personalityInsights += "You tend to tap in to all of your emotions when listening to music. ";
         } else {
-            personalityInsights += "You like tend to be drawn to the same emotions when listening to music. ";
+            personalityInsights += "You tend to be drawn to the same emotions when listening to music. ";
         }
 
         // Insights based on correlation between likes and views
@@ -241,8 +249,11 @@ class UserAnalysis {
         // Insights based on clusters
         clusters.forEach((cluster, index) => {
             personalityInsights += `Cluster ${index + 1}: `;
-            Object.keys(cluster[0]).forEach(emotion => {
-                const avgEmotion = cluster.reduce((sum, point) => sum + point[emotion], 0) / cluster.length;
+            cluster.forEach(point => {
+                personalityInsights += `song: ${point.songInfo} | `;
+            })
+            Object.keys(cluster[0].emotions).forEach(emotion => {
+                const avgEmotion = cluster.reduce((sum, point) => sum + point.emotions[emotion], 0) / cluster.length;
                 personalityInsights += `${emotion}: ${avgEmotion.toFixed(2)} `;
             });
         });
