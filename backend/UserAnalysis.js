@@ -246,11 +246,12 @@ class UserAnalysis {
             personalityInsights += "Your music taste goes against the grain. ";
         }
 
-        // Insights based on clusters
+        // Use clusters to group songs by emotional vibe
+        personalityInsights += "Let's break your playlist down by vibes: "
         clusters.forEach((cluster, index) => {
-            personalityInsights += `Cluster ${index + 1}: `;
+            personalityInsights += `Vibe ${index + 1}: `;
             cluster.forEach(point => {
-                personalityInsights += `song: ${point.songInfo} | `;
+                personalityInsights += `song: ${point.songInfo} , `;
             })
             Object.keys(cluster[0].emotions).forEach(emotion => {
                 const avgEmotion = cluster.reduce((sum, point) => sum + point.emotions[emotion], 0) / cluster.length;
