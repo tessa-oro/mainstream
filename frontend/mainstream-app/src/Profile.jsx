@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import "./Profile.css";
 import Playlist from "./Playlist";
+import UserAnalysisModal from './UserAnalysisModal';
 
 function Profile({ curUser, handleLogout }) {
     const [searchQuery, setSearchQuery] = useState("");
@@ -10,6 +11,7 @@ function Profile({ curUser, handleLogout }) {
     const [result, setResult] = useState("");
     const [songAdded, setSongAdded] = useState("");
     const [clicked, setClicked] = useState(false);
+    const [showAnalysis, setShowAnalysis] = useState(false);
 
     useEffect(() => {
         fetchSearch();
@@ -116,6 +118,10 @@ function Profile({ curUser, handleLogout }) {
         setSearched(false);
     }
 
+    const changeModal = () => {
+        setShowAnalysis(!showAnalysis);
+    }
+
     return (
         <div id="profileContainer">
             <div id="logoutContainer">
@@ -138,6 +144,8 @@ function Profile({ curUser, handleLogout }) {
                 </div>}
                 {searched && <button id="clearSearchButton" onClick={() => clearSearch()}>Clear search</button>}
             </div>
+            <button id="analyzeButton" onClick={() => changeModal()} >Analyze my music taste</button>
+            { showAnalysis && <UserAnalysisModal closeModal={() => changeModal()} ></UserAnalysisModal> }
             <Playlist refetch={clicked} curUser={curUser}></Playlist>
         </div>
     )
