@@ -4,6 +4,7 @@ const Recommended = require('./Recommended');
 const recommended = new Recommended(prisma);
 const UserAnalysis = require('./UserAnalysis');
 const userAnalysis = new UserAnalysis(prisma);
+const MapPriorityQueue = require('./MapPriorityQueue');
 const express = require('express');
 const bcrypt = require('bcrypt');
 const saltRounds = 14;
@@ -72,15 +73,21 @@ app.post('/songs/:user/create/', async (req, res) => {
     } else {
         emoScore = {};
     }
+    const emoScoreJSON = JSON.parse(emoScore);
     const newSong = await prisma.song.create({
         data: {
             player,
             stats,
             tags,
-            emotionScores: JSON.parse(emoScore),
+            emotionScores: emoScoreJSON,
             avgRating: 0,
             userID: user
         }
+    })
+    let mapPriorityQueue = new MapPriorityQueue(prisma, user);
+    mapPriorityQueue.init();
+    Object.entries(emoScoreJSON.emotion_scores).map(([emotion, score]) => {
+        mapPriorityQueue.insert(emotion, score);
     })
     res.json(newSong)
 })
@@ -361,13 +368,13 @@ app.get('/recommended/:userId', async (req, res) => {
 //get personality analysis for a user
 app.get('/userAnalysis/:userId', async (req, res) => {
     const { userId } = req.params;
-    // try {
+    try {
         const playlist = await userAnalysis.getPlaylist(userId);
         const analysis = userAnalysis.analyzePersonality(playlist);
         res.status(200).json(analysis);
-    // } catch (error) {
-    //     res.status(500).json({ error: "An error occurred while fetching analysis." });
-    // }
+    } catch (error) {
+        res.status(500).json({ error: "An error occurred while fetching analysis." });
+    }
 })
 
 app.listen(port, async () => {

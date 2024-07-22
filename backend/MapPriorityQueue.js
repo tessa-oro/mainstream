@@ -22,12 +22,13 @@ class MapPriorityQueue {
             },
             select: { emotionPQ: true }
         })
-
-        if (user && emotionPQ) {
-            this.heap = user.emotionPQ;
-            this.keyIndexMap = new Map(this.heap.map((element, i) => [element.key, i]));
-            this.buildHeap();
-        } else {
+        try {
+            if (user && emotionPQ) {
+                this.heap = user.emotionPQ;
+                this.keyIndexMap = new Map(this.heap.map((element, i) => [element.key, i]));
+                this.buildHeap();
+            } 
+        } catch  {
             this.heap = [];
             this.keyIndexMap = new Map();
         }
@@ -142,3 +143,5 @@ class MapPriorityQueue {
         })
     }
 }
+
+module.exports = MapPriorityQueue;
