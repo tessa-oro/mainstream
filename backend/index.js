@@ -377,6 +377,15 @@ app.get('/userAnalysis/:userId', async (req, res) => {
     }
 })
 
+//get the top emotion in a user's playlist using priority queue
+app.get('/topEmotion/:userId', async (req, res) => {
+    const { userId } = req.params;
+    let mapPriorityQueue = new MapPriorityQueue(prisma, userId);
+    await mapPriorityQueue.init();
+    const topEmotion = mapPriorityQueue.peekMax();
+    res.status(200).json(topEmotion);
+})
+
 app.listen(port, async () => {
     console.log(`starting on port: ${port}`);
 })

@@ -23,7 +23,7 @@ class MapPriorityQueue {
             select: { emotionPQ: true }
         })
         try {
-            if (user && emotionPQ) {
+            if (user && user.emotionPQ.length > 0) {
                 this.heap = user.emotionPQ;
                 this.keyIndexMap = new Map(this.heap.map((element, i) => [element.key, i]));
                 this.buildHeap();
