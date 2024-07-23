@@ -84,7 +84,8 @@ function Login({ closeLogin, setAppUser }) {
         <>
             <div id="createLogin">
                 <div id="loginContent">
-                    <h2 id="loginTitle">Login</h2>
+                <h1 id="welcome">Welcome to mainstream.</h1>
+                    <h2 id="loginTitle">Get started</h2>
                     <div class="loginInput">
                         <label>username: </label>
                         <input type="text" className="formInput" name="username" value={user}
