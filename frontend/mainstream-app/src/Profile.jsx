@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import "./Profile.css";
 import Playlist from "./Playlist";
+import { Link } from 'react-router-dom';
 
 function Profile({ curUser, handleLogout }) {
     const [searchQuery, setSearchQuery] = useState("");
@@ -117,7 +118,9 @@ function Profile({ curUser, handleLogout }) {
     return (
         <div id="profileContainer">
             <div id="logoutContainer">
-                <button id="logoutButton" onClick={() => handleLogout()}>logout</button>
+                <Link to='/'>
+                    <button id="logoutButton" onClick={() => handleLogout()}>logout</button>
+                </Link>
             </div>
             <h2 id="profileHeader">{curUser}</h2>
             <div id="searchSongSection">

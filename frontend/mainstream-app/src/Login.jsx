@@ -70,6 +70,7 @@ function Login({ closeLogin, setAppUser }) {
             .then(response => {
                 if (response.ok) {
                     closeLogin();
+                    setAppUser(user);
                 } else {
                     setResult("Failed to login. Please double check username and password.");
                 }
@@ -77,14 +78,14 @@ function Login({ closeLogin, setAppUser }) {
             .catch(error => {
                 setResult("Failed to login. Please double check username and password.");
             });
-            setAppUser(user);
     }
 
     return (
         <>
             <div id="createLogin">
                 <div id="loginContent">
-                    <h2 id="loginTitle">Login</h2>
+                <h1 id="welcome">Welcome to mainstream.</h1>
+                    <h2 id="loginTitle">Get started</h2>
                     <div class="loginInput">
                         <label>username: </label>
                         <input type="text" className="formInput" name="username" value={user}
