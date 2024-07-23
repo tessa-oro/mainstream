@@ -19,6 +19,10 @@ function Profile({ curUser, handleLogout }) {
         fetchSearch();
     }, [searchQuery]);
 
+    useEffect(() => {
+        clearSearch();
+    }, [curUser]);
+
     /*
     * Fetches youtube search results that match search query
     */
