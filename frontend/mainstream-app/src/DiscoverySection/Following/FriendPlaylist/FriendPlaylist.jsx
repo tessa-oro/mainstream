@@ -1,9 +1,9 @@
 import React from 'react';
-import RateModal from "./RateModal";
+import RateModal from "../RateModal/RateModal";
 import { useState, useEffect } from 'react';
 import { Vortex } from 'react-loader-spinner';
 import "./FriendPlaylist.css";
-import FriendSong from './FriendSong';
+import FriendSong from '../FriendSong/FriendSong';
 
 function FriendPlaylist({ curUser, friend, showPlaylist }) {
     const [songs, setSongs] = useState([]);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import "./Profile.css";
-import Playlist from "./Playlist";
+import Playlist from "../Playlist/Playlist";
 import { Link } from 'react-router-dom';
 
 function Profile({ curUser, handleLogout }) {

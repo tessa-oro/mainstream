@@ -2,8 +2,8 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import "./ViewFriends.css";
-import FollowModal from "./FollowModal";
-import FriendPlaylist from "./FriendPlaylist";
+import FollowModal from "../FollowModal/FollowModal";
+import FriendPlaylist from "../FriendPlaylist/FriendPlaylist";
 
 function ViewFriends({ curUser, login }) {
     const [following, setFollowing] = useState([]);

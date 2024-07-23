@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import './App.css'
-import Login from "./Login"
-import Dashboard from "./Dashboard"
-import Header from "./Header"
+import Login from "../Login/Login"
+import Dashboard from "../Dashboard/Dashboard"
+import Header from "../Header/Header"
 
 function App() {
   const [curUser, setCurUser] = useState("");
