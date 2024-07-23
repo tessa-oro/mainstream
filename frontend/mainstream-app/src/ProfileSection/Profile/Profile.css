@@ -108,3 +108,7 @@
 #logoutButton:hover {
     background-color: #ae82ff;
 }
+
+#analyzeButton {
+    cursor: pointer;
+}

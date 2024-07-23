@@ -3,17 +3,18 @@ import { useState, useEffect } from 'react';
 import "./Profile.css";
 import Playlist from "../Playlist/Playlist";
 import { Link } from 'react-router-dom';
+import UserAnalysisModal from '../UserAnalysisModal/UserAnalysisModal';
 
 function Profile({ curUser, handleLogout }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResult, setSearchResult] = useState([]);
     const [searched, setSearched] = useState(false);
-    const [toAddTitle, setToAddTitle] = useState("addLater");
     const [result, setResult] = useState("");
     const [songAdded, setSongAdded] = useState("");
     const [clicked, setClicked] = useState(false);
     const [searchQ, setSearchQ] = useState("");
     const [searchA, setSearchA] = useState("");
+    const [showAnalysis, setShowAnalysis] = useState(false);
 
     useEffect(() => {
         fetchSearch();
@@ -53,11 +54,12 @@ function Profile({ curUser, handleLogout }) {
     * Fetches video info for the selected song and sets the embed html to add to database
     */
     const fetchSong = (vidID) => {
-        let url = `https://www.googleapis.com/youtube/v3/videos?part=player&id=${vidID}&key=${import.meta.env.VITE_API_KEY}`;
+        let url = `https://www.googleapis.com/youtube/v3/videos?part=player,statistics,snippet&id=${vidID}&key=${import.meta.env.VITE_API_KEY}`;
         fetch(url)
         .then(response => response.json())
         .then(response => {
-            addSongToUser(response.items[0].player.embedHtml);
+            const songData = response.items[0];
+            addSongToUser(songData.player.embedHtml, songData.statistics, songData.snippet.tags, vidID);
             setSongAdded(response.items[0].player.embedHtml);
         })
         .catch(err => { });
@@ -66,7 +68,7 @@ function Profile({ curUser, handleLogout }) {
     /*
     * Adds the selected song to the user playlist in database
     */
-    const addSongToUser = (playerToAdd) => {
+    const addSongToUser = (playerToAdd, stats, tags, vidID) => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/songs/${curUser}/create/`,
             {
                 method: 'POST',
@@ -74,8 +76,10 @@ function Profile({ curUser, handleLogout }) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    title: toAddTitle,
-                    player: playerToAdd
+                    player: playerToAdd,
+                    stats: stats,
+                    tags: tags,
+                    vidID: vidID
                 }),
             })
             .then(response => {
@@ -123,6 +127,10 @@ function Profile({ curUser, handleLogout }) {
         setSearched(false);
     }
 
+    const changeModal = () => {
+        setShowAnalysis(!showAnalysis);
+    }
+
     return (
         <div id="profileContainer">
             <div id="logoutContainer">
@@ -147,6 +155,8 @@ function Profile({ curUser, handleLogout }) {
                 </div>}
                 {searched && <button id="clearSearchButton" onClick={() => clearSearch()}>Clear search</button>}
             </div>
+            <button id="analyzeButton" onClick={() => changeModal()} >Analyze my music taste</button>
+            { showAnalysis && <UserAnalysisModal closeModal={() => changeModal()} curUser={curUser}></UserAnalysisModal> }
             <Playlist refetch={clicked} curUser={curUser}></Playlist>
         </div>
     )
