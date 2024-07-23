@@ -70,6 +70,7 @@ function Login({ closeLogin, setAppUser }) {
             .then(response => {
                 if (response.ok) {
                     closeLogin();
+                    setAppUser(user);
                 } else {
                     setResult("Failed to login. Please double check username and password.");
                 }
@@ -77,7 +78,6 @@ function Login({ closeLogin, setAppUser }) {
             .catch(error => {
                 setResult("Failed to login. Please double check username and password.");
             });
-            setAppUser(user);
     }
 
     return (
