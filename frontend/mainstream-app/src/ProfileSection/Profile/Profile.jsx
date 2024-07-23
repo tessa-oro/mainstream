@@ -12,6 +12,8 @@ function Profile({ curUser, handleLogout }) {
     const [result, setResult] = useState("");
     const [songAdded, setSongAdded] = useState("");
     const [clicked, setClicked] = useState(false);
+    const [searchQ, setSearchQ] = useState("");
+    const [searchA, setSearchA] = useState("");
 
     useEffect(() => {
         fetchSearch();
@@ -39,7 +41,7 @@ function Profile({ curUser, handleLogout }) {
     */
     const handleSearch = (e) => {
         e.preventDefault();
-        setSearchQuery(e.target.elements.searchQ.value + e.target.elements.searchA.value);
+        setSearchQuery(searchQ + searchA);
         setSearched(true);
     }
 
@@ -112,6 +114,8 @@ function Profile({ curUser, handleLogout }) {
     const clearSearch = () => {
         setSearchQuery("");
         setResult("");
+        setSearchQ("");
+        setSearchA("");
         setSearched(false);
     }
 
@@ -127,8 +131,8 @@ function Profile({ curUser, handleLogout }) {
                 <p id="searchSongPrompt">Search songs to recommend to your friends!</p>
                 <form onSubmit={(e) => handleSearch(e)} id="searchForm">
                     <div>
-                        <input name="searchQ" required placeholder="Song title"></input>
-                        <input name="searchA" required placeholder="Artist"></input>
+                        <input name="searchQ" value={searchQ} required placeholder="Song title" onChange={((e) => setSearchQ(e.target.value))}></input>
+                        <input name="searchA" value={searchA} required placeholder="Artist" onChange={((e) => setSearchA(e.target.value))}></input>
                     </div>
                     <button id="goSearch" type="submit" value="Submit">Go</button>
                 </form>
