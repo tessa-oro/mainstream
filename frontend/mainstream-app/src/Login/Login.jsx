@@ -87,12 +87,12 @@ function Login({ closeLogin, setAppUser }) {
                 <h1 id="welcome">Welcome to mainstream.</h1>
                     <h2 id="loginTitle">Get started</h2>
                     <div class="loginInput">
-                        <label>username: </label>
+                        <label>Username: </label>
                         <input type="text" className="formInput" name="username" value={user}
                             onChange={handleChangeUser} required></input>
                     </div>
                     <div class="loginInput">
-                        <label>password: </label>
+                        <label>Password: </label>
                         <input type="text" className="formInput" name="password" value={password}
                             onChange={handleChangePassword} required></input>
                     </div>
