@@ -85,9 +85,9 @@ app.post('/songs/:user/create/', async (req, res) => {
         }
     })
     let mapPriorityQueue = new MapPriorityQueue(prisma, user);
-    mapPriorityQueue.init();
-    Object.entries(emoScoreJSON.emotion_scores).map(([emotion, score]) => {
-        mapPriorityQueue.insert(emotion, score);
+    await mapPriorityQueue.init();
+    Object.entries(emoScoreJSON.emotion_scores).map(async ([emotion, score]) => {
+        await mapPriorityQueue.insert(emotion, score);
     })
     res.json(newSong)
 })
