@@ -1,21 +1,27 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import "./Profile.css";
-import Playlist from "./Playlist";
-import UserAnalysisModal from './UserAnalysisModal';
+import Playlist from "../Playlist/Playlist";
+import { Link } from 'react-router-dom';
 
 function Profile({ curUser, handleLogout }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResult, setSearchResult] = useState([]);
     const [searched, setSearched] = useState(false);
+    const [toAddTitle, setToAddTitle] = useState("addLater");
     const [result, setResult] = useState("");
     const [songAdded, setSongAdded] = useState("");
     const [clicked, setClicked] = useState(false);
-    const [showAnalysis, setShowAnalysis] = useState(false);
+    const [searchQ, setSearchQ] = useState("");
+    const [searchA, setSearchA] = useState("");
 
     useEffect(() => {
         fetchSearch();
     }, [searchQuery]);
+
+    useEffect(() => {
+        clearSearch();
+    }, [curUser]);
 
     /*
     * Fetches youtube search results that match search query
@@ -39,7 +45,7 @@ function Profile({ curUser, handleLogout }) {
     */
     const handleSearch = (e) => {
         e.preventDefault();
-        setSearchQuery(e.target.elements.searchQ.value + e.target.elements.searchA.value);
+        setSearchQuery(searchQ + searchA);
         setSearched(true);
     }
 
@@ -47,12 +53,11 @@ function Profile({ curUser, handleLogout }) {
     * Fetches video info for the selected song and sets the embed html to add to database
     */
     const fetchSong = (vidID) => {
-        let url = `https://www.googleapis.com/youtube/v3/videos?part=player,statistics,snippet&id=${vidID}&key=${import.meta.env.VITE_API_KEY}`;
+        let url = `https://www.googleapis.com/youtube/v3/videos?part=player&id=${vidID}&key=${import.meta.env.VITE_API_KEY}`;
         fetch(url)
         .then(response => response.json())
         .then(response => {
-            const songData = response.items[0];
-            addSongToUser(songData.player.embedHtml, songData.statistics, songData.snippet.tags, vidID);
+            addSongToUser(response.items[0].player.embedHtml);
             setSongAdded(response.items[0].player.embedHtml);
         })
         .catch(err => { });
@@ -61,7 +66,7 @@ function Profile({ curUser, handleLogout }) {
     /*
     * Adds the selected song to the user playlist in database
     */
-    const addSongToUser = (playerToAdd, stats, tags, vidID) => {
+    const addSongToUser = (playerToAdd) => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/songs/${curUser}/create/`,
             {
                 method: 'POST',
@@ -69,10 +74,8 @@ function Profile({ curUser, handleLogout }) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    player: playerToAdd,
-                    stats: stats,
-                    tags: tags,
-                    vidID: vidID
+                    title: toAddTitle,
+                    player: playerToAdd
                 }),
             })
             .then(response => {
@@ -115,25 +118,25 @@ function Profile({ curUser, handleLogout }) {
     const clearSearch = () => {
         setSearchQuery("");
         setResult("");
+        setSearchQ("");
+        setSearchA("");
         setSearched(false);
-    }
-
-    const changeModal = () => {
-        setShowAnalysis(!showAnalysis);
     }
 
     return (
         <div id="profileContainer">
             <div id="logoutContainer">
-                <button id="logoutButton" onClick={() => handleLogout()}>logout</button>
+                <Link to='/'>
+                    <button id="logoutButton" onClick={() => handleLogout()}>logout</button>
+                </Link>
             </div>
             <h2 id="profileHeader">{curUser}</h2>
             <div id="searchSongSection">
                 <p id="searchSongPrompt">Search songs to recommend to your friends!</p>
                 <form onSubmit={(e) => handleSearch(e)} id="searchForm">
                     <div>
-                        <input name="searchQ" required placeholder="Song title"></input>
-                        <input name="searchA" required placeholder="Artist"></input>
+                        <input name="searchQ" value={searchQ} required placeholder="Song title" onChange={((e) => setSearchQ(e.target.value))}></input>
+                        <input name="searchA" value={searchA} required placeholder="Artist" onChange={((e) => setSearchA(e.target.value))}></input>
                     </div>
                     <button id="goSearch" type="submit" value="Submit">Go</button>
                 </form>
@@ -144,8 +147,6 @@ function Profile({ curUser, handleLogout }) {
                 </div>}
                 {searched && <button id="clearSearchButton" onClick={() => clearSearch()}>Clear search</button>}
             </div>
-            <button id="analyzeButton" onClick={() => changeModal()} >Analyze my music taste</button>
-            { showAnalysis && <UserAnalysisModal closeModal={() => changeModal()} curUser={curUser}></UserAnalysisModal> }
             <Playlist refetch={clicked} curUser={curUser}></Playlist>
         </div>
     )

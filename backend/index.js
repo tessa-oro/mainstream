@@ -53,13 +53,17 @@ app.post("/login", async (req, res) => {
     const userRecord = await prisma.user.findUnique({
         where: { user }
     })
-    bcrypt.compare(password, userRecord.hashedPassword, function (err, result) {
-        if (result) {
-            res.status(200).json({});
-        } else {
-            res.status(500).json({ "error": err })
-        }
-    })
+    try{ 
+        bcrypt.compare(password, userRecord.hashedPassword, function (err, result) {
+            if (result) {
+                res.status(200).json({});
+            } else {
+                res.status(500).json({ err: "Incorrect password" });
+            }
+        })
+    } catch (err) {
+        res.status(500).json({ err: "User does not exist" });
+    }
 })
 
 //add a song to user playlist
