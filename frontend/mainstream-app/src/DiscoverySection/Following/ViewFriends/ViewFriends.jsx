@@ -13,6 +13,8 @@ function ViewFriends({ curUser, login }) {
     const [showPlaylist, setShowPlaylist] = useState(false);
     const [selectedFollowing, setSelectedFollowing] = useState("");
     const [showFollowing, setShowFollowing] = useState(false);
+    const [showClear, setShowClear] = useState(false);
+    const [searchQ, setSearchQ] = useState("");
 
     useEffect(() => {
         fetchFollowing();
@@ -47,7 +49,7 @@ function ViewFriends({ curUser, login }) {
     */
     const getUsers = (e) => {
         e.preventDefault();
-        let searchName = e.target.elements.searchUser.value;
+        let searchName = searchQ;
         if (searchName) {
             fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/users/${searchName}`)
             .then(response => {
@@ -59,10 +61,9 @@ function ViewFriends({ curUser, login }) {
             })
             .then(data => {
                 setUserResults(data);
+                setShowClear(true);
             })
-            .catch(error => {
-
-            });
+            .catch(error => {});
         } else {
             setUserResults([]);
         }
@@ -84,6 +85,15 @@ function ViewFriends({ curUser, login }) {
         setShowPlaylist(true);
     }
 
+    /*
+    * Clear search users input and results
+    */
+    const clearSearch = () => {
+        setShowClear(false);
+        setUserResults([]);
+        setSearchQ("");
+    }
+
     return (
         <div id="viewFriendsContainer">
             <h2 id="discoverHeader">Discover</h2>
@@ -93,7 +103,7 @@ function ViewFriends({ curUser, login }) {
             <div id="searchUsersContainer">
                 <form onSubmit={(e) => getUsers(e)} id="searchUsersForm">
                     <label id="searchUsersPrompt">Search users to follow: </label>
-                    <input type="text" placeholder="Search by username" name="searchUser"></input>
+                    <input type="text" value={searchQ} placeholder="Search by username" name="searchUser" onChange={(e) => setSearchQ(e.target.value)}></input>
                 </form>
                 {showModal && <FollowModal closeModal={() => followModal()} userToFollow={userToFollow} curUser={curUser} />}
                 <div>
@@ -101,6 +111,7 @@ function ViewFriends({ curUser, login }) {
                         (user !== curUser) &&
                         <p onClick={() => followModal(user)} id="user">{user}</p>
                     ))}
+                    {showClear && <button onClick={() => clearSearch()}>clear</button>}
                 </div>
             </div>
             <div id="followingContainer">
