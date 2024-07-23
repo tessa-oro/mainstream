@@ -2,6 +2,9 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const Recommended = require('./Recommended');
 const recommended = new Recommended(prisma);
+const UserAnalysis = require('./UserAnalysis');
+const userAnalysis = new UserAnalysis(prisma);
+const MapPriorityQueue = require('./MapPriorityQueue');
 const express = require('express');
 const bcrypt = require('bcrypt');
 const saltRounds = 14;
@@ -33,7 +36,8 @@ app.post('/create', async (req, res) => {
                     score: 0,
                     numRatedSongs: 0,
                     similars: {},
-                    recommended: []
+                    recommended: [],
+                    emotionPQ: {}
                 }
             })
             res.status(200).json({});
@@ -65,17 +69,40 @@ app.post("/login", async (req, res) => {
 //add a song to user playlist
 app.post('/songs/:user/create/', async (req, res) => {
     const { user } = req.params;
-    const { title, player } = req.body;
+    const { player, stats, tags, vidID } = req.body;
+    const transcript = await userAnalysis.convertTranscript(vidID);
+    let emoScore;
+    if (transcript) {
+        emoScore = await userAnalysis.textapi(transcript);
+    } else {
+        emoScore = {};
+    }
+    const emoScoreJSON = JSON.parse(emoScore);
     const newSong = await prisma.song.create({
         data: {
-            title,
             player,
-            artist: "placeholder",
+            stats,
+            tags,
+            emotionScores: emoScoreJSON,
             avgRating: 0,
             userID: user
         }
     })
+    let mapPriorityQueue = new MapPriorityQueue(prisma, user);
+    await mapPriorityQueue.init();
+    Object.entries(emoScoreJSON.emotion_scores).map(async ([emotion, score]) => {
+        await mapPriorityQueue.insert(emotion, score);
+    })
     res.json(newSong)
+})
+
+//delete a user
+app.delete('/user/:userId/delete', async (req, res) => {
+    const { userId } = req.params
+    const deletedUser= await prisma.user.delete({
+      where: { user: userId }
+    })
+    res.json(deletedUser)
 })
 
 //create a song item
@@ -87,7 +114,7 @@ app.post('/songItem', async (req, res) => {
                 playerID
             }
         })
-        res.json(newSong)
+        res.json(newSong);
     } catch (error) {
         res.status(500).json({ error: "Item already created" });
     }
@@ -342,6 +369,27 @@ app.get('/recommended/:userId', async (req, res) => {
     }
 })
 
-app.listen(port, () => {
+//get personality analysis for a user
+app.get('/userAnalysis/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const playlist = await userAnalysis.getPlaylist(userId);
+        const analysis = userAnalysis.analyzePersonality(playlist);
+        res.status(200).json(analysis);
+    } catch (error) {
+        res.status(500).json({ error: "An error occurred while fetching analysis." });
+    }
+})
+
+//get the top emotion in a user's playlist using priority queue
+app.get('/topEmotion/:userId', async (req, res) => {
+    const { userId } = req.params;
+    let mapPriorityQueue = new MapPriorityQueue(prisma, userId);
+    await mapPriorityQueue.init();
+    const topEmotion = mapPriorityQueue.peekMax();
+    res.status(200).json(topEmotion);
+})
+
+app.listen(port, async () => {
     console.log(`starting on port: ${port}`);
 })

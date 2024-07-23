@@ -18,7 +18,7 @@ function ViewFriends({ curUser, login }) {
 
     useEffect(() => {
         fetchFollowing();
-    }, [login, showModal, following, curUser]);
+    }, [login, showModal, curUser]);
 
     useEffect(() => {
         clearSearch();

@@ -24,13 +24,15 @@ model User {
   interactions Interactions[]
   similars Json
   recommended String[]
+  emotionPQ Json
 }
 
 model Song {
   id Int @id @default(autoincrement())
-  title String
-  artist String
   player String
+  stats Json
+  tags String[]
+  emotionScores Json
   ratings Int[]
   ratedBy String[]
   avgRating Decimal
