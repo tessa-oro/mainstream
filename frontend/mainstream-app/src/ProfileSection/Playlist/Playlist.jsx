@@ -55,8 +55,10 @@ function Playlist({ refetch, curUser }) {
         });
     }
 
+    /*
+    * Deletes a song from playlist and refetches playlist
+    */
     const deleteSong = (songId) => {
-        console.log("deleting..");
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/deleteSong`,
             {
                 method: 'DELETE',
@@ -69,9 +71,7 @@ function Playlist({ refetch, curUser }) {
                 }),
             })
             .then(response => {
-                console.log("response");
                 if (response.ok) {
-                    console.log("deleted");
                     fetchUserSongs();
                 }
             })
