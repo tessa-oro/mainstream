@@ -138,15 +138,6 @@ app.get('/songs/:user/', async (req, res) => {
     }
 })
 
-//delete a song
-app.delete('/deleteSong', async (req, res) => {
-    const { songId } = req.body;
-    const deletedSong= await prisma.song.delete({
-      where: { id: songId }
-    })
-    res.json(deletedSong);
-})
-
 //adding to someone else's follower list
 app.post('/follower/:user', async (req, res) => {
     try {
