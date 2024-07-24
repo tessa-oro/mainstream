@@ -56,7 +56,7 @@ function Playlist({ refetch, curUser }) {
     }
 
     /*
-    * Deletes a song from playlist and refetches playlist
+    * Deletes a song from playlist and refetches user playlist
     */
     const deleteSong = (songId) => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/deleteSong`,
