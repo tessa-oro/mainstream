@@ -55,29 +55,6 @@ function Playlist({ refetch, curUser }) {
         });
     }
 
-    const deleteSong = (songId) => {
-        console.log("deleting..");
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/deleteSong`,
-            {
-                method: 'DELETE',
-                credentials: 'include',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    songId: songId
-                }),
-            })
-            .then(response => {
-                console.log("response");
-                if (response.ok) {
-                    console.log("deleted");
-                    fetchUserSongs();
-                }
-            })
-            .catch(error => {});
-    }
-
     return (
         <div id="playlistContainer">
             <div class="playlistHeaderContainer">
@@ -87,10 +64,7 @@ function Playlist({ refetch, curUser }) {
                 </div>
             </div>
             {songs.map((song) => (
-                <>
-                    <div id="songPlayer" dangerouslySetInnerHTML={{ __html: song.player }} />
-                    <button onClick={() => deleteSong(song.id)}>delete</button>
-                </>)
+                <div id="songPlayer" dangerouslySetInnerHTML={{ __html: song.player }} />)
             )}
         </div>
     )
