@@ -102,7 +102,7 @@ function ViewFriends({ curUser, login }) {
         <div id="viewFriendsContainer">
             <h2 id="discoverHeader">Discover</h2>
             <Link to='/recPage'>
-                <button>Get recommendations</button>
+                <button id="recommendButton">Song recommendations</button>
             </Link>
             <div id="searchUsersContainer">
                 <form onSubmit={(e) => getUsers(e)} id="searchUsersForm">
@@ -115,7 +115,7 @@ function ViewFriends({ curUser, login }) {
                         (user !== curUser) &&
                         <p onClick={() => followModal(user)} id="user">{user}</p>
                     ))}
-                    {showClear && <button onClick={() => clearSearch()}>clear</button>}
+                    {showClear && <button onClick={() => clearSearch()} id="clearUserSearchButton">cancel</button>}
                 </div>
             </div>
             <div id="followingContainer">

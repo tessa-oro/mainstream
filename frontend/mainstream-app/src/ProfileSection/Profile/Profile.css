@@ -43,6 +43,7 @@
 
 #profileHeader {
     font-size: 2em;
+    margin-bottom: 76px;
 }
 
 #searchSongPrompt {
@@ -63,6 +64,7 @@
     padding-right: 8px;
     font-size: 0.9em;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 #goSearch:hover {
@@ -70,19 +72,23 @@
 }
 
 #clearSearchButton {
-    background-color: #8860d0;
+    /* background-color: #8860d0;
     border-radius: 8px;
     border: #ffffff00;
     color: white;
     padding: 5px;
     padding-left: 8px;
     padding-right: 8px;
+    font-size: 0.9em; */
+    color: #8860d0;
     font-size: 0.9em;
+    border-color: #744eba00;
+    background-color: #744eba00;
     cursor: pointer;
 }
 
 #clearSearchButton:hover {
-    background-color: #ae82ff;
+    font-weight: bold;
 }
 
 #logoutContainer {
@@ -103,6 +109,7 @@
     margin-right: 5px;
     font-size: 0.9em;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 #logoutButton:hover {
@@ -111,4 +118,19 @@
 
 #analyzeButton {
     cursor: pointer;
+    background-color: #c3a3ff;
+    border-radius: 8px;
+    border: #ffffff00;
+    color: white;
+    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-top: 30px;
+    margin-right: 5px;
+    font-size: 1em;
+    transition: 0.2s;
+}
+
+#analyzeButton:hover {
+    background-color: #ae82ff;
 }

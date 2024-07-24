@@ -59,7 +59,7 @@ function RecommendedPage( {curUser} ) {
       <div id="recommendedContainer">
         <h2>Recommended</h2>
         <Link to='/'>
-            <button>back</button>
+            <button id="backButton">back</button>
         </Link>
         <div>
             {showRecommend && recommendedSongs.map((recommendation) => (

@@ -37,6 +37,7 @@
 
 #user {
     cursor: pointer;
+    font-size: 1.1em;
 }
 
 #user:hover {
@@ -64,4 +65,34 @@
     font-size: 1.1em;
     margin-bottom: 20px;
     color: #1a8cc4;
+}
+
+#recommendButton {
+    color: #1a8cc4;
+    padding: 7px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border-color: #b7e6fe00;
+    background-color: #b7e6fe;
+    transition: 0.3s ease;
+    position: relative;
+    font-size: .9em;
+    cursor: pointer;
+}
+
+#recommendButton:hover {
+    background-color: #dcf3ffe9;
+}
+
+#clearUserSearchButton {
+    color: #1a8cc4;
+    border-color: #b7e6fe00;
+    background-color: #79caf200;
+    font-size: .9em;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#clearUserSearchButton:hover {
+    font-weight: bold;
 }
