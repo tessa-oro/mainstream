@@ -46,7 +46,7 @@ const UserAnalysisModal = ({ closeModal, curUser }) => {
                     {topEmotion && <h3>{topEmotion}</h3>}
                     {analysisResult && <p dangerouslySetInnerHTML={{ __html: analysisResult }}></p>}
                 </div>
-                <button id="close" onClick={closeModal}>cancel</button>
+                <button id="close" onClick={closeModal}>close</button>
             </div>
             <div id="overlay"></div>
         </>

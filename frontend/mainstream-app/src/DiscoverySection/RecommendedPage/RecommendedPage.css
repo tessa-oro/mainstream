@@ -4,3 +4,20 @@
     background-color: #5ab9ea;
     padding-top: 34.5px;
 }
+
+#backButton {
+    color: #1a8cc4;
+    padding: 7px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border-color: #b7e6fe00;
+    background-color: #b7e6fe;
+    transition: 0.3s ease;
+    position: relative;
+    font-size: .9em;
+    cursor: pointer;
+}
+
+#backButton:hover {
+    background-color: #dcf3ffe9;
+}
