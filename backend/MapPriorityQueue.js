@@ -60,7 +60,7 @@ class MapPriorityQueue {
     * Swaps the elements and indices i and j
     */
     async swap(i, j) {
-        [this.heap[i], this.heap[j]] = [ths.heap[j], this.heap[i]];
+        [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]];
         this.keyIndexMap.set(this.heap[i].key, i);
         this.keyIndexMap.set(this.heap[j].key, j);
     }

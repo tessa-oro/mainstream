@@ -219,37 +219,37 @@ class UserAnalysis {
 
         // Insights based on average emotions
         if (avgEmotions.joy > 0.6) {
-            personalityInsights += "You seem to enjoy joy and uplifting music. ";
+            personalityInsights += "You seem to enjoy joy and uplifting music. <br />";
         } else if (avgEmotions.sadness > 0.6) {
-            personalityInsights += "You might have a preference for more melancholic and reflective tunes. ";
+            personalityInsights += "You might have a preference for more melancholic and reflective tunes. <br />";
         } else if (avgEmotions.anger > 0.6) {
-            personalityInsights += "You could be drawn to more intense and energetic music. ";
+            personalityInsights += "You could be drawn to more intense and energetic music. <br />";
         } else if (avgEmotions.fear > 0.6) {
-            personalityInsights += "You may like music that evokes a sense of suspense or thrill. ";
+            personalityInsights += "You may like music that evokes a sense of suspense or thrill. <br />";
         } else if (avgEmotions.disgust > 0.6) {
-            personalityInsights += "Your taste might include music that challenges conventional norms. ";
+            personalityInsights += "Your taste might include music that challenges conventional norms. <br />";
         } else {
-            personalityInsights += "You seem to have a balanced taste in music. ";
+            personalityInsights += "You seem to have a balanced taste in music. <br />";
         }
 
         // Insights based on standard deviation of emotions
         if (stdDevEmotions.joy > 0.2 && stdDevEmotions.anger > 0.2 && stdDevEmotions.sadness > 0.2) {
-            personalityInsights += "You tend to tap in to all of your emotions when listening to music. ";
+            personalityInsights += "<br /> You tend to tap in to all of your emotions when listening to music. <br />";
         } else {
-            personalityInsights += "You tend to be drawn to the same emotions when listening to music. ";
+            personalityInsights += "<br /> You tend to be drawn to the same emotions when listening to music. <br />";
         }
 
         // Insights based on correlation between likes and views
         if (likesViewsCorrelation > 0.7) {
-            personalityInsights += "You tend to like songs that are both popular and widely viewed. ";
+            personalityInsights += "<br /> You tend to like songs that are both popular and widely viewed. <br />";
         } else {
-            personalityInsights += "Your music taste goes against the grain. ";
+            personalityInsights += "<br /> Your music taste goes against the grain. <br />";
         }
 
         // Use clusters to group songs by emotional vibe
         personalityInsights += "Let's break your playlist down by vibes: "
         clusters.forEach((cluster, index) => {
-            personalityInsights += `Vibe ${index + 1}: `;
+            personalityInsights += `<br /><br />Vibe ${index + 1}: `;
             cluster.forEach(point => {
                 personalityInsights += `song: ${point.songInfo} , `;
             })

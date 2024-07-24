@@ -43,8 +43,8 @@ const UserAnalysisModal = ({ closeModal, curUser }) => {
         <>
             <div id="analysisModal">
                 <div id="modalContent">
-                    {analysisResult && <p>{analysisResult}</p>}
-                    {topEmotion && <p>{topEmotion}</p>}
+                    {topEmotion && <h3>{topEmotion}</h3>}
+                    {analysisResult && <p dangerouslySetInnerHTML={{ __html: analysisResult }}></p>}
                 </div>
                 <button id="close" onClick={closeModal}>cancel</button>
             </div>
