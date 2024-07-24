@@ -374,10 +374,10 @@ app.get('/userAnalysis/:userId', async (req, res) => {
     const { userId } = req.params;
     try {
         const playlist = await userAnalysis.getPlaylist(userId);
-        const analysis = userAnalysis.analyzePersonality(playlist);
+        let analysis = userAnalysis.analyzePersonality(playlist);
         res.status(200).json(analysis);
     } catch (error) {
-        res.status(500).json({ error: "An error occurred while fetching analysis." });
+        res.status(200).json("Add at least 3 songs to your playlist to learn more.");
     }
 })
 
