@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 function Dashboard({ curUser, login, handleLogout }) {
 
     return (
-        <Router>
+        <>
             <Link to='/leaderboard'>
                 <h2 id="leaderboardLink">Leaderboard</h2>
             </Link>
@@ -25,7 +25,7 @@ function Dashboard({ curUser, login, handleLogout }) {
                 </Switch>
                 <Profile curUser={curUser} handleLogout={() => handleLogout()}></Profile>
             </div>
-        </Router>
+        </>
     )
 }
 

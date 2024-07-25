@@ -1,5 +1,3 @@
-const { PrismaClient } = require('@prisma/client');
-
 class Recommended {
 
     constructor(prisma) {
