@@ -401,6 +401,13 @@ app.get('/topEmotion/:userId', async (req, res) => {
     res.status(200).json(topEmotion);
 })
 
+//get leaderboard for user
+app.get('/leaderboard', async (req, res) => {
+    const { userId } = req.body;
+    const userLeaderboard = await leaderboard.getFollowingLeaderboard(userId);
+    res.status(200).json(Object.fromEntries(userLeaderboard));
+})
+
 app.listen(port, async () => {
     console.log(`starting on port: ${port}`);
 })

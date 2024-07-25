@@ -4,6 +4,9 @@ class Leaderboard {
         this.prisma = prisma;
     }
 
+    /*
+    * Function gets the sorted scores of a user and their following list
+    */
     async getFollowingLeaderboard(userId) {
         let followingScores = await this.getFollowingUsers(userId);
         const userRecord = await this.prisma.user.findUnique({
