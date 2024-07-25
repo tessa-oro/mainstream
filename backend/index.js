@@ -5,6 +5,8 @@ const recommended = new Recommended(prisma);
 const UserAnalysis = require('./UserAnalysis');
 const userAnalysis = new UserAnalysis(prisma);
 const MapPriorityQueue = require('./MapPriorityQueue');
+const Leaderboard = require('./Leaderboard');
+const leaderboard = new Leaderboard(prisma);
 const express = require('express');
 const bcrypt = require('bcrypt');
 const saltRounds = 14;
@@ -397,6 +399,13 @@ app.get('/topEmotion/:userId', async (req, res) => {
     await mapPriorityQueue.init();
     const topEmotion = mapPriorityQueue.peekMax();
     res.status(200).json(topEmotion);
+})
+
+//get leaderboard for user
+app.get('/leaderboard/:userId', async (req, res) => {
+    const { userId } = req.params;
+    const userLeaderboard = await leaderboard.getFollowingLeaderboard(userId);
+    res.status(200).json(Object.fromEntries(userLeaderboard));
 })
 
 app.listen(port, async () => {

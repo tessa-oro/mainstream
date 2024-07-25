@@ -32,7 +32,7 @@ function App() {
           <Dashboard curUser={curUser} login={showLogin} handleLogout={() => handleLogout()}></Dashboard>
         </Route>
         <Route path='/leaderboard'>
-          <Leaderboard></Leaderboard>
+          <Leaderboard curUser={curUser}></Leaderboard>
         </Route>
       </Switch>
     </Router>
