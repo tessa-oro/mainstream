@@ -4,6 +4,17 @@ class Leaderboard {
         this.prisma = prisma;
     }
 
+    async getFollowingLeaderboard(userId) {
+        let followingScores = await this.getFollowingUsers(userId);
+        const userRecord = await this.prisma.user.findUnique({
+            where: { user: userId }
+        });
+        if (userRecord) {
+            followingScores.set(userId, userRecord.score);
+        }
+        return this.sortScores(followingScores);
+    }
+
     /*
     * Function takes in a userId and returns a map of the users the userId follows mapped to their music taste score
     */
@@ -28,7 +39,7 @@ class Leaderboard {
     /*
     * Sort following scores map in descending order by scores
     */
-    sortFollowingScores(followingScores) {
+    sortScores(followingScores) {
         const scoreEntries = Array.from(followingScores.entries());
         const sortedScoreEntries = scoreEntries.sort((a, b) => b[1] - a[1]);
         const sortedScoresMap = new Map(sortedScoreEntries);
