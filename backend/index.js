@@ -402,8 +402,8 @@ app.get('/topEmotion/:userId', async (req, res) => {
 })
 
 //get leaderboard for user
-app.get('/leaderboard', async (req, res) => {
-    const { userId } = req.body;
+app.get('/leaderboard/:userId', async (req, res) => {
+    const { userId } = req.params;
     const userLeaderboard = await leaderboard.getFollowingLeaderboard(userId);
     res.status(200).json(Object.fromEntries(userLeaderboard));
 })
