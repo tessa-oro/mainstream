@@ -5,11 +5,15 @@ import ViewFriends from '../DiscoverySection/Following/ViewFriends/ViewFriends';
 import RecommendedPage from '../DiscoverySection/RecommendedPage/RecommendedPage';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Profile from '../ProfileSection/Profile/Profile';
+import { Link } from 'react-router-dom';
 
 function Dashboard({ curUser, login, handleLogout }) {
 
     return (
         <Router>
+            <Link to='/leaderboard'>
+                <h2 id="leaderboardLink">Leaderboard</h2>
+            </Link>
             <div id="dashboard">
                 <Switch>
                     <Route exact path='/'>
