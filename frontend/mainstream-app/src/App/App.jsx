@@ -3,6 +3,8 @@ import './App.css'
 import Login from "../Login/Login"
 import Dashboard from "../Dashboard/Dashboard"
 import Header from "../Header/Header"
+import Leaderboard from '../Leaderboard/Leaderboard'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
   const [curUser, setCurUser] = useState("");
@@ -22,11 +24,18 @@ function App() {
   }
 
   return (
-    <>
+    <Router>
       <Header></Header>
       {showLogin ? (<Login setAppUser={setAppUser} closeLogin={() => closeLogin()}></Login>) : (<></>)}
-      <Dashboard curUser={curUser} login={showLogin} handleLogout={() => handleLogout()}></Dashboard>
-    </>
+      <Switch>
+        <Route exact path='/'>
+          <Dashboard curUser={curUser} login={showLogin} handleLogout={() => handleLogout()}></Dashboard>
+        </Route>
+        <Route path='/leaderboard'>
+          <Leaderboard></Leaderboard>
+        </Route>
+      </Switch>
+    </Router>
   )
 }
 
