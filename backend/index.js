@@ -7,8 +7,6 @@ const userAnalysis = new UserAnalysis(prisma);
 const MapPriorityQueue = require('./MapPriorityQueue');
 const Leaderboard = require('./Leaderboard');
 const leaderboard = new Leaderboard(prisma);
-const AnalysisBasedRecommender = require('./AnalysisBasedRecommender');
-const analysisBasedRecommender = new AnalysisBasedRecommender(prisma);
 const express = require('express');
 const bcrypt = require('bcrypt');
 const saltRounds = 14;
@@ -392,16 +390,6 @@ app.get('/userAnalysis/:userId', async (req, res) => {
     } catch (error) {
         res.status(200).json("Add at least 3 songs to your playlist to learn more.");
     }
-})
-
-app.get('/analysisRecommendations/:userId', async (req, res) => {
-    const { userId } = req.params;
-    // try {
-        const recommendedSongs = await analysisBasedRecommender.recommendSongs(userId);
-        res.status(200).json(recommendedSongs);
-    // } catch (error) {
-    //     res.status(200).json("An error ocurred while fetching analysis based recommendations.");
-    // }
 })
 
 //get the top emotion in a user's playlist using priority queue
