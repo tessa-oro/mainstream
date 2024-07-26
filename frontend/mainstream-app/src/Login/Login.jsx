@@ -91,7 +91,7 @@ function Login({ closeLogin, setAppUser }) {
                         <input type="text" className="formInput" name="username" value={user}
                             onChange={handleChangeUser} required></input>
                     </div>
-                    <div class="loginInput">
+                    <div className="loginInput">
                         <label>Password: </label>
                         <input type="text" className="formInput" name="password" value={password}
                             onChange={handleChangePassword} required></input>
