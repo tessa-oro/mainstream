@@ -4,18 +4,21 @@ import { Link } from 'react-router-dom';
 import "./RecommendedPage.css";
 
 function RecommendedPage( {curUser} ) {
-    const [recommendedSongs, setRecommendedSongs] = useState([]);
-    const [showRecommend, setShowRecommend] = useState(false);
+    const [interactionRecommendedSongs, setInteractionRecommendedSongs] = useState([]);
+    const [showInteractionRecommend, setShowInteractionRecommend] = useState(false);
+    const [analysisRecommendedSongs, setAnalysisRecommendedSongs] = useState([]);
+    const [showAnalysisRecommend, setShowAnalysisRecommend] = useState(false);
 
     useEffect(() => {
-        updateRecommendedSongs();
-        fetchRecommendedSongs();
-    }, [showRecommend]);
+        updateInteractionBasedRecommendations();
+        fetchInteractionBasedRecommendations();
+        fetchAnalysisBasedRecommendations();
+    }, [showInteractionRecommend]);
 
     /*
-    * Update the songs recommended for a user using PATCH
+    * Update the interaction based songs recommendations for a user using PATCH
     */
-    const updateRecommendedSongs = () => {
+    const updateInteractionBasedRecommendations = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/recommended/${curUser}`,
             {
                 method: "PATCH",
@@ -31,14 +34,13 @@ function RecommendedPage( {curUser} ) {
                 return response.json();
             }
         })
-        .catch(error => {
-        });
+        .catch(error => {});
     }
 
     /*
-    * Fetches recommended songs for user
+    * Fetches recommended songs for user based on similar user interactions
     */
-    const fetchRecommendedSongs = () => {
+    const fetchInteractionBasedRecommendations = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/recommended/${curUser}`)
         .then(response => {
             if (!response.ok) {
@@ -48,11 +50,29 @@ function RecommendedPage( {curUser} ) {
             }
         })
         .then(data => {
-            setRecommendedSongs(data);
-            setShowRecommend(true);
+            setInteractionRecommendedSongs(data);
+            setShowInteractionRecommend(true);
         })
-        .catch(error => {
-        });
+        .catch(error => {});
+    }
+
+    /*
+    * Fetches recommended songs for user based on their analysis
+    */
+    const fetchAnalysisBasedRecommendations = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/analysisRecommendations/${curUser}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
+                return response.json();
+            }
+        })
+        .then(data => {
+            setAnalysisRecommendedSongs(data);
+            setShowAnalysisRecommend(true);
+        })
+        .catch(error => {});
     }
 
     return (
@@ -62,7 +82,14 @@ function RecommendedPage( {curUser} ) {
             <button id="backButton">back</button>
         </Link>
         <div>
-            {showRecommend && recommendedSongs.map((recommendation) => (
+            <h2>These are a similar vibe to your playlist</h2>
+            {showAnalysisRecommend && analysisRecommendedSongs.map((recommendation) => (
+                <div id="songPlayer" dangerouslySetInnerHTML={{ __html: recommendation.player }} />
+            ))}
+        </div>
+        <div>
+            <h2>Here's what other users like you are listening to</h2>
+            {showInteractionRecommend && interactionRecommendedSongs.map((recommendation) => (
                 <div id="songPlayer" dangerouslySetInnerHTML={{ __html: recommendation }} />
             ))}
         </div>

@@ -392,6 +392,17 @@ app.get('/userAnalysis/:userId', async (req, res) => {
     }
 })
 
+//get recommendations for a user based on their analysis
+app.get('/analysisRecommendations/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const recommendedSongs = await analysisBasedRecommender.recommendSongs(userId);
+        res.status(200).json(recommendedSongs);
+    } catch (error) {
+        res.status(200).json("An error ocurred while fetching analysis based recommendations.");
+    }
+})
+
 //get the top emotion in a user's playlist using priority queue
 app.get('/topEmotion/:userId', async (req, res) => {
     const { userId } = req.params;
