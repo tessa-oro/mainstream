@@ -80,10 +80,10 @@ function Playlist({ refetch, curUser }) {
 
     return (
         <div id="playlistContainer">
-            <div class="playlistHeaderContainer">
-                <h3 class="playlistHeader">{curUser}'s playlist</h3>
-                <div class="score">
-                    <p class="scoreVal">{score}</p>
+            <div className="playlistHeaderContainer">
+                <h3 className="playlistHeader">{curUser}'s playlist</h3>
+                <div className="score">
+                    <p className="scoreVal">{score}</p>
                 </div>
             </div>
             <div id="songs">

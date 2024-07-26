@@ -83,7 +83,7 @@ const RateModal = ({ curUser, friend, songID, closeModal, markRated, player }) =
         <>
             <div id="rateModal">
                 <div id="modalContent">
-                    <h2>Rate song</h2>
+                    <h2 id="rateHeader">Rate song</h2>
                     <form id="rateForm" onSubmit={(e) => handleRate(e)}>
                         <div id="rateButtons">
                             <button id="score1" className="scoreButton" type="button" value="1" onClick={(e) => pickNum(e)}>1</button>
@@ -99,7 +99,7 @@ const RateModal = ({ curUser, friend, songID, closeModal, markRated, player }) =
                         </div>
                         {num && <p id="selectedNum">{num}</p>}
                         <input type="checkbox" onChange={(e) => handleCheck(e)}></input>
-                        <label>I already know this song</label>
+                        <label id="markKnown">I already know this song</label>
                         <button id="submit" type="submit">Submit</button>
                     </form>
                 </div>

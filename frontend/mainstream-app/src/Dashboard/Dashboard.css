@@ -50,3 +50,11 @@
     color: rgb(0, 69, 46);
     font-weight: 600;
 }
+
+#leaderboardLink {
+    margin-left: 20px;
+}
+
+a {
+    text-decoration: none;
+}

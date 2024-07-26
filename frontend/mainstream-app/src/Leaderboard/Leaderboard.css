@@ -1,0 +1,32 @@
+#leaderboardComponent {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    height: 100%;
+}
+
+#lbPlace {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+}
+
+#lbUser {
+    margin: 0;
+}
+
+#scoreId {
+    margin: 10px;
+}
+
+#lbEntries {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    background: linear-gradient(to bottom, rgb(31, 177, 255) 40%, rgb(31, 206, 255) 70%, rgb(106, 255, 198));
+    height: 400px;
+    padding-bottom: 100px;
+}
