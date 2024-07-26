@@ -77,13 +77,13 @@ function RecommendedPage( {curUser} ) {
 
     return (
       <div id="recommendedContainer">
-        <h2>Recommended</h2>
         <Link to='/dashboard'>
             <button id="backButton">back</button>
         </Link>
         <div>
-            <h2>These are a similar vibe to your playlist</h2>
-            {showAnalysisRecommend && analysisRecommendedSongs.map((recommendation) => (
+            {showAnalysisRecommend && 
+                <h2>These are a similar vibe to your playlist</h2> &&
+                analysisRecommendedSongs.map((recommendation) => (
                 <div id="songPlayer" dangerouslySetInnerHTML={{ __html: recommendation.player }} />
             ))}
         </div>
