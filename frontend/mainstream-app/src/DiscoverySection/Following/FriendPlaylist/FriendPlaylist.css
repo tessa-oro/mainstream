@@ -3,6 +3,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 80%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
 }
 
 #loadingContainer {

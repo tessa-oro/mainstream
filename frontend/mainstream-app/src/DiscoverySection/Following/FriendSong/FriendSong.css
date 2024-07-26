@@ -2,10 +2,11 @@
     display: inline-flex;
     margin-left: 20px;
     height: 40px;
-    border-radius: 7px;
+    border-radius: 15px;
     border: 1px;
     cursor: pointer;
     align-items: center;
+    padding: 10px;
 }
 
 #rate:hover {

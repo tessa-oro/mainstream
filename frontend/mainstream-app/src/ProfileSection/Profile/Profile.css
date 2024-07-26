@@ -1,7 +1,8 @@
 #profileContainer {
-    width: 50%;
+    width: 100%;
     text-align: center;
     background-color: #8860d0;
+    height: 100%;
 }
 
 #artist {
@@ -72,14 +73,6 @@
 }
 
 #clearSearchButton {
-    /* background-color: #8860d0;
-    border-radius: 8px;
-    border: #ffffff00;
-    color: white;
-    padding: 5px;
-    padding-left: 8px;
-    padding-right: 8px;
-    font-size: 0.9em; */
     color: #8860d0;
     font-size: 0.9em;
     border-color: #744eba00;

@@ -8,6 +8,15 @@ import Profile from '../ProfileSection/Profile/Profile';
 
 function Dashboard({ curUser, login, handleLogout }) {
     let { path, url } = useRouteMatch();
+    const [layout, setLayout] = useState('50-50');
+
+    const expansion = () => {
+        setLayout(prevLayout => {
+            if (prevLayout === '75-25') return '50-50';
+            if (prevLayout === '50-50') return '25-75';
+            return '75-25'; 
+        })
+    }
 
     return (
         <>
@@ -15,16 +24,21 @@ function Dashboard({ curUser, login, handleLogout }) {
                 <h2 id="leaderboardLink">Leaderboard</h2>
             </Link>
             <div id="dashboard">
-                <Switch>
-                    <Route exact path={path}><ViewFriends curUser={curUser}></ViewFriends></Route>
-                    <Route path={`${path}/viewfriends`}>
-                        <ViewFriends curUser={curUser} login={login}></ViewFriends>
-                    </Route>
-                    <Route path={`${path}/recPage`}>
-                        <RecommendedPage curUser={curUser}></RecommendedPage>
-                    </Route>
-                </Switch>
-                <Profile curUser={curUser} handleLogout={() => handleLogout()}></Profile>
+                <div style={{ height: '100%', flexBasis: layout === '75-25' ? '75%' : layout === '50-50' ? '50%' : '25%'}}>
+                    <Switch>
+                        <Route exact path={path}><ViewFriends curUser={curUser}></ViewFriends></Route>
+                        <Route path={`${path}/viewfriends`}>
+                            <ViewFriends curUser={curUser} login={login}></ViewFriends>
+                        </Route>
+                        <Route path={`${path}/recPage`}>
+                            <RecommendedPage curUser={curUser}></RecommendedPage>
+                        </Route>
+                    </Switch>
+                </div>
+                <div style={{ height: '100%', flexBasis: layout === '75-25' ? '25%' : layout === '50-50' ? '50%' : '75%', position: 'relative'}}>
+                    <Profile curUser={curUser} handleLogout={() => handleLogout()}></Profile>
+                    <button id="expand" onClick={expansion} style={{position: 'absolute', top: 0, left: 0}}>{layout === '75-25' || layout === '50-50' ?  '‹' : '›' }</button>
+                </div>
             </div>
         </>
     )
