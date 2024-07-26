@@ -28,10 +28,10 @@ function App() {
       <Header></Header>
       {showLogin ? (<Login setAppUser={setAppUser} closeLogin={() => closeLogin()}></Login>) : (<></>)}
       <Switch>
-        <Route exact path='/'>
+        <Route path='/dashboard'>
           <Dashboard curUser={curUser} login={showLogin} handleLogout={() => handleLogout()}></Dashboard>
         </Route>
-        <Route path='/leaderboard'>
+        <Route exact path='/leaderboard'>
           <Leaderboard curUser={curUser}></Leaderboard>
         </Route>
       </Switch>

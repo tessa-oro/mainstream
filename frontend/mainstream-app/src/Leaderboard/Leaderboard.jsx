@@ -30,7 +30,7 @@ function Leaderboard({ curUser }) {
     return (
         <div>
             <h1>Leaderboard</h1>
-            <Link to='/'>
+            <Link to='/dashboard'>
                 <button>back</button>
             </Link>
             { leaderboardMap && Object.entries(leaderboardMap).map(([user, score]) => (
