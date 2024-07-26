@@ -16,7 +16,7 @@ function Dashboard({ curUser, login, handleLogout }) {
             </Link>
             <div id="dashboard">
                 <Switch>
-                    <Route exact path={path}><ViewFriends></ViewFriends></Route>
+                    <Route exact path={path}><ViewFriends curUser={curUser}></ViewFriends></Route>
                     <Route path={`${path}/viewfriends`}>
                         <ViewFriends curUser={curUser} login={login}></ViewFriends>
                     </Route>
