@@ -88,10 +88,10 @@ function Playlist({ refetch, curUser }) {
             </div>
             <div id="songs">
                 {songs.map((song) => (
-                    <>
+                    <div id="playlistEntry">
                         <div id="songPlayer" dangerouslySetInnerHTML={{ __html: song.player }} />
-                        <button onClick={() => deleteSong(song.id)}>delete</button>
-                    </>)
+                        <button id="deleteSong" onClick={() => deleteSong(song.id)}>remove</button>
+                    </div>)
                 )}
             </div>
         </div>

@@ -34,6 +34,7 @@
 }
 
 #modalContent {
+    margin-top: 80px;
     align-items: center;
     color: aliceblue;
 }
@@ -71,6 +72,21 @@
 
 #submit {
     margin-left: 50px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    padding: 7px;
+    cursor: pointer;
+}
+
+#closeRate {
+    background-color:rgba(240, 248, 255, 0);
+    border: none;
+    cursor: pointer;
+}
+
+#closeRate:hover {
+    font-weight: 700;
 }
 
 .scoreButton {

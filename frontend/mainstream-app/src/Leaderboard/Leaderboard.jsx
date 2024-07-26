@@ -31,7 +31,7 @@ function Leaderboard({ curUser }) {
         <div id="leaderboardComponent">
             <h1>Leaderboard</h1>
             <Link to='/dashboard'>
-                <button>back</button>
+                <button id="lbBack">back</button>
             </Link>
             <div id="lbEntries">
                 { leaderboardMap && Object.entries(leaderboardMap).map(([user, score]) => (

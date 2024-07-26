@@ -103,7 +103,7 @@ const RateModal = ({ curUser, friend, songID, closeModal, markRated, player }) =
                         <button id="submit" type="submit">Submit</button>
                     </form>
                 </div>
-                <button id="close" onClick={closeModal}>cancel</button>
+                <button id="closeRate" onClick={closeModal}>cancel</button>
             </div>
             <div id="overlay"></div>
         </>

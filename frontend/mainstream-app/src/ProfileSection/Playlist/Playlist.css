@@ -12,3 +12,20 @@ iframe {
 #playlistContainer {
     height: 60%;
 }
+
+#playlistEntry {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#deleteSong {
+    margin-left: 10px;
+    background-color: rgb(77, 0, 128);
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+}
