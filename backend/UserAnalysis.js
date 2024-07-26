@@ -78,42 +78,51 @@ class UserAnalysis {
 
         // Add the scores for each emotion, total scores for each emotion, and weighted scores for each emotion to the corresponding maps
         playlist.forEach(song => {
-            let joyScore = song.emotionScores.emotion_scores.joy;
-            let angerScore = song.emotionScores.emotion_scores.anger
-            let sadnessScore = song.emotionScores.emotion_scores.sadness;
-            let fearScore = song.emotionScores.emotion_scores.fear;
-            let disgustScore = song.emotionScores.emotion_scores.disgust;
-            let likes = parseInt(song.stats.likeCount);
-            let views = parseInt(song.stats.viewCount);
+            if (song.emotionScores.emotion_scores) {
+                let joyScore = song.emotionScores.emotion_scores.joy;
+                let angerScore = song.emotionScores.emotion_scores.anger
+                let sadnessScore = song.emotionScores.emotion_scores.sadness;
+                let fearScore = song.emotionScores.emotion_scores.fear;
+                let disgustScore = song.emotionScores.emotion_scores.disgust;
+                let likes = parseInt(song.stats.likeCount);
+                let views = parseInt(song.stats.viewCount);
 
-            // Sum total emotions and add to total emotions map
-            totalEmotions.joy += joyScore;
-            totalEmotions.anger += angerScore;
-            totalEmotions.sadness += sadnessScore;
-            totalEmotions.fear += fearScore;
-            totalEmotions.disgust += disgustScore;
+                // Sum up total likes and views
+                totalLikes += likes;
+                totalViews += views;
 
-            // Sum up total likes and views
-            totalLikes += likes;
-            totalViews += views;
+                // Sum total emotions and add to total emotions map
+                totalEmotions.joy += joyScore;
+                totalEmotions.anger += angerScore;
+                totalEmotions.sadness += sadnessScore;
+                totalEmotions.fear += fearScore;
+                totalEmotions.disgust += disgustScore;
 
-            // Sum weighted emotions (based on ratio of likes over views) and add to weighted emotions map
-            const weight = likes / views;
-            weightedEmotions.joy += joyScore * weight;
-            weightedEmotions.anger += angerScore * weight;
-            weightedEmotions.sadness += sadnessScore * weight;
-            weightedEmotions.fear += fearScore * weight;
-            weightedEmotions.disgust += disgustScore * weight;
+                // Sum weighted emotions (based on ratio of likes over views) and add to weighted emotions map
+                const weight = likes / views;
+                weightedEmotions.joy += joyScore * weight;
+                weightedEmotions.anger += angerScore * weight;
+                weightedEmotions.sadness += sadnessScore * weight;
+                weightedEmotions.fear += fearScore * weight;
+                weightedEmotions.disgust += disgustScore * weight;
 
-            // Push emotion scores to the emotion array
-            emotionArray.joy.push(joyScore);
-            emotionArray.anger.push(angerScore);
-            emotionArray.sadness.push(sadnessScore);
-            emotionArray.fear.push(fearScore);
-            emotionArray.disgust.push(disgustScore);
+                // Push emotion scores to the emotion array
+                emotionArray.joy.push(joyScore);
+                emotionArray.anger.push(angerScore);
+                emotionArray.sadness.push(sadnessScore);
+                emotionArray.fear.push(fearScore);
+                emotionArray.disgust.push(disgustScore);
 
-            // Push the like to view ratio to the likeViewRatio array
-            likeViewRatios.push(weight);
+                // Push the like to view ratio to the likeViewRatio array
+                likeViewRatios.push(weight);
+            } else { //only handle likes and views if song does not have transcript
+                let likes = parseInt(song.stats.likeCount);
+                let views = parseInt(song.stats.viewCount);
+                totalLikes += likes;
+                totalViews += views;
+                const weight = likes / views;
+                likeViewRatios.push(weight);
+            }
         });
 
         // Calculate the averages of each emotion

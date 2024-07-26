@@ -77,26 +77,27 @@ app.post('/songs/:user/create/', async (req, res) => {
     const transcript = await userAnalysis.convertTranscript(vidID);
     let emoScore;
     if (transcript) {
-        emoScore = await userAnalysis.textapi(transcript);
+        emoScore = JSON.parse(await userAnalysis.textapi(transcript));
     } else {
-        emoScore = {};
+        emoScore = {"emotion_scores" : false};
     }
-    const emoScoreJSON = JSON.parse(emoScore);
     const newSong = await prisma.song.create({
         data: {
             player,
             stats,
             tags,
-            emotionScores: emoScoreJSON,
+            emotionScores: emoScore,
             avgRating: 0,
             userID: user
         }
     })
-    let mapPriorityQueue = new MapPriorityQueue(prisma, user);
-    await mapPriorityQueue.init();
-    Object.entries(emoScoreJSON.emotion_scores).map(async ([emotion, score]) => {
-        await mapPriorityQueue.insert(emotion, score);
-    })
+    if (emoScore.emotion_scores) {
+        let mapPriorityQueue = new MapPriorityQueue(prisma, user);
+        await mapPriorityQueue.init();
+        Object.entries(emoScore.emotion_scores).map(async ([emotion, score]) => {
+            await mapPriorityQueue.insert(emotion, score);
+        })
+    }
     res.json(newSong)
 })
 
