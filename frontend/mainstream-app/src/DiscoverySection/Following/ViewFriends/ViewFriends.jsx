@@ -29,6 +29,7 @@ function ViewFriends({ curUser, login }) {
     * Fetches users that current user follows.
     */
     const fetchFollowing = () => {
+        console.log(curUser);
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/following/${curUser}`)
         .then(response => {
             if (!response.ok) {
@@ -38,6 +39,7 @@ function ViewFriends({ curUser, login }) {
             }
         })
         .then(data => {
+            console.log(data);
             setFollowing(data);
             setShowFollowing(true);
         })
