@@ -2,3 +2,13 @@ iframe {
     width: 200px;
     height: 150px;
 }
+
+#songs {
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#playlistContainer {
+    height: 60%;
+}

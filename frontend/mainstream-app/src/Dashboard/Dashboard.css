@@ -6,7 +6,7 @@
 
 #dashboard > div {
     transition: flex-basis 0.3s ease;
-    overflow: hidden;
+    overflow: auto;
 }
 
 #expand {

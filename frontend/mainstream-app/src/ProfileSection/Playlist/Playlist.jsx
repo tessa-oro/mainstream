@@ -86,12 +86,14 @@ function Playlist({ refetch, curUser }) {
                     <p class="scoreVal">{score}</p>
                 </div>
             </div>
-            {songs.map((song) => (
-                <>
-                    <div id="songPlayer" dangerouslySetInnerHTML={{ __html: song.player }} />
-                    <button onClick={() => deleteSong(song.id)}>delete</button>
-                </>)
-            )}
+            <div id="songs">
+                {songs.map((song) => (
+                    <>
+                        <div id="songPlayer" dangerouslySetInnerHTML={{ __html: song.player }} />
+                        <button onClick={() => deleteSong(song.id)}>delete</button>
+                    </>)
+                )}
+            </div>
         </div>
     )
 }
