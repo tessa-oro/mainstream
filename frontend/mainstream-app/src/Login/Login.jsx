@@ -1,11 +1,13 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import "./Login.css"
 
 function Login({ closeLogin, setAppUser }) {
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [result, setResult] = useState("");
+    const history = useHistory();
 
     useEffect(() => {
 
@@ -71,6 +73,7 @@ function Login({ closeLogin, setAppUser }) {
                 if (response.ok) {
                     closeLogin();
                     setAppUser(user);
+                    history.push('/dashboard');
                 } else {
                     setResult("Failed to login. Please double check username and password.");
                 }

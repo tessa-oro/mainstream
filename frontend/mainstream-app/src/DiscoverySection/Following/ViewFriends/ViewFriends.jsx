@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import "./ViewFriends.css";
 import FollowModal from "../FollowModal/FollowModal";
 import FriendPlaylist from "../FriendPlaylist/FriendPlaylist";
@@ -15,6 +15,7 @@ function ViewFriends({ curUser, login }) {
     const [showFollowing, setShowFollowing] = useState(false);
     const [showClear, setShowClear] = useState(false);
     const [searchQ, setSearchQ] = useState("");
+    let { url } = useRouteMatch();
 
     useEffect(() => {
         fetchFollowing();
@@ -101,7 +102,7 @@ function ViewFriends({ curUser, login }) {
     return (
         <div id="viewFriendsContainer">
             <h2 id="discoverHeader">Discover</h2>
-            <Link to='/recPage'>
+            <Link to={`${url}/recPage`}>
                 <button id="recommendButton">Song recommendations</button>
             </Link>
             <div id="searchUsersContainer">

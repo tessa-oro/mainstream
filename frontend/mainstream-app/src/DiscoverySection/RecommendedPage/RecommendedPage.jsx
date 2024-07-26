@@ -78,7 +78,7 @@ function RecommendedPage( {curUser} ) {
     return (
       <div id="recommendedContainer">
         <h2>Recommended</h2>
-        <Link to='/'>
+        <Link to='/dashboard'>
             <button id="backButton">back</button>
         </Link>
         <div>
