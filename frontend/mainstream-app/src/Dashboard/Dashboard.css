@@ -4,6 +4,24 @@
     height: 1200px;
 }
 
+#dashboard > div {
+    transition: flex-basis 0.3s ease;
+    overflow: hidden;
+}
+
+#expand {
+    background: none;
+    border: none;
+    font-size: 3em;
+    cursor: pointer;
+    z-index: 1;
+    color: white;
+}
+
+#expand:focus {
+    outline: none;
+}
+
 .playlistHeader {
     color: white;
     font-size: 1.7em;
