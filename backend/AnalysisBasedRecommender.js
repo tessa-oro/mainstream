@@ -69,7 +69,7 @@ class AnalysisBasedRecommender {
             const userInteractionSongPlayers = userInteractions.map(interaction => interaction.songItem); //get the player url of the songs in userInteractions
             const userPlaylistSongPlayers = playlist.map(song => song.player); //get the player url of the songs in a user's playlist
             const userKnownSongs = [...new Set([...userInteractionSongPlayers, ...userPlaylistSongPlayers])];
-           
+
             const filteredSongs = songs.filter(song => { //filter all songs based on if they match a user's emotions and playlist tags, excluding those a user has already rated or added to their playlist
                 const matchesEmotion = emotions.some(emotion => song.emotionScores.emotion_scores[emotion] > 0.6);
                 const matchesTag = tags.some(tag => song.tags.includes(tag));
