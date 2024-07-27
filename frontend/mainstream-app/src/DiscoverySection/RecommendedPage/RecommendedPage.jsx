@@ -29,7 +29,7 @@ function RecommendedPage( {curUser} ) {
         )
         .then(response => {
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                setShowInteractionRecommend(false);
             } else {
                 return response.json();
             }
@@ -44,7 +44,7 @@ function RecommendedPage( {curUser} ) {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/recommended/${curUser}`)
         .then(response => {
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                setShowInteractionRecommend(false);
             } else {
                 return response.json();
             }
@@ -63,14 +63,18 @@ function RecommendedPage( {curUser} ) {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/analysisRecommendations/${curUser}`)
         .then(response => {
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                setShowAnalysisRecommend(false);
             } else {
                 return response.json();
             }
         })
         .then(data => {
-            setAnalysisRecommendedSongs(data);
-            setShowAnalysisRecommend(true);
+            if (data === "An error ocurred while fetching analysis based recommendations.") {
+                setShowAnalysisRecommend(false);
+            } else {
+                setAnalysisRecommendedSongs(data);
+                setShowAnalysisRecommend(true);
+            }
         })
         .catch(error => {});
     }
@@ -82,14 +86,14 @@ function RecommendedPage( {curUser} ) {
         </Link>
         <div>
             <h2>These are a similar vibe to your playlist</h2>
-            {showAnalysisRecommend && 
+            {showAnalysisRecommend && analysisRecommendedSongs &&
                 analysisRecommendedSongs.map((recommendation) => (
                 <div id="songPlayer" dangerouslySetInnerHTML={{ __html: recommendation.player }} />
             ))}
         </div>
         <div>
             <h2>Here's what other users like you are listening to</h2>
-            {showInteractionRecommend && 
+            {showInteractionRecommend && interactionRecommendedSongs &&
                 interactionRecommendedSongs.map((recommendation) => (
                 <div id="songPlayer" dangerouslySetInnerHTML={{ __html: recommendation }} />
             ))}
