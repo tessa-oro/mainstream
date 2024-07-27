@@ -17,13 +17,13 @@
     z-index: 1000;
     justify-content: center;
     position: fixed;
-    width: 70%;
-    height: 70%;
+    width: 30%;
+    height: 30%;
     overflow: auto;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.876);
+    background-color: rgba(27, 95, 255, 0.868);
     box-shadow: 0px 0px 10px rgba(72, 72, 72, 0.5);
     border-radius: 4%;
     padding-top: 20px;
@@ -40,4 +40,30 @@
 #result {
     display: block;
     color: white;
+}
+
+#yesFollow {
+    background-color: rgb(101, 154, 252);
+    color: white;
+    margin: 5px;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+#cancelFollow {
+    background-color: rgb(0, 35, 124);
+    color: rgb(255, 255, 255);
+    margin: 5px;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: .8em;
+    cursor: pointer;
 }

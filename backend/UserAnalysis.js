@@ -256,7 +256,7 @@ class UserAnalysis {
         }
 
         // Use clusters to group songs by emotional vibe
-        personalityInsights += "Let's break your playlist down by vibes: "
+        personalityInsights += "<br /><br /> Let's break your playlist down by vibes: "
         clusters.forEach((cluster, index) => {
             personalityInsights += `<br /><br />Vibe ${index + 1}: `;
             cluster.forEach(point => {
