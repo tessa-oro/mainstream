@@ -5,6 +5,11 @@
     height: 100%;
 }
 
+#lbHeader {
+    color: rgb(31, 177, 255);
+    margin-bottom: 0px;
+}
+
 #lbPlace {
     display: flex;
     justify-content: flex-start;
@@ -32,10 +37,16 @@
 }
 
 #lbBack {
-    background-color: rgb(186, 144, 255);
+    margin-top: 25px;
+    background-color: rgba(128, 0, 128, 0);
     color: white;
     border-radius: 10px;
     padding: 7px;
     border: none;
+    font-size: 1em;
     cursor: pointer;
+}
+
+#lbBack:hover {
+    font-weight: bold;
 }

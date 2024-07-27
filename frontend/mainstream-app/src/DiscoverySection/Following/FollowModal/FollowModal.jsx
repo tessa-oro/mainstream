@@ -74,8 +74,8 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
             <div id="followModal">
                 <div id="modalContent">
                     <h2>follow {userToFollow}?</h2>
-                    <button onClick={() => createRelationship()}>yes</button>
-                    <button onClick={closeModal}>cancel</button>
+                    <button id="yesFollow" onClick={() => createRelationship()}>yes</button>
+                    <button id="cancelFollow" onClick={closeModal}>cancel</button>
                 </div>
                 <div>
                     {result && <p id="result">{result}</p>}

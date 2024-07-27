@@ -21,7 +21,7 @@ function Dashboard({ curUser, login, handleLogout }) {
     return (
         <>
             <Link to='/leaderboard'>
-                <h2 id="leaderboardLink">Leaderboard</h2>
+                <h2 id="leaderboardLink">&#x1f451; Leaderboard &#x1f451;</h2>
             </Link>
             <div id="dashboard">
                 <div style={{ height: '100%', flexBasis: layout === '75-25' ? '75%' : layout === '50-50' ? '50%' : '25%'}}>
