@@ -86,6 +86,7 @@ function Profile({ curUser, handleLogout }) {
                 if (response.ok) {
                     setClicked(!clicked);
                     addSongItem(playerToAdd);
+                    clearSearch();
                     setResult("added to playlist!");
                 } else {
                     setResult("failed to add song");

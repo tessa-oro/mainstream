@@ -6,7 +6,6 @@
 
 #dashboard > div {
     transition: flex-basis 0.3s ease;
-    overflow: auto;
 }
 
 #expand {
@@ -52,8 +51,12 @@
 }
 
 #leaderboardLink {
-    color: #ac86ff;
+    color: #c68dff;
     text-align: center;
+}
+
+#leaderboardLink:hover {
+    text-shadow: 2px 2px 5px #fffffff7;
 }
 
 a {
