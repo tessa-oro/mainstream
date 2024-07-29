@@ -90,3 +90,9 @@
     text-align: center;
     text-shadow: rgba(239, 237, 255, 0.614) 1px 0 10px;
 }
+
+#welcomeMain {
+    text-decoration: line-through;
+    text-shadow: rgb(255, 255, 255) 1px 0 9px;
+    font-size: 3.8em;
+}
