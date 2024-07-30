@@ -5,7 +5,7 @@ import { Vortex } from 'react-loader-spinner';
 import "./FriendPlaylist.css";
 import FriendSong from '../FriendSong/FriendSong';
 
-function FriendPlaylist({ curUser, friend, showPlaylist }) {
+function FriendPlaylist({ curUser, friend, showPlaylist, hidePlaylist }) {
     const [songs, setSongs] = useState([]);
     const [score, setScore] = useState("...");
     const [showModal, setShowModal] = useState(false);
@@ -87,6 +87,7 @@ function FriendPlaylist({ curUser, friend, showPlaylist }) {
             .then(response => {
                 if (response.ok) {
                     setUnfollowed(true);
+                    hidePlaylist();
                 }
             })
             .catch(error => {});
@@ -135,7 +136,7 @@ function FriendPlaylist({ curUser, friend, showPlaylist }) {
                 </div>
             </div>
             <div>
-                { unfollowed ? <p>unfollowed</p> : <button onClick={() => unfollow()}>unfollow</button> }
+                <button id="unfollowButton" onClick={() => unfollow()}>unfollow</button> 
             </div>
             <div id="songsWrapper">
                 {songs.map((song) => (

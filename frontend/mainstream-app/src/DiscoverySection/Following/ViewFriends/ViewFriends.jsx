@@ -8,7 +8,6 @@ import FollowButton from '../FollowButton/FollowButton';
 function ViewFriends({ curUser, login }) {
     const [following, setFollowing] = useState([]);
     const [userResults, setUserResults] = useState([]);
-    const [userToFollow, setUserToFollow] = useState("");
     const [showPlaylist, setShowPlaylist] = useState(false);
     const [selectedFollowing, setSelectedFollowing] = useState("");
     const [showFollowing, setShowFollowing] = useState(false);
@@ -19,7 +18,7 @@ function ViewFriends({ curUser, login }) {
 
     useEffect(() => {
         fetchFollowing();
-    }, [login, curUser, changeFollow, selectedFollowing]);
+    }, [login, curUser, changeFollow, selectedFollowing, userResults]);
 
     useEffect(() => {
         clearSearch();
@@ -83,6 +82,14 @@ function ViewFriends({ curUser, login }) {
     }
 
     /*
+    * Hide the displayed playlist
+    */
+    const hidePlaylist = () => {
+        setSelectedFollowing("");
+        setShowPlaylist(false);
+    }
+
+    /*
     * Clear search users input and results
     */
     const clearSearch = () => {
@@ -126,7 +133,7 @@ function ViewFriends({ curUser, login }) {
                     showFollowing && <p onClick={() => displayPlaylist(follow.name)} id="following">{follow.name}</p>)
                 )}
             </div>
-            {showPlaylist && <FriendPlaylist showPlaylist={showPlaylist} curUser={curUser} friend={selectedFollowing}></FriendPlaylist>}
+            {showPlaylist && <FriendPlaylist hidePlaylist={hidePlaylist} showPlaylist={showPlaylist} curUser={curUser} friend={selectedFollowing}></FriendPlaylist>}
         </div>
     )
 }

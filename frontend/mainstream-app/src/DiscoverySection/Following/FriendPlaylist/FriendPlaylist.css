@@ -9,6 +9,23 @@
     padding: 10px;
 }
 
+#unfollowButton {
+    color: #1a8cc4;
+    padding: 4px;
+    margin-bottom: 15px;
+    border-radius: 7px;
+    border-color: #b7e6fe00;
+    background-color: #b7e6fe;
+    transition: 0.3s ease;
+    position: relative;
+    font-size: .8em;
+    cursor: pointer;
+}
+
+#unfollowButton:hover {
+    background-color: #dcf3ffe9;
+}
+
 #loadingContainer {
     display: flex;
     justify-content: center;
