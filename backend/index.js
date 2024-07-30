@@ -220,15 +220,24 @@ app.get('/following/:user', async (req, res) => {
     }
 })
 
-//search for a user by username
-app.get('/users/:searchUser', async (req, res) => {
-    const { searchUser } = req.params;
+//search for a user by username that a user is not following
+app.get('/users/:searchUser/:byUser', async (req, res) => {
+    const { searchUser, byUser } = req.params;
     try {
+        const following = await prisma.following.findMany({
+            where: {
+                followedByName: byUser,
+            },
+            select: {
+                name: true
+            }
+        })
         const userList = await prisma.user.findMany({
             where: {
                 user: {
                     contains: searchUser,
-                    mode: 'insensitive'
+                    mode: 'insensitive',
+                    notIn: following.map(user => user.name)
                 }
             }
         });

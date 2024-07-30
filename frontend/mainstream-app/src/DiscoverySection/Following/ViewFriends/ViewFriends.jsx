@@ -58,7 +58,7 @@ function ViewFriends({ curUser, login }) {
         e.preventDefault();
         let searchName = searchQ;
         if (searchName) {
-            fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/users/${searchName}`)
+            fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/users/${searchName}/${curUser}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
