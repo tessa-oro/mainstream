@@ -22,7 +22,7 @@ function ViewFriends({ curUser, login }) {
 
     useEffect(() => {
         clearSearch();
-    }, [curUser]);
+    }, [curUser, selectedFollowing]);
 
     /*
     * Fetches users that current user follows.
