@@ -63,9 +63,9 @@ function FollowButton({ userToFollow, curUser, handleFollow }) {
     }
 
     /*
-    * Unfollow a user
+    * Unfollow a user in the search section
     */
-    const unfollow = () => {
+    const undoFollow = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/unfollow`,
             {
                 method: 'DELETE',
@@ -94,12 +94,15 @@ function FollowButton({ userToFollow, curUser, handleFollow }) {
         addToFollowers();
     }
 
+    /*
+    * Changes follow state accordingly when plus sign or check mark is clicked
+    */
     const changeFollow = () => {
         if (icon === faPlus) {
             createRelationship();
             setIcon(faCheck);
         } else {
-            unfollow();
+            undoFollow();
         }
     }
 

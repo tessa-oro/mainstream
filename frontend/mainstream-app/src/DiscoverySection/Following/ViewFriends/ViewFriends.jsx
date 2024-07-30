@@ -2,14 +2,12 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import "./ViewFriends.css";
-import FollowModal from "../FollowModal/FollowModal";
 import FriendPlaylist from "../FriendPlaylist/FriendPlaylist";
 import FollowButton from '../FollowButton/FollowButton';
 
 function ViewFriends({ curUser, login }) {
     const [following, setFollowing] = useState([]);
     const [userResults, setUserResults] = useState([]);
-    const [showModal, setShowModal] = useState(false);
     const [userToFollow, setUserToFollow] = useState("");
     const [showPlaylist, setShowPlaylist] = useState(false);
     const [selectedFollowing, setSelectedFollowing] = useState("");
@@ -21,7 +19,7 @@ function ViewFriends({ curUser, login }) {
 
     useEffect(() => {
         fetchFollowing();
-    }, [login, showModal, curUser, changeFollow]);
+    }, [login, curUser, changeFollow, selectedFollowing]);
 
     useEffect(() => {
         clearSearch();
@@ -77,14 +75,6 @@ function ViewFriends({ curUser, login }) {
     }
 
     /*
-    * Opens and closes modal to follow a user
-    */
-    const followModal = (user) => {
-        setUserToFollow(user);
-        // setShowModal(!showModal);
-    }
-
-    /*
     * Display playlist of the selected user
     */
     const displayPlaylist = (name) => {
@@ -101,6 +91,9 @@ function ViewFriends({ curUser, login }) {
         setSearchQ("");
     }
 
+    /*
+    * State variable to update use effect when user is followed or unfollowed
+    */
     const handleFollow = () => {
         setChangeFollow(!changeFollow);
     }
@@ -116,16 +109,15 @@ function ViewFriends({ curUser, login }) {
                     <label id="searchUsersPrompt">Search users to follow: </label>
                     <input type="text" value={searchQ} placeholder="Search by username" name="searchUser" onChange={(e) => setSearchQ(e.target.value)}></input>
                 </form>
-                {showModal && <FollowModal closeModal={() => followModal()} userToFollow={userToFollow} curUser={curUser} />}
                 <div>
                     {userResults && userResults.map((user) => (
                         (user !== curUser) && 
                         <div id="userToFollow">
-                            <p onClick={() => followModal(user)} id="user">{user}</p> 
+                            <p id="user">{user}</p> 
                             <FollowButton userToFollow={user} curUser={curUser} handleFollow={handleFollow}></FollowButton> 
                         </div>
                     ))}
-                    {showClear && <button onClick={() => clearSearch()} id="clearUserSearchButton">cancel</button>}
+                    {showClear && <button onClick={() => clearSearch()} id="clearUserSearchButton">close</button>}
                 </div>
             </div>
             <div id="followingContainer">
