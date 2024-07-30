@@ -63,6 +63,30 @@ function FollowButton({ userToFollow, curUser, handleFollow }) {
     }
 
     /*
+    * Unfollow a user
+    */
+    const unfollow = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/unfollow`,
+            {
+                method: 'DELETE',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    followedBy: curUser,
+                    following: userToFollow
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    setIcon(faPlus);
+                    handleFollow();
+                }
+            })
+            .catch(error => {});
+    }
+
+    /*
     * Creates following and follwer relationships
     */
     const createRelationship = () => {
@@ -70,13 +94,17 @@ function FollowButton({ userToFollow, curUser, handleFollow }) {
         addToFollowers();
     }
 
-    const toggleIcon = () => {
-        setIcon(icon === faPlus ? faCheck : faPlus);
-        createRelationship();
+    const changeFollow = () => {
+        if (icon === faPlus) {
+            createRelationship();
+            setIcon(faCheck);
+        } else {
+            unfollow();
+        }
     }
 
     return (
-        <div style={{ fontSize: '24px', cursor: 'pointer' }} onClick={toggleIcon}>
+        <div style={{ fontSize: '24px', cursor: 'pointer' }} onClick={changeFollow}>
             <FontAwesomeIcon icon={icon} />
         </div>
     );
