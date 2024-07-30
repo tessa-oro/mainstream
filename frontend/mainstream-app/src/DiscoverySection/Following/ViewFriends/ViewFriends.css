@@ -39,11 +39,8 @@
 #user {
     cursor: pointer;
     color: #1a8cc4;
-    font-size: 1.1em;
-}
-
-#user:hover {
-    font-weight: bold;
+    font-size: 1.2em;
+    margin-right: 10px;
 }
 
 #discoverHeader {
@@ -97,4 +94,11 @@
 
 #clearUserSearchButton:hover {
     font-weight: bold;
+}
+
+#userToFollow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }

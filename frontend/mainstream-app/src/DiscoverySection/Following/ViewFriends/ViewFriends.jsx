@@ -4,6 +4,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import "./ViewFriends.css";
 import FollowModal from "../FollowModal/FollowModal";
 import FriendPlaylist from "../FriendPlaylist/FriendPlaylist";
+import FollowButton from '../FollowButton/FollowButton';
 
 function ViewFriends({ curUser, login }) {
     const [following, setFollowing] = useState([]);
@@ -15,11 +16,12 @@ function ViewFriends({ curUser, login }) {
     const [showFollowing, setShowFollowing] = useState(false);
     const [showClear, setShowClear] = useState(false);
     const [searchQ, setSearchQ] = useState("");
+    const [changeFollow, setChangeFollow] = useState(false);
     let { url } = useRouteMatch();
 
     useEffect(() => {
         fetchFollowing();
-    }, [login, showModal, curUser]);
+    }, [login, showModal, curUser, changeFollow]);
 
     useEffect(() => {
         clearSearch();
@@ -79,7 +81,7 @@ function ViewFriends({ curUser, login }) {
     */
     const followModal = (user) => {
         setUserToFollow(user);
-        setShowModal(!showModal);
+        // setShowModal(!showModal);
     }
 
     /*
@@ -99,6 +101,10 @@ function ViewFriends({ curUser, login }) {
         setSearchQ("");
     }
 
+    const handleFollow = () => {
+        setChangeFollow(!changeFollow);
+    }
+
     return (
         <div id="viewFriendsContainer">
             <h2 id="discoverHeader">Discover</h2>
@@ -113,8 +119,11 @@ function ViewFriends({ curUser, login }) {
                 {showModal && <FollowModal closeModal={() => followModal()} userToFollow={userToFollow} curUser={curUser} />}
                 <div>
                     {userResults && userResults.map((user) => (
-                        (user !== curUser) &&
-                        <p onClick={() => followModal(user)} id="user">{user}</p>
+                        (user !== curUser) && 
+                        <div id="userToFollow">
+                            <p onClick={() => followModal(user)} id="user">{user}</p> 
+                            <FollowButton userToFollow={user} curUser={curUser} handleFollow={handleFollow}></FollowButton> 
+                        </div>
                     ))}
                     {showClear && <button onClick={() => clearSearch()} id="clearUserSearchButton">cancel</button>}
                 </div>
