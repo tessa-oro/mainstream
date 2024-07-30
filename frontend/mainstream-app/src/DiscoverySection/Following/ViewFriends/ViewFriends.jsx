@@ -2,28 +2,27 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import "./ViewFriends.css";
-import FollowModal from "../FollowModal/FollowModal";
 import FriendPlaylist from "../FriendPlaylist/FriendPlaylist";
+import FollowButton from '../FollowButton/FollowButton';
 
 function ViewFriends({ curUser, login }) {
     const [following, setFollowing] = useState([]);
     const [userResults, setUserResults] = useState([]);
-    const [showModal, setShowModal] = useState(false);
-    const [userToFollow, setUserToFollow] = useState("");
     const [showPlaylist, setShowPlaylist] = useState(false);
     const [selectedFollowing, setSelectedFollowing] = useState("");
     const [showFollowing, setShowFollowing] = useState(false);
     const [showClear, setShowClear] = useState(false);
     const [searchQ, setSearchQ] = useState("");
+    const [changeFollow, setChangeFollow] = useState(false);
     let { url } = useRouteMatch();
 
     useEffect(() => {
         fetchFollowing();
-    }, [login, showModal, curUser]);
+    }, [login, curUser, changeFollow, selectedFollowing, userResults]);
 
     useEffect(() => {
         clearSearch();
-    }, [curUser]);
+    }, [curUser, selectedFollowing]);
 
     /*
     * Fetches users that current user follows.
@@ -56,7 +55,7 @@ function ViewFriends({ curUser, login }) {
         e.preventDefault();
         let searchName = searchQ;
         if (searchName) {
-            fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/users/${searchName}`)
+            fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/users/${searchName}/${curUser}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -75,19 +74,19 @@ function ViewFriends({ curUser, login }) {
     }
 
     /*
-    * Opens and closes modal to follow a user
-    */
-    const followModal = (user) => {
-        setUserToFollow(user);
-        setShowModal(!showModal);
-    }
-
-    /*
     * Display playlist of the selected user
     */
     const displayPlaylist = (name) => {
         setSelectedFollowing(name);
         setShowPlaylist(true);
+    }
+
+    /*
+    * Hide the displayed playlist
+    */
+    const hidePlaylist = () => {
+        setSelectedFollowing("");
+        setShowPlaylist(false);
     }
 
     /*
@@ -97,6 +96,13 @@ function ViewFriends({ curUser, login }) {
         setShowClear(false);
         setUserResults([]);
         setSearchQ("");
+    }
+
+    /*
+    * State variable to update use effect when user is followed or unfollowed
+    */
+    const handleFollow = () => {
+        setChangeFollow(!changeFollow);
     }
 
     return (
@@ -110,13 +116,15 @@ function ViewFriends({ curUser, login }) {
                     <label id="searchUsersPrompt">Search users to follow: </label>
                     <input type="text" value={searchQ} placeholder="Search by username" name="searchUser" onChange={(e) => setSearchQ(e.target.value)}></input>
                 </form>
-                {showModal && <FollowModal closeModal={() => followModal()} userToFollow={userToFollow} curUser={curUser} />}
                 <div>
                     {userResults && userResults.map((user) => (
-                        (user !== curUser) &&
-                        <p onClick={() => followModal(user)} id="user">{user}</p>
+                        (user !== curUser) && 
+                        <div id="userToFollow">
+                            <p id="user">{user}</p> 
+                            <FollowButton userToFollow={user} curUser={curUser} handleFollow={handleFollow}></FollowButton> 
+                        </div>
                     ))}
-                    {showClear && <button onClick={() => clearSearch()} id="clearUserSearchButton">cancel</button>}
+                    {showClear && <button onClick={() => clearSearch()} id="clearUserSearchButton">close</button>}
                 </div>
             </div>
             <div id="followingContainer">
@@ -125,7 +133,7 @@ function ViewFriends({ curUser, login }) {
                     showFollowing && <p onClick={() => displayPlaylist(follow.name)} id="following">{follow.name}</p>)
                 )}
             </div>
-            {showPlaylist && <FriendPlaylist showPlaylist={showPlaylist} curUser={curUser} friend={selectedFollowing}></FriendPlaylist>}
+            {showPlaylist && <FriendPlaylist hidePlaylist={hidePlaylist} showPlaylist={showPlaylist} curUser={curUser} friend={selectedFollowing}></FriendPlaylist>}
         </div>
     )
 }

@@ -87,7 +87,9 @@ function Login({ closeLogin, setAppUser }) {
         <>
             <div id="createLogin">
                 <div id="loginContent">
-                <h1 id="welcome">Welcome to mainstream.</h1>
+                <h1 id="welcome">Welcome to </h1>
+                <h1 id="welcomeMain">main</h1>
+                <h1 id="welcome">stream.</h1>
                     <h2 id="loginTitle">Get started</h2>
                     <div class="loginInput">
                         <label>Username: </label>

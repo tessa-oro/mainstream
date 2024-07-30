@@ -5,7 +5,7 @@ import { Vortex } from 'react-loader-spinner';
 import "./FriendPlaylist.css";
 import FriendSong from '../FriendSong/FriendSong';
 
-function FriendPlaylist({ curUser, friend, showPlaylist }) {
+function FriendPlaylist({ curUser, friend, showPlaylist, hidePlaylist }) {
     const [songs, setSongs] = useState([]);
     const [score, setScore] = useState("...");
     const [showModal, setShowModal] = useState(false);
@@ -13,11 +13,13 @@ function FriendPlaylist({ curUser, friend, showPlaylist }) {
     const [songPlayer, setSongPlayer] = useState("");
     const [rated, setRated] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [unfollowed, setUnfollowed] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
         fetchUserSongs();
         fetchUserScore();
+        setUnfollowed(false);
     }, [curUser, friend, showPlaylist, rated]);
 
     /*
@@ -68,6 +70,30 @@ function FriendPlaylist({ curUser, friend, showPlaylist }) {
     }
 
     /*
+    * Unfollow a user
+    */
+    const unfollow = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/unfollow`,
+            {
+                method: 'DELETE',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    followedBy: curUser,
+                    following: friend
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    setUnfollowed(true);
+                    hidePlaylist();
+                }
+            })
+            .catch(error => {});
+    }
+
+    /*
     * Opens rate modal for selected song to rate
     */
     const goToRate = (id, player) => {
@@ -108,6 +134,9 @@ function FriendPlaylist({ curUser, friend, showPlaylist }) {
                 <div className="score">
                     <p className="scoreVal">{score}</p>
                 </div>
+            </div>
+            <div>
+                <button id="unfollowButton" onClick={() => unfollow()}>unfollow</button> 
             </div>
             <div id="songsWrapper">
                 {songs.map((song) => (

@@ -1,11 +1,12 @@
-import "./FollowModal.css";
-import React from "react";
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faCheck } from '@fortawesome/free-solid-svg-icons';
 
-const FollowModal = ({ closeModal, userToFollow, curUser }) => {
+function FollowButton({ userToFollow, curUser, handleFollow }) {
     const [result, setResult] = useState("");
     const [follower, setFollower] = useState(curUser);
     const [following, setFollowing] = useState(userToFollow);
+    const [icon, setIcon] = useState(faPlus);
 
     /*
     * Adds the selected user to the following list of the current user.
@@ -51,7 +52,7 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
             .then(response => {
                 if (response.ok) {
                     setResult("following!");
-                    closeModal();
+                    handleFollow();
                 } else {
                     setResult("already following");
                 }
@@ -62,6 +63,30 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
     }
 
     /*
+    * Unfollow a user in the search section
+    */
+    const undoFollow = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/unfollow`,
+            {
+                method: 'DELETE',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    followedBy: curUser,
+                    following: userToFollow
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    setIcon(faPlus);
+                    handleFollow();
+                }
+            })
+            .catch(error => {});
+    }
+
+    /*
     * Creates following and follwer relationships
     */
     const createRelationship = () => {
@@ -69,21 +94,22 @@ const FollowModal = ({ closeModal, userToFollow, curUser }) => {
         addToFollowers();
     }
 
+    /*
+    * Changes follow state accordingly when plus sign or check mark is clicked
+    */
+    const changeFollow = () => {
+        if (icon === faPlus) {
+            createRelationship();
+            setIcon(faCheck);
+        } else {
+            undoFollow();
+        }
+    }
+
     return (
-        <>
-            <div id="followModal">
-                <div id="modalContent">
-                    <h2>follow {userToFollow}?</h2>
-                    <button id="yesFollow" onClick={() => createRelationship()}>yes</button>
-                    <button id="cancelFollow" onClick={closeModal}>cancel</button>
-                </div>
-                <div>
-                    {result && <p id="result">{result}</p>}
-                </div>
-            </div>
-            <div id="overlay"></div>
-        </>
+        <div style={{ fontSize: '24px', cursor: 'pointer' }} onClick={changeFollow}>
+            <FontAwesomeIcon icon={icon} />
+        </div>
     );
 }
-
-export default FollowModal;
+export default FollowButton;

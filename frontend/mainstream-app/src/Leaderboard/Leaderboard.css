@@ -6,8 +6,13 @@
 }
 
 #lbHeader {
-    color: rgb(31, 177, 255);
+    color: rgba(155, 255, 217, 0.901);
+    text-shadow: rgba(237, 252, 255, 0.697) 1px 0 10px;
+    background: rgb(31, 177, 255);
+    padding-bottom: 20px;
+    padding-top: 20px;
     margin-bottom: 0px;
+    margin-top: 10px;
 }
 
 #lbPlace {
@@ -26,7 +31,6 @@
 }
 
 #lbEntries {
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
     text-align: center;

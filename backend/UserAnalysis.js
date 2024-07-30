@@ -220,7 +220,7 @@ class UserAnalysis {
         // Perform k-means clustering on the emotion data
         const emotionData = playlist.map(song => ({
             emotions: song.emotionScores.emotion_scores,
-            songInfo: song.tags.join(' ')
+            songInfo: song.player
         }));
         const clusters = kMeansCluster(emotionData, 3);
 
@@ -258,14 +258,15 @@ class UserAnalysis {
         // Use clusters to group songs by emotional vibe
         personalityInsights += "<br /><br /> Let's break your playlist down by vibes: "
         clusters.forEach((cluster, index) => {
-            personalityInsights += `<br /><br />Vibe ${index + 1}: `;
-            cluster.forEach(point => {
-                personalityInsights += `song: ${point.songInfo} , `;
-            })
+            personalityInsights += `<br /><br />Vibe ${index + 1}: <br /><br />`;
             Object.keys(cluster[0].emotions).forEach(emotion => {
                 const avgEmotion = cluster.reduce((sum, point) => sum + point.emotions[emotion], 0) / cluster.length;
-                personalityInsights += `${emotion}: ${avgEmotion.toFixed(2)} `;
+                personalityInsights += `${emotion}: ${avgEmotion.toFixed(2)} <br />`;
             });
+            personalityInsights += `<br />`;
+            cluster.forEach(point => {
+                personalityInsights += ` ${point.songInfo} `;
+            })
         });
 
         return personalityInsights;

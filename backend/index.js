@@ -190,6 +190,32 @@ app.post('/following/:user', async (req, res) => {
     }
 })
 
+//unfollow a user
+app.delete('/unfollow', async (req, res) =>{
+    try {
+        const { followedBy, following } = req.body;
+        const deletedFollowing = await prisma.following.delete({
+        where: { 
+            followedByName_name: {
+                followedByName: followedBy,
+                name: following
+            }
+        }
+        })
+        const deletedFollower = await prisma.follower.delete({
+            where: { 
+            followsName_name: {
+                followsName: following,
+                name: followedBy
+            }
+            }
+        })
+        res.json([deletedFollowing, deletedFollower])
+    } catch (error) {
+        res.status(500).json({ error: "An error occurred while unfollowing user." })
+    }
+})
+
 //get user's followers
 app.get('/followers/:user', async (req, res) => {
     const { user } = req.params;
@@ -220,15 +246,24 @@ app.get('/following/:user', async (req, res) => {
     }
 })
 
-//search for a user by username
-app.get('/users/:searchUser', async (req, res) => {
-    const { searchUser } = req.params;
+//search for a user by username that a user is not following
+app.get('/users/:searchUser/:byUser', async (req, res) => {
+    const { searchUser, byUser } = req.params;
     try {
+        const following = await prisma.following.findMany({
+            where: {
+                followedByName: byUser,
+            },
+            select: {
+                name: true
+            }
+        })
         const userList = await prisma.user.findMany({
             where: {
                 user: {
                     contains: searchUser,
-                    mode: 'insensitive'
+                    mode: 'insensitive',
+                    notIn: following.map(user => user.name)
                 }
             }
         });
