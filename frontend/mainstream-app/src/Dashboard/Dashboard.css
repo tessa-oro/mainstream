@@ -8,6 +8,17 @@
     transition: flex-basis 0.3s ease;
 }
 
+#discoverButton {
+    color: white;
+    font-size: 20px;
+    margin-right: 10px;
+    background-color: #530BAE;
+    padding: 7px 12px;
+    border: 1px solid #5D5D5D;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
 #expand {
     background: none;
     border: none;
@@ -45,17 +56,4 @@
 
 .space {
     color: white;
-}
-
-#leaderboardLink {
-    color: #5800b1;
-    text-align: center;
-}
-
-#leaderboardLink:hover {
-    text-shadow: 2px 2px 5px #fffffff7;
-}
-
-a {
-    text-decoration: none;
 }

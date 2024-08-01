@@ -37,8 +37,8 @@ function Leaderboard({ curUser }) {
                 { leaderboardMap && Object.entries(leaderboardMap).map(([user, score]) => (
                     <div id="lbPlace">
                         <h2 id="lbUser">{user}</h2>
-                        <div id="scoreId" className="score">
-                            <p className="scoreVal">{score}</p>
+                        <div id="lbScore">
+                            <p id="lbScoreVal">{score}</p>
                         </div>
                     </div>
                 ))}

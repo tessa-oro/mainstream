@@ -14,7 +14,58 @@
     line-height: normal;
 }
 
+#discoverLinks {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#recommendButton {
+    display: inline-flex;
+    padding: 9.25px 17px;
+    align-items: center;
+    gap: 10px;
+    margin: 5px;
+    border-radius: 4px;
+    border: 1px solid #5D5D5D;
+    background: #ffffff;
+    color: #5D5D5D;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    transition: 0.2s ease;
+    line-height: normal;
+    cursor: pointer;
+}
+
+#leaderboardLink {
+    display: inline-flex;
+    padding: 8px 17px;
+    align-items: center;
+    gap: 10px;
+    margin: 5px;
+    border-radius: 4px;
+    border: 1px solid #5D5D5D;
+    background: #ffffff;
+    color: #5D5D5D;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    transition: 0.2s ease;
+    line-height: normal;
+    cursor: pointer;
+}
+
+#leaderboardLink:hover {
+    text-shadow: 2px 2px 5px #fffffff7;
+}
+
+a {
+    text-decoration: none;
+}
+
 #searchUsersContainer {
+    margin-top: 30px;
     background-color: #F5F0FF;
     padding: 20px;
     padding-bottom: 60px;
@@ -61,32 +112,28 @@
     width: 388px;
     height: 47px;
     padding: 11px 17px;
-
     justify-content: center;
     align-items: center;
     gap: 10px;
     flex-shrink: 0;
 }
 
-#recommendButton {
-    color: #1a8cc4;
-    padding: 7px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    border-color: #b7e6fe00;
-    background-color: #b7e6fe;
-    transition: 0.3s ease;
-    position: relative;
-    font-size: .9em;
+#user {
     cursor: pointer;
+    color: black;
+    font-size: 1.2em;
+    margin-right: 10px;
 }
 
-#recommendButton:hover {
-    background-color: #dcf3ffe9;
+#userToFollow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 #clearUserSearchButton {
-    color: #1a8cc4;
+    color: #202020;
     border-color: #b7e6fe00;
     background-color: #79caf200;
     font-size: .9em;
@@ -137,20 +184,6 @@
     background-color: #FFF;
     box-shadow: 2px 2px 7px rgba(125, 125, 125, 0.232);
     transform: translate3d(0, -2px, 0) scale(1.05);
-}
-
-#user {
-    cursor: pointer;
-    color: #1a8cc4;
-    font-size: 1.2em;
-    margin-right: 10px;
-}
-
-#userToFollow {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
 }
 
 #noPlaylistSpacer {

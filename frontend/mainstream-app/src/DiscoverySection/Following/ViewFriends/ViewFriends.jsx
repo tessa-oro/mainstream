@@ -108,9 +108,14 @@ function ViewFriends({ curUser, login }) {
     return (
         <div id="viewFriendsContainer">
             <h2 id="discoverHeader">Discover on Mainstream</h2>
-            <Link to={`${url}/recPage`}>
-                <button id="recommendButton">Song recommendations</button>
-            </Link>
+            <div id="discoverLinks">
+                <Link to={`${url}/recPage`}>
+                    <button id="recommendButton">Recommended songs</button>
+                </Link>
+                <Link to='/leaderboard'>
+                    <h2 id="leaderboardLink">&#x1f451; Leaderboard &#x1f451;</h2>
+                </Link>
+            </div>
             <div id="searchUsersContainer">
                 <form onSubmit={(e) => getUsers(e)} id="searchUsersForm">
                     <label id="searchUsersPrompt">Search users</label>
