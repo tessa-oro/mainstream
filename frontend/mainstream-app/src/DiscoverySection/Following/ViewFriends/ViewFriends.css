@@ -1,54 +1,21 @@
 #viewFriendsContainer {
     width: 100%;
     text-align: center;
-    background-color: #5ab9ea;
+    background-color: #F5F0FF;
     padding-top: 34.5px;
     height: 100%;
 }
 
-#followingContainer{
-    padding: 15px;
-    padding-bottom: 40px;
-    background-color: hsl(200, 91%, 75%);
-    border: 5px #055c87;
-    margin-bottom: 10px;
-}
-
-#followingHeader {
-    padding-bottom: 10px;
-    color: #1a8cc4;
-    font-weight: 200;
-}
-
-#following {
-    display: inline;
-    color: #1a8cc4;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 10px;
-    background-color: #b7e6fe;
-    transition: 0.3s ease;
-    position: relative;
-}
-
-#following:hover {
-    cursor: pointer;
-    background-color: #dcf3ffe9;
-}
-
-#user {
-    cursor: pointer;
-    color: #1a8cc4;
-    font-size: 1.2em;
-    margin-right: 10px;
-}
-
 #discoverHeader {
-    font-size: 2em;
+    color: #181818;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
 }
 
 #searchUsersContainer {
-    background-color: #b0e5ff;
+    background-color: #F5F0FF;
     padding: 20px;
     padding-bottom: 60px;
 }
@@ -57,13 +24,48 @@
     padding: 1em;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 #searchUsersPrompt {
-    font-weight: 300;
-    font-size: 1.1em;
-    margin-bottom: 20px;
-    color: #1a8cc4;
+    color: #181818;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    padding-right: 265px;
+    padding-bottom: 23px;
+}
+
+#searchUserInput {
+    border-radius: 4px;
+    border: 1px solid #5D5D5D;
+    background: #FFF;
+    display: flex;
+    width: 351px;
+    height: 25px;
+    padding: 11px 17px;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+#goSearchUser {
+    color: white;
+    border-radius: 4px;
+    border: 1px solid #5D5D5D;
+    background: #530BAE;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    width: 388px;
+    height: 47px;
+    padding: 11px 17px;
+
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
 }
 
 #recommendButton {
@@ -94,6 +96,50 @@
 
 #clearUserSearchButton:hover {
     font-weight: bold;
+}
+
+#followingContainer{
+    padding: 15px;
+    padding-bottom: 40px;
+    background-color: #F5F0FF;
+    border: 5px #055c87;
+    margin-bottom: 10px;
+}
+
+#followingHeader {
+    color: #181818;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+#following {
+    display: inline-flex;
+    padding: 8px 17px;
+    align-items: center;
+    gap: 10px;
+    margin: 5px;
+    border-radius: 4px;
+    border: 0px #5D5D5D;
+    background: #FFF;
+    color: #5D5D5D;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+#following:hover {
+    cursor: pointer;
+    background-color: #dcf3ffe9;
+}
+
+#user {
+    cursor: pointer;
+    color: #1a8cc4;
+    font-size: 1.2em;
+    margin-right: 10px;
 }
 
 #userToFollow {

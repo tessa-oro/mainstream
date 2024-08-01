@@ -105,7 +105,6 @@
     cursor: pointer;
     transition: 0.2s;
     display: flex;
-    width: auto;
     height: 47px;
     padding: 11px 17px;
     margin-left: 5px;

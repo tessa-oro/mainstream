@@ -107,14 +107,15 @@ function ViewFriends({ curUser, login }) {
 
     return (
         <div id="viewFriendsContainer">
-            <h2 id="discoverHeader">Discover</h2>
+            <h2 id="discoverHeader">Discover on Mainstream</h2>
             <Link to={`${url}/recPage`}>
                 <button id="recommendButton">Song recommendations</button>
             </Link>
             <div id="searchUsersContainer">
                 <form onSubmit={(e) => getUsers(e)} id="searchUsersForm">
-                    <label id="searchUsersPrompt">Search users to follow: </label>
-                    <input type="text" value={searchQ} placeholder="Search by username" name="searchUser" onChange={(e) => setSearchQ(e.target.value)}></input>
+                    <label id="searchUsersPrompt">Search users</label>
+                    <input id="searchUserInput" type="text" value={searchQ} placeholder="Search by username" name="searchUser" onChange={(e) => setSearchQ(e.target.value)}></input>
+                    <button id="goSearchUser" type="submit" value="Submit">Search</button>
                 </form>
                 <div>
                     {userResults && userResults.map((user) => (
