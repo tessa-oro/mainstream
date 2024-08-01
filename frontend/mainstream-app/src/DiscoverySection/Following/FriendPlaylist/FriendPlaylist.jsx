@@ -128,19 +128,23 @@ function FriendPlaylist({ curUser, friend, showPlaylist, hidePlaylist }) {
     }
 
     return (
-        <div id="playlistContainer">
+        <div id="friendPlaylistContainer">
             <div className="playlistHeaderContainer">
                 <h3 className="playlistHeader">{friend}'s playlist</h3>
                 <div className="score">
-                    <p className="scoreVal">{score}</p>
+                    <p className="scoreVal">{score}/10</p>
+                    <p className="space">..</p>
+                    <p className="musicTasteText">Music taste</p>
                 </div>
             </div>
-            <div>
+            <div id="unfollowContainer">
                 <button id="unfollowButton" onClick={() => unfollow()}>unfollow</button> 
             </div>
             <div id="songsWrapper">
                 {songs.map((song) => (
-                    <FriendSong curUser={curUser} rated={rated} player={song.player} goToRate={goToRate} songId={song.id}></FriendSong>
+                    <div id="friendPlaylistEntry">
+                        <FriendSong curUser={curUser} rated={rated} player={song.player} goToRate={goToRate} songId={song.id}></FriendSong>
+                    </div>
                 )
                 )}
             </div>

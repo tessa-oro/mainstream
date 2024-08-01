@@ -134,7 +134,9 @@ function ViewFriends({ curUser, login }) {
                     showFollowing && <p onClick={() => displayPlaylist(follow.name)} id="following">{follow.name}</p>)
                 )}
             </div>
-            {showPlaylist && <FriendPlaylist hidePlaylist={hidePlaylist} showPlaylist={showPlaylist} curUser={curUser} friend={selectedFollowing}></FriendPlaylist>}
+            {showPlaylist ? <FriendPlaylist hidePlaylist={hidePlaylist} showPlaylist={showPlaylist} curUser={curUser} friend={selectedFollowing}></FriendPlaylist> :
+                <div id="noPlaylistSpacer"></div>
+            }
         </div>
     )
 }

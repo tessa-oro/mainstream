@@ -1,7 +1,7 @@
 #dashboard {
     display: flex;
     flex-direction: row;
-    height: 1200px;
+    height: 100%;
 }
 
 #dashboard > div {
