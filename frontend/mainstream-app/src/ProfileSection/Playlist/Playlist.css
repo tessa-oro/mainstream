@@ -1,12 +1,14 @@
 iframe {
-    width: 200px;
-    height: 150px;
+    width: 160%;
+    height: 180%;
 }
 
 #songs {
     height: 90%;
     overflow-y: auto;
     overflow-x: hidden;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 #playlistContainer {
@@ -15,17 +17,27 @@ iframe {
 
 #playlistEntry {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 40%;
+    margin-bottom: 20px;
 }
 
 #deleteSong {
-    margin-left: 10px;
-    background-color: rgb(77, 0, 128);
-    border: none;
-    border-radius: 10px;
-    padding: 5px;
     color: white;
+    border-radius: 1px;
+    border: 1px solid #5D5D5D;
+    background: #530BAE;
     cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    width: 100px;
+    height: 30px;
+    padding: 11px 17px;
+    margin-left: 380px;
+    margin-top: 130px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
 }

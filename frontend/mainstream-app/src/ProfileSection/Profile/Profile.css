@@ -4,7 +4,7 @@
     background-color: #ffffff;
     height: 100%;
     padding-bottom: 34.5px;
-    padding-left: 40px;
+    padding-left: 100px;
 }
 
 #artist {
@@ -89,7 +89,7 @@
     border: 1px solid #5D5D5D;
     background: #FFF;
     display: flex;
-    width: 250px;
+    width: 490px;
     height: 20px;
     padding: 11px 17px;
     align-items: center;
@@ -112,12 +112,12 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    width: 582px;
+    width: 1063px;
     flex-shrink: 0;
 }
 
 #goSearch:hover {
-    background-color: #7b31d6;
+    background-color: #844fe6;
 }
 
 #clearSearchButton {
