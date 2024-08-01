@@ -12,9 +12,8 @@ function Dashboard({ curUser, login, handleLogout }) {
 
     const expansion = () => {
         setLayout(prevLayout => {
-            if (prevLayout === '75-25') return '0-100';
-            if (prevLayout === '50-50') return '25-75';
-            return '75-25'; 
+            if (prevLayout === '100-0') return '0-100';
+            return '100-0';
         })
     }
 
@@ -23,8 +22,9 @@ function Dashboard({ curUser, login, handleLogout }) {
             <Link to='/leaderboard'>
                 <h2 id="leaderboardLink">&#x1f451; Leaderboard &#x1f451;</h2>
             </Link>
+            <button id="expand" onClick={expansion} style={{position: 'absolute', top: 0, left: 0}}>{layout === '100-0' ?  '‹' : '›' }</button>
             <div id="dashboard">
-                <div style={{ height: '100%', overflow: 'hidden', flexBasis: layout === '75-25' ? '75%' : layout === '0-100' ? '0%' : '25%'}}>
+                <div style={{ height: '100%', overflow: 'hidden', flexBasis: layout === '0-100' ? '0%' : '100%'}}>
                     <Switch>
                         <Route exact path={path}><ViewFriends curUser={curUser}></ViewFriends></Route>
                         <Route path={`${path}/viewfriends`}>
@@ -35,9 +35,8 @@ function Dashboard({ curUser, login, handleLogout }) {
                         </Route>
                     </Switch>
                 </div>
-                <div style={{ height: '100%', flexBasis: layout === '75-25' ? '25%' : layout === '0-100' ? '100%' : '75%', position: 'relative'}}>
+                <div style={{ height: '100%', overflow: 'hidden', flexBasis: layout === '0-100' ? '100%' : '0%', position: 'relative'}}>
                     <Profile curUser={curUser} handleLogout={() => handleLogout()}></Profile>
-                    <button id="expand" onClick={expansion} style={{position: 'absolute', top: 0, left: 0}}>{layout === '75-25' || layout === '50-50' ?  '‹' : '›' }</button>
                 </div>
             </div>
         </>
