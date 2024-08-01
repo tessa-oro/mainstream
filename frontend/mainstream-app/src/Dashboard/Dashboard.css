@@ -14,7 +14,7 @@
     font-size: 3em;
     cursor: pointer;
     z-index: 1;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 #expand:focus {
@@ -22,7 +22,7 @@
 }
 
 .playlistHeader {
-    color: white;
+    color: rgb(0, 0, 0);
     font-size: 1.7em;
 }
 
@@ -51,7 +51,7 @@
 }
 
 #leaderboardLink {
-    color: #c68dff;
+    color: #5800b1;
     text-align: center;
 }
 
