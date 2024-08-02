@@ -1,54 +1,73 @@
 #viewFriendsContainer {
     width: 100%;
     text-align: center;
-    background-color: #5ab9ea;
+    background-color: #F5F0FF;
     padding-top: 34.5px;
+    padding-bottom: 400px;
     height: 100%;
 }
 
-#followingContainer{
-    padding: 15px;
-    padding-bottom: 40px;
-    background-color: hsl(200, 91%, 75%);
-    border: 5px #055c87;
-    margin-bottom: 10px;
-}
-
-#followingHeader {
-    padding-bottom: 10px;
-    color: #1a8cc4;
-    font-weight: 200;
-}
-
-#following {
-    display: inline;
-    color: #1a8cc4;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 10px;
-    background-color: #b7e6fe;
-    transition: 0.3s ease;
-    position: relative;
-}
-
-#following:hover {
-    cursor: pointer;
-    background-color: #dcf3ffe9;
-}
-
-#user {
-    cursor: pointer;
-    color: #1a8cc4;
-    font-size: 1.2em;
-    margin-right: 10px;
-}
-
 #discoverHeader {
-    font-size: 2em;
+    color: #181818;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+#discoverLinks {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#recommendButton {
+    display: inline-flex;
+    padding: 9.25px 17px;
+    align-items: center;
+    gap: 10px;
+    margin: 5px;
+    border-radius: 4px;
+    border: 1px solid #5D5D5D;
+    background: #ffffff;
+    color: #5D5D5D;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    transition: 0.2s ease;
+    line-height: normal;
+    cursor: pointer;
+}
+
+#leaderboardLink {
+    display: inline-flex;
+    padding: 8px 17px;
+    align-items: center;
+    gap: 10px;
+    margin: 5px;
+    border-radius: 4px;
+    border: 1px solid #5D5D5D;
+    background: #ffffff;
+    color: #5D5D5D;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    transition: 0.2s ease;
+    line-height: normal;
+    cursor: pointer;
+}
+
+#leaderboardLink:hover {
+    text-shadow: 2px 2px 5px #fffffff7;
+}
+
+a {
+    text-decoration: none;
 }
 
 #searchUsersContainer {
-    background-color: #b0e5ff;
+    margin-top: 30px;
+    background-color: #F5F0FF;
     padding: 20px;
     padding-bottom: 60px;
 }
@@ -57,34 +76,65 @@
     padding: 1em;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 #searchUsersPrompt {
-    font-weight: 300;
-    font-size: 1.1em;
-    margin-bottom: 20px;
-    color: #1a8cc4;
+    color: #181818;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    padding-right: 665px;
+    padding-bottom: 23px;
 }
 
-#recommendButton {
-    color: #1a8cc4;
-    padding: 7px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    border-color: #b7e6fe00;
-    background-color: #b7e6fe;
-    transition: 0.3s ease;
-    position: relative;
-    font-size: .9em;
+#searchUserInput {
+    border-radius: 4px;
+    border: 1px solid #5D5D5D;
+    background: #FFF;
+    display: flex;
+    width: 751px;
+    height: 25px;
+    padding: 11px 17px;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+#goSearchUser {
+    color: white;
+    border-radius: 4px;
+    border: 1px solid #5D5D5D;
+    background: #530BAE;
     cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    width: 788px;
+    height: 47px;
+    padding: 11px 17px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
 }
 
-#recommendButton:hover {
-    background-color: #dcf3ffe9;
+#user {
+    cursor: pointer;
+    color: black;
+    font-size: 1.2em;
+    margin-right: 10px;
+}
+
+#userToFollow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 #clearUserSearchButton {
-    color: #1a8cc4;
+    color: #202020;
     border-color: #b7e6fe00;
     background-color: #79caf200;
     font-size: .9em;
@@ -96,9 +146,46 @@
     font-weight: bold;
 }
 
-#userToFollow {
-    display: flex;
-    flex-direction: row;
+#followingContainer{
+    padding: 15px;
+    padding-bottom: 40px;
+    border: 5px #055c87;
+    margin-bottom: 10px;
+    overflow-x: scroll;
+}
+
+#followingHeader {
+    color: #181818;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+#following {
+    display: inline-flex;
+    padding: 8px 17px;
     align-items: center;
-    justify-content: center;
+    gap: 10px;
+    margin: 5px;
+    border-radius: 4px;
+    border: 0px #5D5D5D;
+    background: #ffffff;
+    color: #5D5D5D;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    transition: 0.2s ease;
+    line-height: normal;
+}
+
+#following:hover {
+    cursor: pointer;
+    background-color: #FFF;
+    box-shadow: 2px 2px 7px rgba(125, 125, 125, 0.232);
+    transform: translate3d(0, -2px, 0) scale(1.05);
+}
+
+#noPlaylistSpacer {
+    height: 400px;
 }

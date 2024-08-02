@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './Leaderboard.css'
 import { Link } from 'react-router-dom';
+import background from '/Users/tessaoro/Desktop/capstone/mainstream/frontend/mainstream-app/assets/lbBg.mp4';
 
 function Leaderboard({ curUser }) {
     const [leaderboardMap, setLeaderboardMap] = useState({});
@@ -29,6 +30,9 @@ function Leaderboard({ curUser }) {
 
     return (
         <div id="leaderboardComponent">
+            <video id="lbVid" autoPlay loop muted>
+                <source src={background} type='video/mp4'></source>
+            </video>
             <h1 id="lbHeader">&#x1f451; Leaderboard &#x1f451;</h1>
             <div id="lbEntries">
                 <Link to='/dashboard'>
@@ -37,8 +41,8 @@ function Leaderboard({ curUser }) {
                 { leaderboardMap && Object.entries(leaderboardMap).map(([user, score]) => (
                     <div id="lbPlace">
                         <h2 id="lbUser">{user}</h2>
-                        <div id="scoreId" className="score">
-                            <p className="scoreVal">{score}</p>
+                        <div id="lbScore">
+                            <p id="lbScoreVal">{score}</p>
                         </div>
                     </div>
                 ))}

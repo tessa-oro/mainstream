@@ -1,76 +1,131 @@
 #profileContainer {
     width: 100%;
     text-align: center;
-    background-color: #8860d0;
+    background-color: #ffffff;
     height: 100%;
     padding-bottom: 34.5px;
+    padding-left: 215px;
+    padding-top: 20px;
 }
 
 #artist {
     padding-left: 20px;
 }
 
+#profileHeader {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    color: black;
+    text-align: left;
+    margin-bottom: 0px;
+}
+
+#iconNameContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding-top: 10px;
+}
+
+#profileName {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding-left: 15px;
+    padding-top: 4px;
+    margin-top: 0;
+}
+
+#searchSongPrompt {
+    color: #181818;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+#searchInputs {
+    display: flex;
+    flex-direction: row;
+}
+
+.searchBox{
+    border-radius: 4px;
+    border: 1px solid #5D5D5D;
+    background: #FFF;
+    display: flex;
+    width: 490px;
+    height: 20px;
+    padding: 11px 17px;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+#goSearch {
+    color: white;
+    border-radius: 4px;
+    border: 1px solid #5D5D5D;
+    background: #530BAE;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    height: 47px;
+    padding: 11px 17px;
+    margin-left: 5px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 1063px;
+    flex-shrink: 0;
+}
+
+#goSearch:hover {
+    background-color: #844fe6;
+}
+
+#searchResultContainer {
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    width: 1033px;
+    background-color: #F5F0FF;
+    padding: 16px;
+    border-radius: 4px;
+}
+
 #searchResult {
     cursor: pointer;
     color: black;
-    background-color: rgba(0, 255, 183, 0.681);
+    background-color: #FFF;
     border-radius: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 10px;
     margin: 15px;
-    margin-left: 30px;
-    margin-left: 30px;
+    width: fit-content;
+    border: 1px solid #5D5D5D;
     transition: 0.2s ease;
 }
 
 #searchResult:hover {
-    background-color: rgba(0, 255, 183);
-    box-shadow: #744eba 2px 2px 5px;
+    background-color: #e8dcff;
 }
 
 #searchSongSection {
-    background-color: #c3a3ff;
-    padding: 20px;
+    background-color: #ffffff;
     padding-bottom: 35px;
-    text-align: center;
+    text-align: left;
 }
 
 #searchForm {
-    text-align: center;
+    text-align: left;
     align-content: center;
     flex-direction: column;
     display: flex;
-    align-items: center;
-}
-
-#profileHeader {
-    font-size: 2em;
-    margin-bottom: 76px;
-}
-
-#searchSongPrompt {
-    color: #744eba;
-    font-weight: 300;
-    font-size: 1.1em;
-}
-
-#goSearch {
-    display: block;
-    margin-top: 15px;
-    background-color: #8860d0;
-    border-radius: 8px;
-    border: #ffffff00;
-    color: white;
-    padding: 5px;
-    padding-left: 8px;
-    padding-right: 8px;
-    font-size: 0.9em;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-#goSearch:hover {
-    background-color: #ae82ff;
+    align-items: left;
+    width: 90%;
 }
 
 #clearSearchButton {
@@ -86,45 +141,52 @@
 }
 
 #logoutContainer {
+    margin-top: 30px;
     display: flex;
     justify-content: right;
 }
 
 #logoutButton {
     display: block;
-    background-color: #c3a3ff;
     border-radius: 8px;
+    background-color: white;
     border: #ffffff00;
-    color: white;
+    color: rgb(0, 0, 0);
     padding: 5px;
     padding-left: 8px;
     padding-right: 8px;
     margin-top: 8px;
-    margin-right: 5px;
+    margin-right: 450px;
     font-size: 0.9em;
+    font-weight: 600;
     cursor: pointer;
     transition: 0.2s;
 }
 
 #logoutButton:hover {
-    background-color: #ae82ff;
+    text-decoration: underline;
 }
 
 #analyzeButton {
-    cursor: pointer;
-    background-color: #c3a3ff;
-    border-radius: 8px;
-    border: #ffffff00;
     color: white;
-    padding: 5px;
-    padding-left: 8px;
-    padding-right: 8px;
-    margin-top: 30px;
-    margin-right: 5px;
-    font-size: 1em;
+    border-radius: 4px;
+    border: 1px solid #5D5D5D;
+    background: #530BAE;
+    cursor: pointer;
     transition: 0.2s;
+    display: flex;
+    width: auto;
+    height: 47px;
+    padding: 11px 17px;
+    margin-left: 5px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 200px;
+    flex-shrink: 0;
+    margin-bottom: 20px;
 }
 
 #analyzeButton:hover {
-    background-color: #ae82ff;
+    background-color: #844fe6;
 }

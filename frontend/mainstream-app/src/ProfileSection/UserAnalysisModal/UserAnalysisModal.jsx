@@ -1,6 +1,7 @@
 import "./UserAnalysisModal.css";
 import React from "react";
 import { useState, useEffect } from 'react';
+import background from '/Users/tessaoro/Desktop/capstone/mainstream/frontend/mainstream-app/assets/lbBg.mp4';
 
 const UserAnalysisModal = ({ closeModal, curUser }) => {
     const [analysisResult, setAnalysisResult] = useState("");
@@ -42,9 +43,12 @@ const UserAnalysisModal = ({ closeModal, curUser }) => {
     return (
         <>
             <div id="analysisModal">
+                <video id="analysisVid" autoPlay loop muted>
+                    <source src={background} type='video/mp4'></source>
+                </video>
                 <div id="modalContent">
                     {topEmotion && <h3>{topEmotion}</h3>}
-                    {analysisResult && <p dangerouslySetInnerHTML={{ __html: analysisResult }}></p>}
+                    {analysisResult && <p className="analysisPlayer" dangerouslySetInnerHTML={{ __html: analysisResult }}></p>}
                 </div>
                 <button id="closeAnalysis" onClick={closeModal}>close</button>
             </div>

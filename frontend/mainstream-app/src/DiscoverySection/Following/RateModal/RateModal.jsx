@@ -63,7 +63,6 @@ const RateModal = ({ curUser, friend, songID, closeModal, markRated, player }) =
     * Sets the currently selected rating
     */
     const pickNum = (e) => {
-        e.preventDefault();
         setNum(e.target.value);
     }
 
@@ -73,7 +72,7 @@ const RateModal = ({ curUser, friend, songID, closeModal, markRated, player }) =
     const handleCheck = (e) => {
         setCheck(e.target.checked);
         if (e.target.checked) {
-            setSubScore(2);
+            setSubScore(1);
         } else {
             setSubScore(0);
         }
@@ -85,25 +84,24 @@ const RateModal = ({ curUser, friend, songID, closeModal, markRated, player }) =
                 <div id="modalContent">
                     <h2 id="rateHeader">Rate song</h2>
                     <form id="rateForm" onSubmit={(e) => handleRate(e)}>
-                        <div id="rateButtons">
-                            <button id="score1" className="scoreButton" type="button" value="1" onClick={(e) => pickNum(e)}>1</button>
-                            <button id="score2" className="scoreButton" type="button" value="2" onClick={(e) => pickNum(e)}>2</button>
-                            <button id="score3" className="scoreButton" type="button" value="3" onClick={(e) => pickNum(e)}>3</button>
-                            <button id="score4" className="scoreButton" type="button" value="4" onClick={(e) => pickNum(e)}>4</button>
-                            <button id="score5" className="scoreButton" type="button" value="5" onClick={(e) => pickNum(e)}>5</button>
-                            <button id="score6" className="scoreButton" type="button" value="6" onClick={(e) => pickNum(e)}>6</button>
-                            <button id="score7" className="scoreButton" type="button" value="7" onClick={(e) => pickNum(e)}>7</button>
-                            <button id="score8" className="scoreButton" type="button" value="8" onClick={(e) => pickNum(e)}>8</button>
-                            <button id="score9" className="scoreButton" type="button" value="9" onClick={(e) => pickNum(e)}>9</button>
-                            <button id="score10" className="scoreButton" type="button" value="10" onClick={(e) => pickNum(e)}>10</button>
+                        <div className="rating">
+                            <input type="radio" id="star5" name="rating" value="5" onClick={(e) => pickNum(e)}></input>
+                            <label for="star5">&#9733;</label>
+                            <input type="radio" id="star4" name="rating" value="4" onClick={(e) => pickNum(e)}></input>
+                            <label for="star4">&#9733;</label>
+                            <input type="radio" id="star3" name="rating" value="3" onClick={(e) => pickNum(e)}></input>
+                            <label for="star3">&#9733;</label>
+                            <input type="radio" id="star2" name="rating" value="2" onClick={(e) => pickNum(e)}></input>
+                            <label for="star2">&#9733;</label>
+                            <input type="radio" id="star1" name="rating" value="1" onClick={(e) => pickNum(e)}></input>
+                            <label for="star1">&#9733;</label>
                         </div>
-                        {num && <p id="selectedNum">{num}</p>}
                         <input type="checkbox" onChange={(e) => handleCheck(e)}></input>
                         <label id="markKnown">I already know this song</label>
                         <button id="submit" type="submit">Submit</button>
                     </form>
+                    <button id="closeRate" onClick={closeModal}>cancel</button>
                 </div>
-                <button id="closeRate" onClick={closeModal}>cancel</button>
             </div>
             <div id="overlay"></div>
         </>

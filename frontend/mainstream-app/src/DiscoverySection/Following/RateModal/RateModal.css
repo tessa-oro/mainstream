@@ -1,8 +1,3 @@
-#close {
-    cursor: pointer;
-    color: rgb(0, 0, 0);
-}
-
 #overlay {
     position: fixed;
     top: 0;
@@ -18,15 +13,15 @@
     z-index: 1000;
     justify-content: center;
     position: fixed;
-    width: 70%;
-    height: 70%;
-    overflow: auto;
+    width: 50%;
+    height: 55%;
+    overflow: hidden;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(87, 255, 216, 0.851);
+    background-color: #530BAE;
     box-shadow: 0px 0px 10px rgba(72, 72, 72, 0.5);
-    border-radius: 4%;
+    border-radius: 4px;
     padding-top: 20px;
     padding-bottom: 60px;
     padding-left: 30px;
@@ -34,45 +29,58 @@
 }
 
 #modalContent {
-    margin-top: 80px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
     align-items: center;
     color: aliceblue;
 }
 
 #rateHeader {
-    color: black;
-    padding-top: 40px;
+    color: rgb(255, 255, 255);
     font-weight: 300;
     font-size: 2em;
-    margin-bottom: 0px;
+    margin-bottom: 40px;
 }
 
-#rateButtons {
+.rating {
+    margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
+    flex-direction: row-reverse;
     justify-content: center;
-    flex-direction: row;
-    align-items: center;
-    margin: 40px;
+}
+  
+.rating input {
+    display: none;
+}
+
+.rating label {
+    font-size: 60px;
+    cursor: pointer;
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+    color: orange;
+}
+
+.rating input:checked ~ label {
+    color: orange;
 }
 
 #rateForm {
-    margin-bottom: 60px;
     align-content: center;
 }
 
-#selectedNum {
-    color: rgb(0, 0, 0);
-    font-size: 3em;
-}
-
 #markKnown {
-    color: black;
+    color: rgb(255, 255, 255);
     font-size: 1.2em;
 }
 
 #submit {
+    margin-top: 40px;
     margin-left: 50px;
-    border-radius: 10px;
+    border-radius: 3px;
     background-color: rgb(255, 255, 255);
     border: none;
     padding: 7px;
@@ -80,66 +88,13 @@
 }
 
 #closeRate {
+    margin-top: 60px;
     background-color:rgba(240, 248, 255, 0);
     border: none;
+    color: white;
     cursor: pointer;
 }
 
 #closeRate:hover {
     font-weight: 700;
-}
-
-.scoreButton {
-    border-radius: 30%;
-    width: 50px;
-    height: 50px;
-    margin: 4px;
-    font-size: 1.5em;
-    padding: 10px;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-.scoreButton:hover {
-    box-shadow: 2px 2px 5px rgba(0, 138, 92, 0.795);
-}
-
-#score1 {
-    background-color: rgb(212, 0, 0);
-}
-
-#score2 {
-    background-color: rgb(255, 98, 0);
-}
-
-#score3 {
-    background-color: rgb(255, 140, 0);
-}
-
-#score4 {
-    background-color: rgb(255, 197, 7);
-}
-
-#score5 {
-    background-color: rgb(255, 247, 0);
-}
-
-#score6 {
-    background-color: rgb(246, 255, 0);
-}
-
-#score7 {
-    background-color: rgb(195, 255, 0);
-}
-
-#score8 {
-    background-color: rgb(136, 255, 0);
-}
-
-#score9 {
-    background-color: rgb(13, 253, 0);
-}
-
-#score10 {
-    background-color: rgb(0, 255, 242);
 }

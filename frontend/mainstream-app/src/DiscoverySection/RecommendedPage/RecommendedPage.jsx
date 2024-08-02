@@ -84,19 +84,23 @@ function RecommendedPage( {curUser} ) {
         <Link to='/dashboard'>
             <button id="backButton">back</button>
         </Link>
-        <div>
-            <h2>These are a similar vibe to your playlist</h2>
-            {showAnalysisRecommend && analysisRecommendedSongs &&
-                analysisRecommendedSongs.map((recommendation) => (
-                <div id="songPlayer" dangerouslySetInnerHTML={{ __html: recommendation.player }} />
-            ))}
+        <div id="vibeMatchContainer">
+            <h2>Similar vibe to your playlist</h2>
+            <div className="recommendGrid">
+                {showAnalysisRecommend && analysisRecommendedSongs &&
+                    analysisRecommendedSongs.map((recommendation) => (
+                    <div className="recommendSongPlayer" dangerouslySetInnerHTML={{ __html: recommendation.player }} />
+                ))}
+            </div>
         </div>
-        <div>
+        <div id="userMatchContainer">
             <h2>Here's what other users like you are listening to</h2>
-            {showInteractionRecommend && interactionRecommendedSongs &&
-                interactionRecommendedSongs.map((recommendation) => (
-                <div id="songPlayer" dangerouslySetInnerHTML={{ __html: recommendation }} />
-            ))}
+            <div className="recommendGrid">
+                {showInteractionRecommend && interactionRecommendedSongs &&
+                    interactionRecommendedSongs.map((recommendation) => (
+                    <div className="recommendSongPlayer" dangerouslySetInnerHTML={{ __html: recommendation }} />
+                ))}
+            </div>
         </div>
       </div>
     )

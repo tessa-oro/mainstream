@@ -31,9 +31,6 @@ function App() {
         <Route path='/dashboard'>
           <Dashboard curUser={curUser} login={showLogin} handleLogout={() => handleLogout()}></Dashboard>
         </Route>
-        <Route exact path='/leaderboard'>
-          <Leaderboard curUser={curUser}></Leaderboard>
-        </Route>
       </Switch>
     </Router>
   )

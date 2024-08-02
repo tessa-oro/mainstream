@@ -2,24 +2,52 @@
     width: 100%;
     height: 100%;
     text-align: center;
-    background-color: #5ab9ea;
+    background-color: white;
     padding-top: 34.5px;
+    padding-bottom: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    color: black;
+}
+
+.recommendGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 #backButton {
-    margin-top: 20px;
-    color: #1a8cc4;
-    padding: 7px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    border-color: #b7e6fe00;
-    background-color: #b7e6fe;
-    transition: 0.3s ease;
-    position: relative;
-    font-size: .9em;
+    color: white;
+    border-radius: 4px;
+    border: 1px solid #5D5D5D;
+    background: #530BAE;
     cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    width: 70px;
+    height: 35px;
+    padding: 11px 17px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
 }
 
 #backButton:hover {
-    background-color: #dcf3ffe9;
+    background-color: #540bae43;
+}
+
+#vibeMatchContainer {
+    margin-top: 30px;
+    margin-bottom: 70px;
+}
+
+.recommendSongPlayer iframe {
+    width: 300px;
+    height: 200px;
+    margin: 10px;
 }

@@ -136,20 +136,33 @@ function Profile({ curUser, handleLogout }) {
         <div id="profileContainer">
             <div id="logoutContainer">
                 <Link to='/'>
-                    <button id="logoutButton" onClick={() => handleLogout()}>logout</button>
+                    <button id="logoutButton" onClick={() => handleLogout()}>Logout</button>
                 </Link>
             </div>
-            <h2 id="profileHeader">{curUser}</h2>
+            <p id="profileHeader">Profile</p>
+            <div id="iconNameContainer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+                <mask id="mask0_1_96" maskType="alpha" maskUnits="userSpaceOnUse" x="1" y="3" width="34" height="33">
+                    <circle cx="18" cy="19.5" r="15" fill="#D9D9D9" stroke="black" strokeWidth="3" />
+                </mask>
+                <g mask="url(#mask0_1_96)">
+                    <circle cx="18" cy="15" r="3.75" stroke="black" strokeWidth="3"/>
+                    <circle cx="18" cy="33.75" r="12.75" stroke="black" strokeWidth="3"/>
+                </g>
+                <circle cx="18" cy="18" r="16.5" stroke="black" strokeWidth="3"/>
+                </svg>
+                <p id="profileName">{curUser}</p>
+            </div>
             <div id="searchSongSection">
-                <p id="searchSongPrompt">Search songs to recommend to your friends!</p>
+                <p id="searchSongPrompt">Create your stream</p>
                 <form onSubmit={(e) => handleSearch(e)} id="searchForm">
-                    <div>
-                        <input name="searchQ" value={searchQ} required placeholder="Song title" onChange={((e) => setSearchQ(e.target.value))}></input>
-                        <input name="searchA" value={searchA} required placeholder="Artist" onChange={((e) => setSearchA(e.target.value))}></input>
+                    <div id="searchInputs">
+                        <input name="searchQ" className="searchBox" value={searchQ} required placeholder="Add song title" onChange={((e) => setSearchQ(e.target.value))}></input>
+                        <input name="searchA" className="searchBox" value={searchA} required placeholder="Add artist" onChange={((e) => setSearchA(e.target.value))}></input>
                     </div>
-                    <button id="goSearch" type="submit" value="Submit">Go</button>
+                    <button id="goSearch" type="submit" value="Submit">Search</button>
                 </form>
-                {searchResult && <div>
+                {searchResult && <div id="searchResultContainer">
                     {searchResult.map((searchResult, index) => (
                         <p id="searchResult" onClick={() => fetchSong(searchResult.id.videoId)}>{searchResult.snippet.title}</p>)
                     )}

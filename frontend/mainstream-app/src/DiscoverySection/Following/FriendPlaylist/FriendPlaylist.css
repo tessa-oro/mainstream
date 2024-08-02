@@ -1,38 +1,59 @@
+#friendPlaylistContainer {
+    margin-left: 17%;
+}
+
 #songsWrapper {
+    height: 90%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#friendPlaylistEntry {
     display: flex;
     flex-direction: column;
-    justify-content: top;
-    align-items: center;
-    height: 80%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 10px;
+    align-items: flex-start;
+    width: 450px;
+    height: 300px;
+    margin-bottom: 40px;
+    margin-right: 50px;
+}
+
+#unfollowContainer {
+    display: flex;
+    align-items: left;
 }
 
 #unfollowButton {
-    color: #1a8cc4;
-    padding: 4px;
-    margin-bottom: 15px;
-    border-radius: 7px;
-    border-color: #b7e6fe00;
-    background-color: #b7e6fe;
-    transition: 0.3s ease;
-    position: relative;
-    font-size: .8em;
+    padding: 6px 10px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 35px;
+    border-radius: 4px;
+    border: 0px #5D5D5D;
+    background: #FFF;
+    color: #5D5D5D;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
     cursor: pointer;
+    transition: 0.2s ease;
 }
 
 #unfollowButton:hover {
-    background-color: #dcf3ffe9;
+    background-color: #540bae;
+    color: white;
 }
 
 #loadingContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 80px;
+    height: 400px;
 }
-
 
 .progress-bar {
     position: relative;
@@ -45,7 +66,7 @@
     right: 0px;
     position: absolute;
     border: solid 5px #e1e1e1b8;
-    border-top-color: rgb(0, 255, 183);
+    border-top-color: #530BAE;
     border-radius: 50%;
 }
 

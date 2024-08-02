@@ -32,7 +32,8 @@ function FriendSong({ curUser, player, goToRate, songId, rated }) {
     return (
         <div id="songBorder">
             <div id="songPlayerFollowing" dangerouslySetInnerHTML={{ __html: player }} />
-            {!(ratedBy.includes(curUser)) && <button id="rate" onClick={() => { goToRate(songId, player); }}>rate</button>}
+            <div id="songSpacer"></div>
+            {!(ratedBy.includes(curUser)) && <button id="rate" onClick={() => { goToRate(songId, player); }}>Rate</button>}
         </div>
     )
 }

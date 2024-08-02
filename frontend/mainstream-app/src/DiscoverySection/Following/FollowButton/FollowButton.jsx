@@ -6,6 +6,7 @@ function FollowButton({ userToFollow, curUser, handleFollow }) {
     const [result, setResult] = useState("");
     const [follower, setFollower] = useState(curUser);
     const [following, setFollowing] = useState(userToFollow);
+    const [hoverText, setHoverText] = useState('Follow');
     const [icon, setIcon] = useState(faPlus);
 
     /*
@@ -101,13 +102,15 @@ function FollowButton({ userToFollow, curUser, handleFollow }) {
         if (icon === faPlus) {
             createRelationship();
             setIcon(faCheck);
+            setHoverText('Unfollow');
         } else {
             undoFollow();
+            setHoverText('Follow');
         }
     }
 
     return (
-        <div style={{ fontSize: '24px', cursor: 'pointer' }} onClick={changeFollow}>
+        <div style={{ fontSize: '24px', cursor: 'pointer' }} title={hoverText} onClick={changeFollow}>
             <FontAwesomeIcon icon={icon} />
         </div>
     );

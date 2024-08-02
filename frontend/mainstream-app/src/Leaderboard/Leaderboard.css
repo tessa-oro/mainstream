@@ -5,14 +5,26 @@
     height: 100%;
 }
 
+#lbVid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: 3000px;
+    height: auto;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+}
+
 #lbHeader {
-    color: rgba(155, 255, 217, 0.901);
-    text-shadow: rgba(237, 252, 255, 0.697) 1px 0 10px;
-    background: rgb(31, 177, 255);
+    color: rgba(255, 255, 255, 0.901);
+    font-size: 40px;
+    background: rgba(31, 177, 255, 0);
     padding-bottom: 20px;
-    padding-top: 20px;
+    padding-top: 30px;
     margin-bottom: 0px;
-    margin-top: 10px;
+    margin-top: 0px;
 }
 
 #lbPlace {
@@ -20,14 +32,31 @@
     justify-content: flex-start;
     align-items: center;
     padding: 10px;
+    margin: 15px;
 }
 
 #lbUser {
     margin: 0;
+    color: white;
 }
 
-#scoreId {
-    margin: 10px;
+#lbScore {
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+    margin-top: 0px;
+    margin-left: 10px;
+    border-radius: 100%;
+    background-color: rgb(0, 255, 183);
+    height: 15px;
+    width: 15px;
+    text-align: center;
+}
+
+#lbScoreVal {
+    margin: 0px;
+    color: rgb(0, 69, 46);
+    font-weight: 600;
 }
 
 #lbEntries {
@@ -35,22 +64,25 @@
     flex-direction: column;
     text-align: center;
     align-items: center;
-    background: linear-gradient(to bottom, rgb(31, 177, 255) 40%, rgb(31, 206, 255) 70%, rgb(106, 255, 198));
-    height: 400px;
+    background-color: rgba(240, 248, 255, 0);
+    height: 100%;
     padding-bottom: 100px;
 }
 
 #lbBack {
-    margin-top: 25px;
-    background-color: rgba(128, 0, 128, 0);
-    color: white;
-    border-radius: 10px;
-    padding: 7px;
-    border: none;
-    font-size: 1em;
     cursor: pointer;
+    color: white;
+    background-color: rgb(53, 0, 175);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 3px;
+    box-shadow: 2px 2px 17px 2px rgba(255, 255, 255, 0.498);
+    margin-top: 25px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    transition: 0.4s ease;
 }
-
+    
 #lbBack:hover {
-    font-weight: bold;
+    background-color: rgb(104, 55, 217);
 }

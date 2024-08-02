@@ -107,14 +107,20 @@ function ViewFriends({ curUser, login }) {
 
     return (
         <div id="viewFriendsContainer">
-            <h2 id="discoverHeader">Discover</h2>
-            <Link to={`${url}/recPage`}>
-                <button id="recommendButton">Song recommendations</button>
-            </Link>
+            <h2 id="discoverHeader">Discover on Mainstream</h2>
+            <div id="discoverLinks">
+                <Link to={`${url}/recPage`}>
+                    <button id="recommendButton">Recommended songs</button>
+                </Link>
+                <Link to={`${url}/lb`}>
+                    <h2 id="leaderboardLink">&#x1f451; Leaderboard &#x1f451;</h2>
+                </Link>
+            </div>
             <div id="searchUsersContainer">
                 <form onSubmit={(e) => getUsers(e)} id="searchUsersForm">
-                    <label id="searchUsersPrompt">Search users to follow: </label>
-                    <input type="text" value={searchQ} placeholder="Search by username" name="searchUser" onChange={(e) => setSearchQ(e.target.value)}></input>
+                    <label id="searchUsersPrompt">Search users</label>
+                    <input id="searchUserInput" type="text" value={searchQ} placeholder="Search by username" name="searchUser" onChange={(e) => setSearchQ(e.target.value)}></input>
+                    <button id="goSearchUser" type="submit" value="Submit">Search</button>
                 </form>
                 <div>
                     {userResults && userResults.map((user) => (
@@ -133,7 +139,9 @@ function ViewFriends({ curUser, login }) {
                     showFollowing && <p onClick={() => displayPlaylist(follow.name)} id="following">{follow.name}</p>)
                 )}
             </div>
-            {showPlaylist && <FriendPlaylist hidePlaylist={hidePlaylist} showPlaylist={showPlaylist} curUser={curUser} friend={selectedFollowing}></FriendPlaylist>}
+            {showPlaylist ? <FriendPlaylist hidePlaylist={hidePlaylist} showPlaylist={showPlaylist} curUser={curUser} friend={selectedFollowing}></FriendPlaylist> :
+                <div id="noPlaylistSpacer"></div>
+            }
         </div>
     )
 }

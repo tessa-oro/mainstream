@@ -1,24 +1,20 @@
-h1 {
-    font-size: 4em;
-    display: inline;
-    color: white;
-    background: linear-gradient(to right, #bc7aff, #369aff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-emphasis-color: transparent;
-    text-align: center;
-    text-shadow: rgba(239, 237, 255, 0.697) 1px 0 10px;
-}
-
-#main {
-    text-decoration: line-through;
-    text-shadow: rgb(255, 255, 255) 1px 0 9px;
-    font-size: 3.8em;
-}
-
 #headerText {
-    text-align: center;
-    padding-top: 30px;
-    padding: 30px;
+    display: flex;
+    width: 1450px;
+    height: 36px;
+    padding: 31px 56px;
+    align-items: center;
+    flex-shrink: 0;
+    border: 1px solid #5D5D5D;
+    background: #FFF;
+}
+
+#mainstreamDashboard {
+    color: #530BAE;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    position: fixed 93px 19px;
+    padding-left: 4px;
 }
