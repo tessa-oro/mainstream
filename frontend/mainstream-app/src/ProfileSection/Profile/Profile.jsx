@@ -162,7 +162,7 @@ function Profile({ curUser, handleLogout }) {
                     </div>
                     <button id="goSearch" type="submit" value="Submit">Search</button>
                 </form>
-                {searchResult && <div>
+                {searchResult && <div id="searchResultContainer">
                     {searchResult.map((searchResult, index) => (
                         <p id="searchResult" onClick={() => fetchSong(searchResult.id.videoId)}>{searchResult.snippet.title}</p>)
                     )}

@@ -132,7 +132,7 @@ function FriendPlaylist({ curUser, friend, showPlaylist, hidePlaylist }) {
             <div className="playlistHeaderContainer">
                 <h3 className="playlistHeader">{friend}'s playlist</h3>
                 <div className="score">
-                    <p className="scoreVal">{score}/10</p>
+                    <p className="scoreVal">{score}/5</p>
                     <p className="space">..</p>
                     <p className="musicTasteText">Music taste</p>
                 </div>

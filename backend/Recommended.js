@@ -170,7 +170,7 @@ class Recommended {
                     sumSimScore += simScore;
                 }
                 let weightedAverage = sumWeightedRating / sumSimScore;
-                if (weightedAverage > 5) {
+                if (weightedAverage >= 3) {
                     weightedScores.set(song, weightedAverage);
                 }
             }

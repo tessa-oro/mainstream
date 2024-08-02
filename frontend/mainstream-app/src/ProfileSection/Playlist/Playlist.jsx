@@ -83,7 +83,7 @@ function Playlist({ refetch, curUser }) {
             <div className="playlistHeaderContainer">
                 <h3 className="playlistHeader">{curUser}'s playlist</h3>
                 <div className="score">
-                    <p className="scoreVal">{score}/10</p>
+                    <p className="scoreVal">{score}/5</p>
                     <p className="space">..</p>
                     <p className="musicTasteText">Music taste</p>
                 </div>
