@@ -3,12 +3,13 @@ import { useState } from 'react';
 import "./Dashboard.css";
 import ViewFriends from '../DiscoverySection/Following/ViewFriends/ViewFriends';
 import RecommendedPage from '../DiscoverySection/RecommendedPage/RecommendedPage';
+import Leaderboard from '../Leaderboard/Leaderboard';
 import { Route, Switch, Link, useRouteMatch } from 'react-router-dom';
 import Profile from '../ProfileSection/Profile/Profile';
 
 function Dashboard({ curUser, login, handleLogout }) {
     let { path, url } = useRouteMatch();
-    const [layout, setLayout] = useState('100-0');
+    const [layout, setLayout] = useState('0-100');
 
     const expansion = () => {
         setLayout(prevLayout => {
@@ -39,6 +40,9 @@ function Dashboard({ curUser, login, handleLogout }) {
                         </Route>
                         <Route path={`${path}/recPage`}>
                             <RecommendedPage curUser={curUser}></RecommendedPage>
+                        </Route>
+                        <Route path={`${path}/lb`}>
+                            <Leaderboard curUser={curUser}></Leaderboard>
                         </Route>
                     </Switch>
                 </div>

@@ -112,7 +112,7 @@ function ViewFriends({ curUser, login }) {
                 <Link to={`${url}/recPage`}>
                     <button id="recommendButton">Recommended songs</button>
                 </Link>
-                <Link to='/leaderboard'>
+                <Link to={`${url}/lb`}>
                     <h2 id="leaderboardLink">&#x1f451; Leaderboard &#x1f451;</h2>
                 </Link>
             </div>

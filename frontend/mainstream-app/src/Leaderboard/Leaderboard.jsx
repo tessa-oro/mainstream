@@ -30,7 +30,7 @@ function Leaderboard({ curUser }) {
 
     return (
         <div id="leaderboardComponent">
-            <video autoPlay loop muted>
+            <video id="lbVid" autoPlay loop muted>
                 <source src={background} type='video/mp4'></source>
             </video>
             <h1 id="lbHeader">&#x1f451; Leaderboard &#x1f451;</h1>

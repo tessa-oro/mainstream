@@ -43,7 +43,7 @@ const UserAnalysisModal = ({ closeModal, curUser }) => {
     return (
         <>
             <div id="analysisModal">
-                <video autoPlay loop muted>
+                <video id="analysisVid" autoPlay loop muted>
                     <source src={background} type='video/mp4'></source>
                 </video>
                 <div id="modalContent">
