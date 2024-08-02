@@ -84,7 +84,7 @@ a {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    padding-right: 265px;
+    padding-right: 665px;
     padding-bottom: 23px;
 }
 
@@ -93,7 +93,7 @@ a {
     border: 1px solid #5D5D5D;
     background: #FFF;
     display: flex;
-    width: 351px;
+    width: 751px;
     height: 25px;
     padding: 11px 17px;
     align-items: center;
@@ -109,7 +109,7 @@ a {
     cursor: pointer;
     transition: 0.2s;
     display: flex;
-    width: 388px;
+    width: 788px;
     height: 47px;
     padding: 11px 17px;
     justify-content: center;

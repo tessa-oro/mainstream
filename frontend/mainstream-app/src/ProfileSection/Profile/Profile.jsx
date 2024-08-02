@@ -146,10 +146,10 @@ function Profile({ curUser, handleLogout }) {
                     <circle cx="18" cy="19.5" r="15" fill="#D9D9D9" stroke="black" strokeWidth="3" />
                 </mask>
                 <g mask="url(#mask0_1_96)">
-                    <circle cx="18" cy="15" r="3.75" stroke="black" stroke-width="3"/>
-                    <circle cx="18" cy="33.75" r="12.75" stroke="black" stroke-width="3"/>
+                    <circle cx="18" cy="15" r="3.75" stroke="black" strokeWidth="3"/>
+                    <circle cx="18" cy="33.75" r="12.75" stroke="black" strokeWidth="3"/>
                 </g>
-                <circle cx="18" cy="18" r="16.5" stroke="black" stroke-width="3"/>
+                <circle cx="18" cy="18" r="16.5" stroke="black" strokeWidth="3"/>
                 </svg>
                 <p id="profileName">{curUser}</p>
             </div>

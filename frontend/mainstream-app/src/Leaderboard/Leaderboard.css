@@ -5,10 +5,22 @@
     height: 100%;
 }
 
+video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+}
+
 #lbHeader {
-    color: rgba(155, 255, 217, 0.901);
+    color: rgba(255, 255, 255, 0.901);
     font-size: 40px;
-    background: rgb(31, 177, 255);
+    background: rgba(31, 177, 255, 0);
     padding-bottom: 20px;
     padding-top: 30px;
     margin-bottom: 0px;
@@ -25,6 +37,7 @@
 
 #lbUser {
     margin: 0;
+    color: white;
 }
 
 #lbScore {
@@ -51,7 +64,7 @@
     flex-direction: column;
     text-align: center;
     align-items: center;
-    background: linear-gradient(to bottom, rgb(31, 177, 255) 40%, rgb(31, 206, 255) 70%, rgb(106, 255, 198));
+    background-color: rgba(240, 248, 255, 0);
     height: 100%;
     padding-bottom: 100px;
 }
