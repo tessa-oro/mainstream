@@ -15,6 +15,7 @@ function Profile({ curUser, handleLogout }) {
     const [searchQ, setSearchQ] = useState("");
     const [searchA, setSearchA] = useState("");
     const [showAnalysis, setShowAnalysis] = useState(false);
+    const [followerCount, setFollowerCount] = useState(0);
 
     useEffect(() => {
         fetchSearch();
@@ -22,6 +23,7 @@ function Profile({ curUser, handleLogout }) {
 
     useEffect(() => {
         clearSearch();
+        fetchFollowerCount();
     }, [curUser]);
 
     /*
@@ -118,6 +120,25 @@ function Profile({ curUser, handleLogout }) {
     }
 
     /*
+    * Fetches follower count
+    */
+    const fetchFollowerCount = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/followerCount/${curUser}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
+                return response.json();
+            }
+        })
+        .then(data => {
+            setFollowerCount(data);
+        })
+        .catch(error => {
+        });
+    }
+
+    /*
     * Clears search query variable
     */
     const clearSearch = () => {
@@ -152,6 +173,10 @@ function Profile({ curUser, handleLogout }) {
                 <circle cx="18" cy="18" r="16.5" stroke="black" strokeWidth="3"/>
                 </svg>
                 <p id="profileName">{curUser}</p>
+            </div>
+            <div id="followCountContainer">
+                <p id="followCount">{followerCount}</p>
+                <p id="followers">Followers</p>
             </div>
             <div id="searchSongSection">
                 <p id="searchSongPrompt">Create your stream</p>

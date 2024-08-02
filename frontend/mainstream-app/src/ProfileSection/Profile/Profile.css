@@ -27,6 +27,7 @@
     flex-direction: row;
     align-items: flex-start;
     padding-top: 10px;
+    height: 35px;
 }
 
 #profileName {
@@ -37,6 +38,24 @@
     padding-left: 15px;
     padding-top: 4px;
     margin-top: 0;
+}
+
+#followCountContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+#followCount {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    color: black;
+}
+
+#followers {
+    padding-left: 6px;
 }
 
 #searchSongPrompt {

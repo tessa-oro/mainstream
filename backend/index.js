@@ -204,10 +204,10 @@ app.delete('/unfollow', async (req, res) =>{
         })
         const deletedFollower = await prisma.follower.delete({
             where: { 
-            followsName_name: {
-                followsName: following,
-                name: followedBy
-            }
+                followsName_name: {
+                    followsName: following,
+                    name: followedBy
+                }
             }
         })
         res.json([deletedFollowing, deletedFollower])
@@ -228,6 +228,24 @@ app.get('/followers/:user', async (req, res) => {
         res.status(200).json(followers);
     } catch (error) {
         res.status(500).json({ error: "An error occurred while fetching followers." });
+    }
+})
+
+//get user's followers
+app.get('/followerCount/:user', async (req, res) => {
+    const { user } = req.params;
+    try {
+        const curUser = await prisma.user.findUnique({
+            where: {
+                user: user
+            },
+            include: { 
+                followers: true 
+            }
+        })
+        res.status(200).json(curUser.followers.length);
+    } catch (error) {
+        res.status(500).json({ error: "An error occurred while fetching follower count." });
     }
 })
 
