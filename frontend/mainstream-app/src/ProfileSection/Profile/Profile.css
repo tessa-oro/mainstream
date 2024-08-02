@@ -175,6 +175,7 @@
     gap: 10px;
     width: 200px;
     flex-shrink: 0;
+    margin-bottom: 20px;
 }
 
 #analyzeButton:hover {
